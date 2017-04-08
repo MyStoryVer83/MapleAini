@@ -261,6 +261,8 @@ public class MapleQuest {
         MapleQuestStatus newStatus = new MapleQuestStatus(this, MapleQuestStatus.Status.COMPLETED, npc);
         newStatus.setForfeited(c.getQuest(this).getForfeited());
         newStatus.setCompletionTime(System.currentTimeMillis());
+        c.getClient().getSession().write(MaplePacketCreator.showSpecialEffect(9)); // 任务完成特效
+        c.getMap().broadcastMessage(c, MaplePacketCreator.showForeignEffect(c.getId(), 9), false);
         c.updateQuest(newStatus);
         return true;
     }
