@@ -222,7 +222,7 @@ public class MapleQuest {
 		    for (MapleQuestAction a : completeActs.values()) {
 		        a.run(c, selection);
 		    }
-            c.getClient().getSession().write(MaplePacketCreator.showSpecialEffect(9)); // Quest completion
+            c.getClient().getSession().write(MaplePacketCreator.showSpecialEffect(9)); // 任务完成特效
             c.getMap().broadcastMessage(c, MaplePacketCreator.showForeignEffect(c.getId(), 9), false);
 		}
     }
