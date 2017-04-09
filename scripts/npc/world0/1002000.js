@@ -37,7 +37,7 @@ function action(mode, type, selection) {
 				cm.sendSimple("在金银岛内有7个大村庄。\r\n#b#L0##m104000000##l\r\n#L1##m102000000##l\r\n#L2##m101000000##l\r\n#L3##m100000000##l\r\n#L4##m103000000##l\r\n#L6##m105040300##l");
 			} else if (selection == 1) {
 				status = 26;
-				if (cm.getJob() == 0) {
+				if (cm.getJobId() == 0) {
 					var selStr = "新手的费用是 90% 的折扣.你想要去哪里呢？#b";
 					for (var i = 0; i < maps.length; i++) {
 						selStr += "\r\n#L" + i + "##m" + maps[i] + "# (" + costBeginner[i] + " 金币)#l";
