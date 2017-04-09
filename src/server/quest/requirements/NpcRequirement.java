@@ -50,6 +50,6 @@ public class NpcRequirement extends MapleQuestRequirement {
 	
 	@Override
 	public boolean check(MapleCharacter chr, Integer npcid) {
-		return npcid != null && npcid == reqNPC && (autoComplete || autoStart || chr.getMap().containsNPC(npcid));
+		return npcid != null && npcid == reqNPC && (autoComplete || autoStart /*|| chr.getMap().containsNPC(npcid)*/);
 	}
 }

@@ -3608,32 +3608,25 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         int tap = 0, tsp = 1;
         int tstr = 4, tdex = 4, tint = 4, tluk = 4;
         int levelap = (isCygnus() ? 6 : 5);
+        tap = (getLevel() - 1) * levelap + 8;
         switch (job.getId()) {
             case 100:
             case 1100:
-            case 2100://?
-                tstr = 35;
-                tap = ((getLevel() - 10) * levelap) + 14;
+            case 2100:
                 tsp += ((getLevel() - 10) * 3);
                 break;
             case 200:
             case 1200:
-                tint = 20;
-                tap = ((getLevel() - 8) * levelap) + 29;
                 tsp += ((getLevel() - 8) * 3);
                 break;
             case 300:
             case 1300:
             case 400:
             case 1400:
-                tdex = 25;
-                tap = ((getLevel() - 10) * levelap) + 24;
                 tsp += ((getLevel() - 10) * 3);
                 break;
             case 500:
             case 1500:
-                tdex = 20;
-                tap = ((getLevel() - 10) * levelap) + 29;
                 tsp += ((getLevel() - 10) * 3);
                 break;
         }
@@ -3727,7 +3720,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
             con.setAutoCommit(false);
             ps = con.prepareStatement("INSERT INTO characters (str, dex, luk, `int`, gm, skincolor, gender, job, hair, face, map, meso, spawnpoint, accountid, name, world) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", DatabaseConnection.RETURN_GENERATED_KEYS);
             ps.setInt(1, 12);
-            ps.setInt(2, 5);
+            ps.setInt(2, 4);
             ps.setInt(3, 4);
             ps.setInt(4, 4);
             ps.setInt(5, gmLevel);
