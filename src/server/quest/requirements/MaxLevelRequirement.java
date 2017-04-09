@@ -51,7 +51,7 @@ public class MaxLevelRequirement extends MapleQuestRequirement {
 	
 	
 	@Override
-	public boolean check(MapleCharacter chr, Integer npcid) {
+	public boolean check(MapleCharacter chr, Integer npcid) { 
 		return maxLevel >= chr.getLevel();
 	}
 }

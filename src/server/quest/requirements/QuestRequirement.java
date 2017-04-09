@@ -50,11 +50,11 @@ public class QuestRequirement extends MapleQuestRequirement {
 			if(q == null && MapleQuestStatus.Status.getById(stateReq).equals(MapleQuestStatus.Status.NOT_STARTED))
 				continue;
 			
-			if(q == null || !q.getStatus().equals(MapleQuestStatus.Status.getById(stateReq))) {
+			if(q == null || !q.getStatus().equals(MapleQuestStatus.Status.getById(stateReq))) {               
 				return false;
 			}
 			
-		}
+		}      
 		return true;
 	}
 }

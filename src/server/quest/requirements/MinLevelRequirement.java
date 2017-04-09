@@ -48,7 +48,7 @@ public class MinLevelRequirement extends MapleQuestRequirement {
 	
 	
 	@Override
-	public boolean check(MapleCharacter chr, Integer npcid) {
+	public boolean check(MapleCharacter chr, Integer npcid) { 
 		return chr.getLevel() >= minLevel;
 	}
 }

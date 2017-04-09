@@ -58,10 +58,10 @@ public class JobRequirement extends MapleQuestRequirement {
 	@Override
 	public boolean check(MapleCharacter chr, Integer npcid) {
 		for(Integer job : jobs) {
-			if (chr.getJob().equals(MapleJob.getById(job)) || chr.isGM()) {
+			if (chr.getJob().equals(MapleJob.getById(job)) || chr.isGM()) {                          
 				return true;
 			}
-		}
+		}    
 		return false;
 	}
 }

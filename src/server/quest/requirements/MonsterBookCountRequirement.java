@@ -47,7 +47,7 @@ public class MonsterBookCountRequirement extends MapleQuestRequirement {
 	
 	
 	@Override
-	public boolean check(MapleCharacter chr, Integer npcid) {
+	public boolean check(MapleCharacter chr, Integer npcid) { 
 		return chr.getMonsterBook().getTotalCards() >= reqCards;
 	}
 }

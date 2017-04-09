@@ -58,7 +58,6 @@ public class PetRequirement extends MapleQuestRequirement {
 			if(petIDs.contains(pet.getItemId()))
 				return true;
 		}
-		
 		return false;
 	}
 }

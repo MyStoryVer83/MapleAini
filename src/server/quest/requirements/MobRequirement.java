@@ -75,9 +75,9 @@ public class MobRequirement extends MapleQuestRequirement {
 			}
 			
 			if(progress < countReq)
-				return false;
+                            return false;
 		}
-		return true;
+                return true;
 	}
 	
 	public int getRequiredMobCount(int mobid) {
