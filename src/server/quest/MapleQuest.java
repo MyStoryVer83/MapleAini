@@ -196,7 +196,7 @@ public class MapleQuest {
     }
 
     public void start(MapleCharacter c, int npc) {
-        if (autoStart || canStart(c, npc)) {
+        if (autoStart /*|| canStart(c, npc)*/) {
             for (MapleQuestAction a : startActs.values()) {
 				if (!a.check(c, null)) { // would null be good ?
 					return;
@@ -212,7 +212,7 @@ public class MapleQuest {
     }
 
     public void complete(MapleCharacter c, int npc, Integer selection) {
-		if (autoPreComplete || canComplete(c, npc)) {
+		if (autoPreComplete /*|| canComplete(c, npc)*/) {
 		   for (MapleQuestAction a : completeActs.values()) {
 			  if (!a.check(c, selection)) {
 			 	 return;
