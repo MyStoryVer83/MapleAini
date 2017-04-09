@@ -51,6 +51,6 @@ public class NpcRequirement extends MapleQuestRequirement {
 	@Override
 	public boolean check(MapleCharacter chr, Integer npcid) {
 		//return npcid != null && npcid == reqNPC && (autoComplete || autoStart || chr.getMap().containsNPC(npcid)); //似乎从WZ中取得允许自动开始并完成的任务出错了，导致autoComplete和autoStart总是返回false 
-                return npcid != null && npcid == reqNPC; //允许远程接受任务和完成任务  正确的判断待修复
+                return npcid != null && npcid == reqNPC; //允许远程接受任务和完成任务  这不是完美的修复
 	}
 }
