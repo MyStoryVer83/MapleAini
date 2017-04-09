@@ -61,7 +61,7 @@ var necklace = [[1122007, 50], [2041211, 40]];
 
 // Long Text Descriptions
 var infoText = "You wish to know about the Monster Carnival? Very well. The Monster Carnival is a place of trilling battles and exciting competiton against people just as strong and motivated as yourself. You must summon monsters and defeat the monsters summoned by the opposing party. That's the essence of the Monster Carnival. Once you enter the Carnival Field, the task is to earn CP by hunter monsters from the opposing party and use those CP's to distract the opposing party from hunting monsters. There are three ways to distract the other party; Summon a Monster, Skill or Protector. Please remember this though, it's never a good idea to save up CP just for the sake of it. The CP's you've used will also help determine the winner and the loser of the carnival.";
-var no = "You do not have enough Maple Coins for this item. Come back to me when you acquire more!";
+var no = "你没有足够的冒险岛纪念币来进行兑换。";
 
 function getGrade(cp) {
     // Returns index of corresponding expRewards pair.
@@ -111,7 +111,7 @@ var CONTEXT_LOSE = 3;
 
 function start() {
     if (DISABLED) {
-        cm.sendOk("CPQ is temporarily unavailable.");
+        cm.sendOk("暂时无法进行怪物嘉年华。");
         cm.dispose();
         return;
     }
@@ -145,14 +145,14 @@ function doLoserMap(mode, type, selection) {
         else status--;
 
         if (status == 0) {
-            cm.sendNext("Unfortunately, you did not manage to win this round. Better luck next time!");
+            cm.sendNext("很遗憾，你没有取得怪物嘉年华的胜利，祝你下次好运！");
         } else if (status == 1) {
             var points = cm.getPlayer().getMCPQParty().getTotalCP();
             var grade = getGrade(points);
             var letterGrade = "ABCDF"[grade];
             var expReward = expRewards[grade][1];
 
-            cm.sendNext("Your grade is: #b" + letterGrade + "\r\n\r\n#kEXP Reward: " + expReward);
+            cm.sendNext("你的评分是: #b" + letterGrade + "\r\n\r\n#k获得经验值: " + expReward);
             cm.gainExp(expReward);
         } else if (status == 2) {
             cm.warp(MonsterCarnival.MAP_LOBBY);
@@ -175,14 +175,14 @@ function doWinnerMap(mode, type, selection) {
         else status--;
 
         if (status == 0) {
-            cm.sendNext("Congratulations! You managed to defeat the enemy team!");
+            cm.sendNext("恭喜你！获得了怪物嘉年华的胜利！");
         } else if (status == 1) {
             var points = cm.getPlayer().getMCPQParty().getTotalCP();
             var grade = getGrade(points);
             var letterGrade = "ABCDF"[grade];
             var expReward = expRewards[grade][0];
 
-            cm.sendNext("Your grade is: #b" + letterGrade + "\r\n\r\n#kEXP Reward: " + expReward);
+            cm.sendNext("你的评分是: #b" + letterGrade + "\r\n\r\n#k获得经验值: " + expReward);
             cm.gainExp(expReward);
         } else if (status == 2) {
             cm.warp(MonsterCarnival.MAP_LOBBY);
@@ -200,11 +200,11 @@ function doTown(mode, type, selection) {
         else status--;
 
         if (status == 0) {
-            cm.sendSimple("What would you like to do? If you have never participated in the Monster Carnival, you'll need to know a thing or two about it before joining.\r\n\r\n#b#L0#Go to the Monster Carnival Field#l\r\n#L1#Learn about the Monster Carnival#l\r\n#L2#Trade Maple Coin#l");
+            cm.sendSimple("想干嘛呢？要是没有尝试过怪物嘉年华的话，最好还是先看一看说明再玩。\r\n\r\n#b#L0#移动到怪物嘉年华地图#l\r\n#L1#听有关怪物嘉年华说明#l\r\n#L2#冒险岛纪念币交换#l");
         } else if (status == 1) {
             if (selection == 0) {
                 if (cm.getChar().getLevel() < MonsterCarnival.MIN_LEVEL || cm.getChar().getLevel() > MonsterCarnival.MAX_LEVEL) {
-                    cm.sendOk("You must be between level " + MonsterCarnival.MIN_LEVEL + " and level " + MonsterCarnival.MAX_LEVEL + " to enter.");
+                    cm.sendOk("你的等级必须高于 " + MonsterCarnival.MIN_LEVEL + " 级,低于 " + MonsterCarnival.MAX_LEVEL + " 级");
                     cm.dispose();
                     return;
                 }
@@ -218,13 +218,13 @@ function doTown(mode, type, selection) {
                 return;
             } else if (selection == 2) {
                 store = true;
-                cm.sendSimple("Select a category:\r\n" +
-                    "#L101##bTrade Maple Coins for Warrior Weapons\r\n" +
-                    "#L102#Trade Maple Coins for Magician Weapons\r\n" +
-                    "#L103#Trade Maple Coins for Bowman Weapons\r\n" +
-                    "#L104#Trade Maple Coins for Thief Weapons\r\n" +
-                    "#L105#Trade Maple Coins for Pirate Weapons\r\n" +
-                    "#L106#Trade Maple Coins for a Necklace");
+                cm.sendSimple("请选择想要交换的物品。\r\n" +
+                    "#L101##b战士武器\r\n" +
+                    "#L102#魔法师武器\r\n" +
+                    "#L103#弓箭手武器\r\n" +
+                    "#L104#飞侠武器\r\n" +
+                    "#L105#海盗武器\r\n" +
+                    "#L106#休彼德蔓的项链");
             }
         } else if (status == 2) {
             if (store) {
@@ -259,7 +259,7 @@ function doTown(mode, type, selection) {
                 for (var i = 0; i < storeInfo.length; ++i) {
                     var wepId = storeInfo[i][0];
                     var cost = storeInfo[i][1];
-                    storeText += "#L" + i + "##v" + wepId + "# - #z" + wepId + "# - " + cost + " " + coinIcon + "#l\r\n";
+                    storeText += "#L" + i + "##v" + wepId + "#    #z" + wepId + "#     " + coinIcon + cost + "个"+"#l\r\n";
                 }
                 cm.sendSimple(storeText);
             } else {
@@ -273,7 +273,7 @@ function doTown(mode, type, selection) {
                 if (cm.haveItem(coinId, purchaseCost)) {
                     cm.sendYesNo("Are you sure you want to purchase #i" + purchaseId + "#? You will have #r#e" + (cm.itemQuantity(coinId) - purchaseCost) + " " + coinIcon + "##k#n remaining.");
                 } else {
-                    cm.sendOk("You don't have enough " + coinIcon + ".");
+                    cm.sendOk("你没有足够的冒险岛纪念币");
                     cm.dispose();
                 }
             } else {

@@ -33,23 +33,23 @@ var status = 0;
 var cost = 1000;
 
 function start() {
-    cm.sendNext("Hi there! This cab is for VIP customers only. Instead of just taking you to different towns like the regular cabs, we offer a much better service worthy of VIP class. It's a bit pricey, but... for only 10,000 mesos, we'll take you safely to the \r\n#bAnt Tunnel#k.");
+    cm.sendNext("您好~！我们是星级出租车。不同于村落之间来往的一半的中巴我们给您提供更高级的服务。因此车费有点贵…您只要支付10000金币，我们就会将您安全迅速的送到#b蚂蚁洞广场#k。但是等级太低进去会很危险是否要进去呢？");
 }
 
 function action(mode, type, selection) {
     status++;
     if (mode == -1){
         if(mode == 0)
-            cm.sendNext("This town also has a lot to offer. Find us if and when you feel the need to go to the Ant Tunnel Park.");
+            cm.sendNext("在这个村子里还有许多漂亮的景点，如果你想去蚂蚁洞广场，欢迎随时使用我们的出租车服务。");
         cm.dispose();
         return;
     }
     if (status == 1) {
-        cm.sendYesNo(cm.getJobId() == 0 ? "We have a special 90% discount for beginners. The Ant Tunnel is located deep inside in the dungeon that's placed at the center of the Victoria Island, where the 24 Hr Mobile Store is. Would you like to go there for #b1,000 mesos#k?" : "The regular fee applies for all non-beginners. The Ant Tunnel is located deep inside in the dungeon that's placed at the center of the Victoria Island, where 24 Hr Mobile Store is. Would you like to go there for #b10,000 mesos#k?");
+        cm.sendYesNo(cm.getJobId() == 0 ? "蚂蚁洞广场是位于金银岛中间的迷宫深处。在那里有24小时排挡。你是否要付10000金币后去蚂蚁洞广场？（新手的费用有 90% 的折扣）");
         cost *= cm.getJobId() == 0 ? 10 : 1;
     } else if (status == 2) {
         if (cm.getMeso() < cost)
-            cm.sendNext("It looks like you don't have enough mesos. Sorry but you won't be able to use this without it.")
+            cm.sendNext("对不起，你的金币不够支付车费。")
         else {
             cm.gainMeso(-cost);
             cm.warp(105070001);

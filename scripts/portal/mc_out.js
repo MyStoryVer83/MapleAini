@@ -23,6 +23,10 @@ Author: kevintjuh93
 */ 
 
 function enter(pi) {
-    pi.warp(pi.getPlayer().getSavedLocation("MIRROR"));
+    var returnMap = pi.getPlayer().getSavedLocation("MIRROR");
+    if (returnMap < 0) {
+        returnMap = 103000000; // 给非正常进入玩家的传送点
+    }
+    pi.warp(returnMap);
     return true;
 }
