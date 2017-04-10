@@ -152,7 +152,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     private static final int[] DEFAULT_KEY = {18, 65, 2, 23, 3, 4, 5, 6, 16, 17, 19, 25, 26, 27, 31, 34, 35, 37, 38, 40, 43, 44, 45, 46, 50, 56, 59, 60, 61, 62, 63, 64, 57, 48, 29, 7, 24, 33, 41, 39};
     private static final int[] DEFAULT_TYPE = {4, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 4, 4, 5, 6, 6, 6, 6, 6, 6, 5, 4, 5, 4, 4, 4, 4, 4};
     private static final int[] DEFAULT_ACTION = {0, 106, 10, 1, 12, 13, 18, 24, 8, 5, 4, 19, 14, 15, 2, 17, 11, 3, 20, 16, 9, 50, 51, 6, 7, 53, 100, 101, 102, 103, 104, 105, 54, 22, 52, 21, 25, 26, 23, 27};
-    private static final String[] BLOCKED_NAMES = {"admin", "owner", "moderator", "intern", "donor", "administrator", "help", "helper", "alert", "notice", "maplestory", "Solaxia", "fuck", "wizet", "fucking", "negro", "fuk", "fuc", "penis", "pussy", "asshole", "gay",
+    private static final String[] BLOCKED_NAMES = {"admin", "owner", "moderator", "intern", "donor", "administrator", "help", "helper", "alert", "notice", "maplestory", "Aini", "fuck", "wizet", "fucking", "negro", "fuk", "fuc", "penis", "pussy", "asshole", "gay",
         "nigger", "homo", "suck", "cum", "shit", "shitty", "condom", "security", "official", "rape", "nigga", "sex", "tit", "boner", "orgy", "clit", "asshole", "fatass", "bitch", "support", "gamemaster", "cock", "gaay", "gm",
         "operate", "master", "sysop", "party", "GameMaster", "community", "message", "event", "test", "meso", "Scania", "renewal", "yata", "AsiaSoft", "henesys"};
     private int world;
@@ -2766,11 +2766,11 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         } else if (level == 80) {
             yellowMessage("You think you are powerful enough? Try facing horntail!");
         } else if (level == 85) {
-            yellowMessage("Did you know? The majority of people who hit level 85 in Solaxia don't live to be 85 years old?");
+            yellowMessage("Did you know? The majority of people who hit level 85 in MapleAini don't live to be 85 years old?");
         } else if (level == 90) {
             yellowMessage("Hey do you like the amusement park? I heard Spooky Wood is the best theme park around. I heard they sell cute teddy-bears.");
         } else if (level == 95) {
-            yellowMessage("100% of people who hit level 95 in Solaxia don't live to be 95 years old.");
+            yellowMessage("100% of people who hit level 95 in MapleAini don't live to be 95 years old.");
         } else if (level == 100) {
             yellowMessage("Your drop rate has increased to 3x since you have reached level 100!");
         } else if (level == 105) {
@@ -4068,7 +4068,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     }
 
     public void sendPolice(int greason, String reason, int duration) {
-        announce(MaplePacketCreator.sendPolice(String.format("You have been blocked by the#b %s Police for %s.#k", "Solaxia", reason)));
+        announce(MaplePacketCreator.sendPolice(String.format("You have been blocked by the#b %s Police for %s.#k", "MapleAini", reason)));
         this.isbanned = true;
         TimerManager.getInstance().schedule(new Runnable() {
             @Override
@@ -4916,7 +4916,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 
     public void autoban(String reason) {
         this.ban(reason);
-        announce(MaplePacketCreator.sendPolice(String.format("You have been blocked by the#b %s Police for HACK reason.#k", "Solaxia")));
+        announce(MaplePacketCreator.sendPolice(String.format("You have been blocked by the#b %s Police for HACK reason.#k", "MapleAini")));
         TimerManager.getInstance().schedule(new Runnable() {
             @Override
             public void run() {

@@ -51,21 +51,11 @@ public class StringUtil {
 	 */
     public static String getRightPaddedStr(String in, char padchar, int length) { //支持中文
         StringBuilder builder = new StringBuilder(in);
-        for (int x = getlength(in); x < length; x++) {
-                builder.append(padchar);
+        for (int x = in.getBytes().length; x < length; x++) {
+            builder.append(padchar);
         }
         return builder.toString();
-    }
-
-    public static int getlength(String  str){  
-        int  i,t=0;  
-        byte[]  bt  =  str.getBytes();  
-        for  (i=1;i<=bt.length;i++){  
-            if  (bt[i-1]<0)  {t=t+2;i++;}  
-            else  t=t+1;  
-        }  
-        return  t;  
-    }    
+    }  
        
 	/**
 	 * Joins an array of strings starting from string <code>start</code> with
