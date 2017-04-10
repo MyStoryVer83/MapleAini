@@ -672,10 +672,10 @@ public class MaplePacketCreator {
         mplew.writeShort(0);
         mplew.writeInt(c.getAccID()); //user id
         mplew.write(c.getGender());
-        mplew.writeBool(false); //admin byte
+        mplew.writeBool(c.getGMLevel() > 0); //admin byte
         short toWrite = (short) (c.getGMLevel() * 64);
         //toWrite = toWrite |= 0x100; only in higher versions
-        mplew.write(toWrite >= 0x80 ? 0x80 : 0);//0x80 is admin, 0x20 and 0x40 = subgm
+        mplew.write(toWrite >= 0x100 ? 0x100 : 0);//0x80 is admin, 0x20 and 0x40 = subgm
         mplew.writeBool(c.getGMLevel() > 0);
         //mplew.writeShort(toWrite > 0x80 ? 0x80 : toWrite); only in higher versions...
         mplew.writeMapleAsciiString(c.getAccountName());
