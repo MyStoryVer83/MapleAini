@@ -29,7 +29,7 @@ import tools.MaplePacketCreator;
 
 public class MapScriptMethods extends AbstractPlayerInteraction {
    
-	private String rewardstring = " title has been rewarded. Please see NPC Dalair to receive your Medal.";
+	private String rewardstring = " 称号已经发放，请寻找勋章老人领取.";
     
 	public MapScriptMethods(MapleClient c) {
         super(c);
@@ -103,13 +103,13 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
         StringBuilder smp = new StringBuilder();
         StringBuilder etm = new StringBuilder();
         if (status.equals(infoex)) {
-            etm.append("Earned the ").append(questName).append(" title!");
-            smp.append("You have earned the <").append(questName).append(">").append(rewardstring);
+            etm.append("获得了 ").append(questName).append(" 称号!");
+            smp.append("你获得了 <").append(questName).append(">").append(rewardstring);
             getPlayer().announce(MaplePacketCreator.getShowQuestCompletion(quest.getId()));
         } else {
             getPlayer().announce(MaplePacketCreator.earnTitleMessage(status + "/" + infoex + " regions explored."));
-            etm.append("Trying for the ").append(questName).append(" title.");
-            smp.append("You made progress on the ").append(questName).append(" title. ").append(status).append("/").append(infoex);
+            etm.append("正在进行 ").append(questName).append(" 称号获取中.");
+            smp.append("正在进行 ").append(questName).append(" 的称号. ").append(status).append("/").append(infoex);
         }
         getPlayer().announce(MaplePacketCreator.earnTitleMessage(etm.toString()));
         showInfoText(smp.toString());
