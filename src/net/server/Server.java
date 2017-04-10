@@ -62,6 +62,7 @@ import tools.Pair;
 import client.MapleCharacter;
 import client.SkillFactory;
 import constants.ServerConstants;
+import java.io.InputStreamReader;
 import server.quest.MapleQuest;
 
 public class Server implements Runnable {
@@ -128,13 +129,13 @@ public class Server implements Runnable {
     public void run() {
         Properties p = new Properties();
         try {
-            p.load(new FileInputStream("world.ini"));
+           p.load(new InputStreamReader(new FileInputStream("world.ini"), "UTF-8"));            
         } catch (Exception e) {
             System.out.println("Please start create_server.bat");
             System.exit(0);
         }
 
-        System.out.println("MapleSolaxia v" + ServerConstants.VERSION + " starting up.\r\n");
+        System.out.println("MapleAini v" + ServerConstants.VERSION + " starting up.\r\n");
 
 
         if(ServerConstants.SHUTDOWNHOOK)
@@ -213,7 +214,7 @@ public class Server implements Runnable {
         
         System.out.println("Listening on port 8484\r\n\r\n");
 
-        System.out.println("Solaxia is now online.");
+        System.out.println("MapleAini is now online.");
         online = true;
     }
 

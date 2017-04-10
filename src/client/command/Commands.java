@@ -327,20 +327,20 @@ public class Commands {
 			player.message("@bug <bug>: Sends a bug report to all developers.");
 			player.message("@joinevent: If an event is in progress, use this to warp to the event map.");
 			player.message("@leaveevent: If an event has ended, use this to warp to your original map.");
-			player.message("@staff: Lists the staff of Solaxia.");
-			player.message("@uptime: Shows how long Solaxia has been online.");
+			player.message("@staff: Lists the staff of MapleAini.");
+			player.message("@uptime: Shows how long MapleAini has been online.");
 			player.message("@whatdropsfrom <monster name>: Displays a list of drops and chances for a specified monster.");
 			player.message("@whodrops <item name>: Displays monsters that drop an item given an item name.");
-			player.message("@uptime: Shows how long Solaxia has been online.");
+			player.message("@uptime: Shows how long MapleAini has been online.");
 			player.message("@bosshp: Displays the remaining HP of the bosses on your map.");
 			break;
 		case "time":
 			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 			dateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
-			player.yellowMessage("Solaxia Server Time: " + dateFormat.format(new Date()));
+			player.yellowMessage("MapleAini Server Time: " + dateFormat.format(new Date()));
 			break;
 		case "staff":
-			player.yellowMessage("MapleSolaxia Staff");
+			player.yellowMessage("MapleAini Staff");
 			player.yellowMessage("Aria - Administrator");
 			player.yellowMessage("Twdtwd - Administrator");
 			player.yellowMessage("Exorcist - Developer");
@@ -357,7 +357,7 @@ public class Commands {
 			int minutes = (int) ((milliseconds / (1000*60)) % 60);
 			int hours   = (int) ((milliseconds / (1000*60*60)) % 24);
 			int days	= (int) ((milliseconds / (1000*60*60*24)));
- 			player.yellowMessage("Solaxia has been online for " + days + " days " + hours + " hours " + minutes + " minutes and " + seconds + " seconds.");
+ 			player.yellowMessage("MapleAini has been online for " + days + " days " + hours + " hours " + minutes + " minutes and " + seconds + " seconds.");
 			break;
 		case "gacha":
 			if (player.gmLevel() == 0) { // Sigh, need it for now...

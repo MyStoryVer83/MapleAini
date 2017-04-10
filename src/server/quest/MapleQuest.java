@@ -196,11 +196,7 @@ public class MapleQuest {
     }
 
     public void start(MapleCharacter c, int npc) {
-<<<<<<< HEAD
         if (autoStart || canStart(c, npc)) {
-=======
-        //if (autoStart || canStart(c, npc)) {
->>>>>>> origin/master
             for (MapleQuestAction a : startActs.values()) {
 				if (!a.check(c, null)) { // would null be good ?
 					return;
@@ -208,7 +204,7 @@ public class MapleQuest {
                 a.run(c, null);
             }
             forceStart(c, npc);
-        //}
+        }
     }
 
     public void complete(MapleCharacter c, int npc) {
@@ -216,11 +212,7 @@ public class MapleQuest {
     }
 
     public void complete(MapleCharacter c, int npc, Integer selection) {
-<<<<<<< HEAD
 		if (autoPreComplete || canComplete(c, npc)) {
-=======
-		//if (autoPreComplete || canComplete(c, npc)) {
->>>>>>> origin/master
 		   for (MapleQuestAction a : completeActs.values()) {
 			  if (!a.check(c, selection)) {
 			 	 return;
@@ -232,7 +224,7 @@ public class MapleQuest {
 		    }
             c.getClient().getSession().write(MaplePacketCreator.showSpecialEffect(9)); // 任务完成特效
             c.getMap().broadcastMessage(c, MaplePacketCreator.showForeignEffect(c.getId(), 9), false);
-		//}
+		}
     }
 
     public void reset(MapleCharacter c) {

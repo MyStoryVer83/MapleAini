@@ -6,7 +6,7 @@ import java.util.Properties;
 public class ServerConstants {
 
     public static short VERSION = 83;
-    public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
+    public static String[] WORLD_NAMES = {"MapleAini", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
     ;
 	// Login Configuration
     public static final int CHANNEL_LOAD = 100;//Players per channel

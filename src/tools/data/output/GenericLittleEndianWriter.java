@@ -32,7 +32,7 @@ import java.nio.charset.Charset;
  * @since Revision 323
  */
 public class GenericLittleEndianWriter implements LittleEndianWriter {
-    private static Charset ASCII = Charset.forName("GBK");  //支持中文
+    private static Charset ASCII = Charset.forName("GBK");  //修改为中文编码
     private ByteOutputStream bos;
 
     /**
@@ -130,19 +130,9 @@ public class GenericLittleEndianWriter implements LittleEndianWriter {
 
     @Override
     public void writeMapleAsciiString(String s) {
-        writeShort((short)getlength(s));
+        writeShort((short) s.getBytes(ASCII).length);
         writeAsciiString(s);
-    } 
-
-      public  int  getlength(String  str){  
-        int  i,t=0;  
-        byte[]  bt  =  str.getBytes();  
-        for  (i=1;i<=bt.length;i++){  
-            if  (bt[i-1]<0)  {t=t+2;i++;}  
-            else  t=t+1;  
-        }  
-        return  t;  
-    } 
+    }
 
     /**
      * Writes a null-terminated ASCII string to the stream.
