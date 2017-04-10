@@ -182,10 +182,10 @@ public class Server implements Runnable {
                 World world = new World(i,
                         Integer.parseInt(p.getProperty("flag" + i)),
                         p.getProperty("eventmessage" + i),
-                        ServerConstants.EXP_RATE,
-                        ServerConstants.DROP_RATE,
-                        ServerConstants.MESO_RATE,
-                        ServerConstants.BOSS_DROP_RATE);
+                        Integer.parseInt(p.getProperty("exprate" + i)),
+                        Integer.parseInt(p.getProperty("droprate" + i)),
+                        Integer.parseInt(p.getProperty("mesorate" + i)),
+                        Integer.parseInt(p.getProperty("bossdroprate" + i)));
 
                 worldRecommendedList.add(new Pair<>(i, p.getProperty("whyamirecommended" + i)));
                 worlds.add(world);

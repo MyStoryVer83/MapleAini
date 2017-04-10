@@ -31,12 +31,8 @@ public class ServerConstants {
     public static final boolean USE_ITEM_SORT = false;
     public static final boolean USE_PARTY_SEARCH = false;
     //Rates
-    public static final int EXP_RATE = 4;
-    public static final int MESO_RATE = 2;
-    public static final int DROP_RATE = 2;
-    public static final int BOSS_DROP_RATE = 2;
     public static final int PARTY_EXPERIENCE_MOD = 1; // change for event stuff
-	public static final double PQ_BONUS_EXP_MOD = 0.5;
+    public static final double PQ_BONUS_EXP_MOD = 0.5;
 	
 	public static final long EVENT_END_TIMESTAMP = 1428897600000L;
     static {

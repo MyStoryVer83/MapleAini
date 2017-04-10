@@ -480,10 +480,7 @@ public class Commands {
 			player.message(">>Total MESO Rate: " + player.getMesoRate() + "x");
 
 			player.yellowMessage("EXP RATE");
-			player.message(">>Base Server EXP Rate: " + ServerConstants.EXP_RATE + "x");
-			if(c.getWorldServer().getExpRate() > ServerConstants.EXP_RATE) {
-				player.message(">>Event EXP bonus: " + (c.getWorldServer().getExpRate() - ServerConstants.EXP_RATE) + "x");
-			}
+			player.message(">>Base Server EXP Rate: " + c.getWorldServer().getExpRate() + "x");
 			player.message(">>Voted EXP bonus: " + (c.hasVotedAlready() ? "1x" : "0x (If you vote now, you will earn an additional 1x EXP!)"));
 			player.message(">>Total EXP Rate: " + player.getExpRate() + "x");
 			

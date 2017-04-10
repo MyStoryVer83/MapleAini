@@ -4195,8 +4195,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         World worldz = Server.getInstance().getWorld(world);
         int hr = cal.get(Calendar.HOUR_OF_DAY);
         if ((haveItem(5360001) && hr > 6 && hr < 12) || (haveItem(5360002) && hr > 9 && hr < 15) || (haveItem(536000) && hr > 12 && hr < 18) || (haveItem(5360004) && hr > 15 && hr < 21) || (haveItem(536000) && hr > 18) || (haveItem(5360006) && hr < 5) || (haveItem(5360007) && hr > 2 && hr < 6) || (haveItem(5360008) && hr >= 6 && hr < 11)) {
-            this.dropRate = worldz.getDropRate(); //Nerfed
-            this.mesoRate = worldz.getMesoRate(); //Nerfed
+            this.dropRate = 2 * worldz.getDropRate(); //Nerfed
+            this.mesoRate = 2 * worldz.getMesoRate(); //Nerfed
         } else {
             this.dropRate = worldz.getDropRate();
             this.mesoRate = worldz.getMesoRate();
@@ -4205,7 +4205,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
             if (isBeginnerJob()) {
                 this.expRate = 1; //Nerfed
             } else {
-                this.expRate = 1 * worldz.getExpRate(); //Nerfed
+                this.expRate = 2  * worldz.getExpRate(); //Nerfed
             }
         } else if (isBeginnerJob()) {
             this.expRate = 1;

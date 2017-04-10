@@ -57,7 +57,6 @@ public class PortalScriptManager {
             return scripts.get(scriptName);
         }
         File scriptFile = new File("scripts/portal/" + scriptName + ".js");
-        System.err.println("正在使用" + scriptName + "进行传送。");
         if (!scriptFile.exists()) {
             scripts.put(scriptName, null);
             return null;
@@ -87,7 +86,10 @@ public class PortalScriptManager {
         try {
             PortalScript script = getPortalScript(portal.getScriptName());
             if (script != null) {
+                System.err.println("正在使用" + portal.getScriptName() + "进行传送。");
                 return script.enter(new PortalPlayerInteraction(c, portal));
+            } else {
+            System.out.println("缺少脚本" + portal.getScriptName() + " 所在地图：" + c.getPlayer().getMapId());
             }
         } catch (UndeclaredThrowableException ute) {
             FilePrinter.printError(FilePrinter.PORTAL + portal.getScriptName() + ".txt", ute);

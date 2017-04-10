@@ -3541,7 +3541,7 @@ public class MaplePacketCreator {
         }
         return mplew.getPacket();
     }
-
+    
     public static byte[] buddylistMessage(byte message) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(SendOpcode.BUDDYLIST.getValue());
@@ -3556,7 +3556,7 @@ public class MaplePacketCreator {
         mplew.writeInt(cidFrom);
         mplew.writeMapleAsciiString(nameFrom);
         mplew.writeInt(cidFrom);
-        mplew.writeAsciiString(StringUtil.getRightPaddedStr(nameFrom, '\0', 11));
+        mplew.writeAsciiString(StringUtil.getRightPaddedStr(nameFrom, '\0', 13));
         mplew.write(0x09);
         mplew.write(0xf0);
         mplew.write(0x01);

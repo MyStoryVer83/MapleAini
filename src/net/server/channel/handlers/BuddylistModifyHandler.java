@@ -83,7 +83,7 @@ public class BuddylistModifyHandler extends AbstractMaplePacketHandler {
         if (mode == 1) { // add
             String addName = slea.readMapleAsciiString();
             String group = slea.readMapleAsciiString();
-            if (group.length() > 16 || addName.length() < 4 || addName.length() > 13) {
+            if (group.length() > 16 || addName.length() > 13) {
                 return; //hax.
             }
             BuddylistEntry ble = buddylist.get(addName);
