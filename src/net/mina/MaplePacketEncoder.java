@@ -22,12 +22,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package net.mina;
 
 import client.MapleClient;
+import constants.ServerConstants;
 import java.util.concurrent.locks.Lock;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoder;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 import tools.MapleAESOFB;
+import tools.data.input.ByteArrayByteStream;
+import tools.data.input.GenericLittleEndianAccessor;
+import net.SendOpcode;
 
 public class MaplePacketEncoder implements ProtocolEncoder {
 
@@ -38,6 +42,13 @@ public class MaplePacketEncoder implements ProtocolEncoder {
         if (client != null) {
             final MapleAESOFB send_crypto = client.getSendCrypto();
             final byte[] input = (byte[]) message;
+        if(ServerConstants.DEBUG){ //控制台输出封包 
+                int packetLen = input.length;
+                int pHeader = readFirstShort(input);
+                String pHeaderStr = Integer.toHexString(pHeader).toUpperCase();
+                String op = lookupRecv(pHeader);
+                System.out.println("服务端发送 " + op + " [" + pHeaderStr + "] (" + packetLen + ")");
+        }
             final byte[] unencrypted = new byte[input.length];
             System.arraycopy(input, 0, unencrypted, 0, input.length);
             final byte[] ret = new byte[unencrypted.length + 4];
@@ -64,4 +75,17 @@ public class MaplePacketEncoder implements ProtocolEncoder {
     @Override
     public void dispose(IoSession session) throws Exception {
     }
+    
+    private String lookupRecv(int val) {
+        for (SendOpcode op : SendOpcode.values()) {
+            if (op.getValue() == val) {
+                return op.name();
+            }
+        }
+        return "UNKNOWN";
+    }
+    
+    private int readFirstShort(byte[] arr) {
+        return new GenericLittleEndianAccessor(new ByteArrayByteStream(arr)).readShort();
+    }    
 }

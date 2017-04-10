@@ -23,6 +23,7 @@ public class ServerConstants {
     //Other Configuration
     public static boolean JAVA_8;
     public static boolean SHUTDOWNHOOK;
+    public static boolean DEBUG;
     //Gameplay Configurations
     public static final boolean USE_MTS = false;
     public static final boolean USE_FAMILY_SYSTEM = false;
@@ -54,7 +55,8 @@ public class ServerConstants {
             //OTHER
             ServerConstants.JAVA_8 = p.getProperty("JAVA8").equalsIgnoreCase("TRUE");
             ServerConstants.SHUTDOWNHOOK = p.getProperty("SHUTDOWNHOOK").equalsIgnoreCase("true");
-
+            ServerConstants.DEBUG = p.getProperty("DEBUG").equalsIgnoreCase("true");
+            
         } catch (Exception e) {
             System.out.println("Failed to load configuration.ini.");
             System.exit(0);

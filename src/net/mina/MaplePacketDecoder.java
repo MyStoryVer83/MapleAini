@@ -22,11 +22,15 @@
 package net.mina;
 
 import client.MapleClient;
+import constants.ServerConstants;
+import net.RecvOpcode;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import tools.MapleAESOFB;
+import tools.data.input.ByteArrayByteStream;
+import tools.data.input.GenericLittleEndianAccessor;
 
 public class MaplePacketDecoder extends CumulativeProtocolDecoder {
     private static final String DECODER_STATE_KEY = MaplePacketDecoder.class.getName() + ".STATE";
@@ -60,8 +64,28 @@ public class MaplePacketDecoder extends CumulativeProtocolDecoder {
             client.getReceiveCrypto().crypt(decryptedPacket);
             MapleCustomEncryption.decryptData(decryptedPacket);
             out.write(decryptedPacket);
+        if(ServerConstants.DEBUG){ //控制台输出封包 
+                int packetLen = decryptedPacket.length;
+                int pHeader = readFirstShort(decryptedPacket);
+                String pHeaderStr = Integer.toHexString(pHeader).toUpperCase();
+                String op = lookupSend(pHeader);
+                System.out.println("客户端发送 " + op + " [" + pHeaderStr + "] (" + packetLen + ")");           
+        } 
             return true;
         }
         return false;
     }
+    
+        private String lookupSend(int val) {
+        for (RecvOpcode op : RecvOpcode.values()) {
+            if (op.getValue() == val) {
+                return op.name();
+            }
+        }
+        return "UNKNOWN";
+    }
+    private int readFirstShort(byte[] arr) {
+        return new GenericLittleEndianAccessor(new ByteArrayByteStream(arr)).readShort();
+    }
+    
 }
