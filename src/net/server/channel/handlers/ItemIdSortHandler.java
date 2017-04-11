@@ -48,12 +48,7 @@ public final class ItemIdSortHandler extends AbstractMaplePacketHandler {
         chr.getAutobanManager().setTimestamp(4, slea.readInt(), 3);
         byte inventoryType = slea.readByte();
         
-        if(!chr.isGM() || !ServerConstants.USE_ITEM_SORT) {
-			c.announce(MaplePacketCreator.enableActions());
-			return;
-		}
-		
-		if (inventoryType < 1 || inventoryType > 5) {
+	if (inventoryType < 1 || inventoryType > 5) {
             c.disconnect(false, false);
             return;
         }

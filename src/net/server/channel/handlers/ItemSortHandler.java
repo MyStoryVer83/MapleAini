@@ -42,10 +42,6 @@ public final class ItemSortHandler extends AbstractMaplePacketHandler {
 		    c.getSession().write(MaplePacketCreator.enableActions());
 		    return;
 		}
-		if(!chr.isGM() || !ServerConstants.USE_ITEM_SORT) {
-			c.announce(MaplePacketCreator.enableActions());
-			return;
-		}
 		
 		MapleInventory inventory = c.getPlayer().getInventory(inventoryType);
 		boolean sorted = false;

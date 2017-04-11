@@ -596,17 +596,21 @@ public class Commands {
                 case "reloaddrop":
                                 MapleMonsterInformationProvider.getInstance().clearDrops();
                                 ReactorScriptManager.getInstance().clearDrops();
+                                player.yellowMessage("暴率重载完毕" );
 			break;
                 case "reloadshop":
                                 MapleShopFactory.getInstance().clear();
+                                player.yellowMessage("商店重载完毕" );
 			break;
                 case "reloadevent":
                             for (Channel instance : Server.getInstance().getChannelsFromWorld(player.getWorld())) {
                                     instance.reloadEventScriptManager();
+                                    player.yellowMessage("事件脚本重载完毕" );
                             }
 			break;
                 case "reloadportal":
                             PortalScriptManager.getInstance().reloadPortalScripts();
+                            player.yellowMessage("传送脚本重载完毕" );
 			break;
 		case "bosshp":
 			for(MapleMonster monster : player.getMap().getMonsters()) {

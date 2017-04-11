@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2017-04-10 23:38:11
+Date: 2017-04-11 22:08:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -12591,6 +12591,6 @@ INSERT INTO `drop_data` VALUES ('12797', '7130010', '4031171', '1', '1', '7101',
 INSERT INTO `drop_data` VALUES ('12798', '7130300', '4031171', '1', '1', '7101', '100000');
 INSERT INTO `drop_data` VALUES ('12799', '7140000', '4031171', '1', '1', '7101', '100000');
 INSERT INTO `drop_data` VALUES ('12800', '9500137', '4031171', '1', '1', '7101', '100000');
-INSERT INTO `drop_data` VALUES ('12801', '1210101', '4001343', '1', '1', '28170', '800');
-INSERT INTO `drop_data` VALUES ('12802', '1110101', '4001344', '1', '1', '28170', '800');
-INSERT INTO `drop_data` VALUES ('12803', '1210102', '4001345', '1', '1', '28170', '1600');
+INSERT INTO `drop_data` VALUES ('12801', '1210101', '4001343', '1', '1', '28170', '800000');
+INSERT INTO `drop_data` VALUES ('12802', '1110101', '4001344', '1', '1', '28170', '600000');
+INSERT INTO `drop_data` VALUES ('12803', '1210102', '4001345', '1', '1', '28170', '400000');
