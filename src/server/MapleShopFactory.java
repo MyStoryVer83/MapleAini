@@ -41,6 +41,11 @@ public class MapleShopFactory {
         shops.clear();
     }
     
+    public void clear() {
+        shops.clear();
+        npcShops.clear();
+    }
+    
     private MapleShop loadShop(int id, boolean isShopId) {
         MapleShop ret = MapleShop.createFromDB(id, isShopId);
         if (ret != null) {

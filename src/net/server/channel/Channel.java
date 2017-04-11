@@ -76,6 +76,7 @@ public final class Channel {
     private List<MapleExpeditionType> expedType = new ArrayList<>();
     private MapleEvent event;
     private boolean finishedShutdown = false;
+    private static final Map<Integer, Channel> instances = new HashMap<Integer, Channel>();
     
     public Channel(final int world, final int channel) {
         this.world = world;
@@ -299,7 +300,7 @@ public final class Channel {
             return storedVars.get(key);
         return 0;
     }
-    
+        
     public void setStoredVar(int key, int val) {
         this.storedVars.put(key, val);
     }
