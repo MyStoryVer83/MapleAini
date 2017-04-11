@@ -21,8 +21,11 @@
 */
 package tools.data.output;
 
+import constants.ServerConstants;
 import java.io.ByteArrayOutputStream;
+import net.ByteArrayMaplePacket;
 import tools.HexTool;
+import net.MaplePacket;
 
 /**
  * Writes a maplestory-packet little-endian stream of bytes.
@@ -58,6 +61,10 @@ public class MaplePacketLittleEndianWriter extends GenericLittleEndianWriter {
      * @return A <code>MaplePacket</code> with the bytes in this stream.
      */
     public byte[] getPacket() {
+        if (ServerConstants.outPacket) {
+            MaplePacket packet = new ByteArrayMaplePacket(baos.toByteArray());
+            System.out.println("Packet to be sent:\n" + packet.toString());
+        }       
         return baos.toByteArray();
     }
 
