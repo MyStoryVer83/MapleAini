@@ -98,6 +98,7 @@ import constants.GameConstants;
 import constants.ItemConstants;
 import constants.ServerConstants;
 import java.util.ArrayList;
+import scripting.reactor.ReactorScriptManager;
 import server.maps.FieldLimit;
 
 public class Commands {
@@ -318,26 +319,31 @@ public class Commands {
 		case "help":
 		case "commands":
 			player.yellowMessage("After you vote, talk to Rooney to get a leaf and redeem it for prizes!");
-			player.message("@dispose: Fixes your character if it is stuck.");
-			player.message("@online: Displays a list of all online players.");
-			player.message("@time: Displays the current server time.");
+			player.message("@jiasi: 解卡.");
+                        player.message("@ReloadP: 刷新入口脚本.");
+                        player.message("@ReloadE: 刷新活动脚本.");
+                        player.message("@ReloadShop: 刷新商店.");
+                        player.message("@ReloadDrop: 刷新爆率.");
+                        player.message("@mapid: 查看所在地图ID.");
+			player.message("@online: 查看在线.");
+			//player.message("@time: Displays the current server time.");
 			player.message("@rates: Displays your current DROP, MESO and EXP rates.");
 			player.message("@points: Tells you how many unused vote points you have and when/if you can vote.");
-			player.message("@gm <message>: Sends a message to all online GMs in the case of an emergency.");
-			player.message("@bug <bug>: Sends a bug report to all developers.");
-			player.message("@joinevent: If an event is in progress, use this to warp to the event map.");
-			player.message("@leaveevent: If an event has ended, use this to warp to your original map.");
-			player.message("@staff: Lists the staff of MapleAini.");
-			player.message("@uptime: Shows how long MapleAini has been online.");
+			//player.message("@gm <message>: Sends a message to all online GMs in the case of an emergency.");
+			//player.message("@bug <bug>: Sends a bug report to all developers.");
+			//player.message("@joinevent: If an event is in progress, use this to warp to the event map.");
+			//player.message("@leaveevent: If an event has ended, use this to warp to your original map.");
+			//player.message("@staff: Lists the staff of MapleAini.");
+			player.message("@uptime: 查看服务器运行时间.");
 			player.message("@whatdropsfrom <monster name>: Displays a list of drops and chances for a specified monster.");
 			player.message("@whodrops <item name>: Displays monsters that drop an item given an item name.");
-			player.message("@uptime: Shows how long MapleAini has been online.");
+			//player.message("@uptime: Shows how long MapleAini has been online.");
 			player.message("@bosshp: Displays the remaining HP of the bosses on your map.");
 			break;
 		case "time":
 			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 			dateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
-			player.yellowMessage("MapleAini Server Time: " + dateFormat.format(new Date()));
+			player.yellowMessage("MapleAini 服务器时间: " + dateFormat.format(new Date()));
 			break;
 		case "staff":
 			player.yellowMessage("MapleAini Staff");
@@ -462,11 +468,11 @@ public class Commands {
 			}
 			c.announce(MaplePacketCreator.getNPCTalk(9010000, (byte) 0, output, "00 00", (byte) 0));
 			break;
-		case "dispose":
+		case "jiasi":
 			NPCScriptManager.getInstance().dispose(c);
 			c.announce(MaplePacketCreator.enableActions());
 			c.removeClickedNPC();
-			player.message("You've been disposed.");
+			player.message("解卡成功.");
 			break;
 		case "rates":
 			c.resetVoteTime(); 
@@ -583,6 +589,24 @@ public class Commands {
 			} else {
 				player.dropMessage(5, "You are not currently in an event.");
 			}
+			break;
+                case "mapid":
+                                c.getPlayer().dropMessage(6, "你在地图 " + c.getPlayer().getMap().getId());
+			break;
+                case "ReloadDrop":
+                                MapleMonsterInformationProvider.getInstance().clearDrops();
+                                ReactorScriptManager.getInstance().clearDrops();
+			break;
+                case "ReloadShop":
+                                MapleShopFactory.getInstance().clear();
+			break;
+                case "ReloadE":
+                            for (Channel instance : Server.getInstance().getChannelsFromWorld(player.getWorld())) {
+                                    instance.reloadEventScriptManager();
+                            }
+			break;
+                case "ReloadP":
+                            PortalScriptManager.getInstance().reloadPortalScripts();
 			break;
 		case "bosshp":
 			for(MapleMonster monster : player.getMap().getMonsters()) {
