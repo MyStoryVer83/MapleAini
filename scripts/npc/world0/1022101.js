@@ -22,7 +22,7 @@
 /* Rooney
 	Map Name (Map ID)
 	Used to exchange VP for Maple Leaves, and Maple Leaves for rewards.
- */
+ 
 
 var itemToUse = 4001126;
 
@@ -211,4 +211,4 @@ function action(mode, type, selection) {
 			cm.dispose();
 		}
     }
-}
+}*/

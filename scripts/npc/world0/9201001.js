@@ -3,7 +3,7 @@ Credits go to Travis of DeanMS ( xKillsAlotx on RaGEZONE)
 Item Exchanger for scrolls
 
 Modified by SharpAceX (Alan) for MapleSolaxia
-*/
+
 
 importPackage(Packages.tools);
 
@@ -117,4 +117,4 @@ function action(mode, type, selection) {
 			}
         }
     }
-}
+}*/
