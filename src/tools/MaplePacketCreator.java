@@ -3551,18 +3551,24 @@ public class MaplePacketCreator {
 
     public static byte[] requestBuddylistAdd(int cidFrom, int cid, String nameFrom) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
+    if (ServerConstants.outPacket) {
+        System.out.println("requestBuddylistAdd");
+    }
         mplew.writeShort(SendOpcode.BUDDYLIST.getValue());
         mplew.write(9);
         mplew.writeInt(cidFrom);
         mplew.writeMapleAsciiString(nameFrom);
         mplew.writeInt(cidFrom);
-        mplew.writeAsciiString(StringUtil.getRightPaddedStr(nameFrom, '\0', 13));
+        mplew.writeAsciiString(StringUtil.getRightPaddedStr(nameFrom, '\0', 11));
         mplew.write(0x09);
         mplew.write(0xf0);
         mplew.write(0x01);
         mplew.writeInt(0x0f);
         mplew.writeNullTerminatedAsciiString("Default Group");
         mplew.writeInt(cid);
+    if (ServerConstants.outPacket) {
+        System.out.println("requestBuddylistAdd" + mplew.getPacket());
+    }        
         return mplew.getPacket();
     }
 

@@ -114,7 +114,7 @@ public final class WhisperHandler extends AbstractMaplePacketHandler {
                     e.printStackTrace();
                 }
             }
-        } else if (mode == 0x44) {
+        } else if (mode == 68) {
             //Buddy find?
         }
     }
