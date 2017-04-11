@@ -317,17 +317,17 @@ public class Commands {
 		}
 		switch (sub[0]) {
 		case "help":
-		case "commands":
+		case "commands":   //脚本命令不支持大写字母
 			player.yellowMessage("After you vote, talk to Rooney to get a leaf and redeem it for prizes!");
 			player.message("@jiasi: 解卡.");
-                        player.message("@ReloadP: 刷新入口脚本.");
-                        player.message("@ReloadE: 刷新活动脚本.");
-                        player.message("@ReloadShop: 刷新商店.");
-                        player.message("@ReloadDrop: 刷新爆率.");
+                        player.message("@reloadportal: 重载传送脚本.");
+                        player.message("@reloadevent: 重载事件脚本.");
+                        player.message("@reloadshop: 重载商店.");
+                        player.message("@reloaddrop: 重载爆率.");
                         player.message("@mapid: 查看所在地图ID.");
 			player.message("@online: 查看在线.");
 			//player.message("@time: Displays the current server time.");
-			player.message("@rates: Displays your current DROP, MESO and EXP rates.");
+			player.message("@rates: 查看倍率");
 			player.message("@points: Tells you how many unused vote points you have and when/if you can vote.");
 			//player.message("@gm <message>: Sends a message to all online GMs in the case of an emergency.");
 			//player.message("@bug <bug>: Sends a bug report to all developers.");
@@ -593,19 +593,19 @@ public class Commands {
                 case "mapid":
                                 c.getPlayer().dropMessage(6, "你在地图 " + c.getPlayer().getMap().getId());
 			break;
-                case "ReloadDrop":
+                case "reloaddrop":
                                 MapleMonsterInformationProvider.getInstance().clearDrops();
                                 ReactorScriptManager.getInstance().clearDrops();
 			break;
-                case "ReloadShop":
+                case "reloadshop":
                                 MapleShopFactory.getInstance().clear();
 			break;
-                case "ReloadE":
+                case "reloadevent":
                             for (Channel instance : Server.getInstance().getChannelsFromWorld(player.getWorld())) {
                                     instance.reloadEventScriptManager();
                             }
 			break;
-                case "ReloadP":
+                case "reloadportal":
                             PortalScriptManager.getInstance().reloadPortalScripts();
 			break;
 		case "bosshp":
