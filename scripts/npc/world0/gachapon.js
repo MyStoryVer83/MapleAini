@@ -26,7 +26,7 @@
 
 var status;
 var ticketId = 5220000;
-var mapName = ["Henesys", "Ellinia", "Perion", "Kerning City", "Sleepywood", "Mushroom Shrine", "Showa Spa (M)", "Showa Spa (F)", "New Leaf City", "Nautilus"];
+var mapName = ["射手村", "魔法密林", "勇士部落", "废弃都市", "林中之城", "Mushroom Shrine", "Showa Spa (M)", "Showa Spa (F)", "新叶城", "诺特勒斯号码头"];
 var curMapName = "";
 
 function start() {
@@ -48,7 +48,7 @@ function action(mode, type, selection) {
 			if (cm.haveItem(ticketId)) {
 				cm.sendYesNo("You may use the " + curMapName + " Gachapon. Would you like to use your Gachapon ticket?");
 			} else {
-				cm.sendSimple("Welcome to the " + curMapName + " Gachapon. How may I help you?\r\n\r\n#L0#What is Gachapon?#l\r\n#L1#Where can you buy Gachapon tickets?#l");
+				cm.sendSimple("欢迎来到 " + curMapName + " 的百宝箱. 我能帮您什么?\r\n\r\n#L0#什么是百宝箱?#l\r\n#L1#在哪里买快乐百宝卷?#l");
 			}
 		} else if(status == 1 && cm.haveItem(ticketId)) {
 			if(cm.canHold(1302000) && cm.canHold(2000000) && cm.canHold(3010001) && cm.canHold(4000000)) { // One free slot in every inventory.
@@ -60,9 +60,9 @@ function action(mode, type, selection) {
 			cm.dispose();
 		} else if(status == 1) {
 			if (selection == 0) {
-                cm.sendNext("Play Gachapon to earn rare scrolls, equipment, chairs, mastery books, and other cool items! All you need is a #bGachapon Ticket#k to be the winner of a random mix of items.");
+                cm.sendNext("快乐百宝卷里面有各种稀奇古怪的道具哦.");
             } else {
-                cm.sendNext("Gachapon Tickets are available in the #rCash Shop#k and can be purchased using NX or Maple Points. Click on the red SHOP at the lower right hand corner of the screen to visit the #rCash Shop#k where you can purchase tickets.");
+                cm.sendNext("快乐百宝卷在 #r商城#k 购买.");
             }
 		} else if(status == 2) {
 			cm.sendNextPrev("You'll find a variety of items from the " + curMapName + " Gachapon, but you'll most likely find items and scrolls related to " + curMapName + ".");

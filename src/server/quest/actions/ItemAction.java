@@ -124,7 +124,7 @@ public class ItemAction extends MapleQuestAction {
 					MapleInventoryManipulator.addById(chr.getClient(), iEntry.getId(), (short) iEntry.getCount());
 					chr.announce(MaplePacketCreator.getShowItemGain(iEntry.getId(), (short) iEntry.getCount(), true));
 				} else {
-					chr.dropMessage(1, "Inventory Full");
+					chr.dropMessage(1, "背包已满");
 				}
 			}
 		}
@@ -168,7 +168,7 @@ public class ItemAction extends MapleQuestAction {
 		}
 		
 		if (!MapleInventory.checkSpots(chr, itemList)) {
-			chr.dropMessage(1, "Please check if you have enough space in your inventory.");
+			chr.dropMessage(1, "背包已满.");
 			return false;
 		}
 		return true;

@@ -25,7 +25,7 @@ var sel;
 var pickup = -1;
 
 function start() {
-    cm.sendSimple("I'm Abdula, and I am a merchant intermediary who deals with rare goods. What do you have for me?#b\r\n#L0#I want to sell goods.\r\n#L1#I want to know about current market prices.\r\n#L2#A merchant intermediary? What is that?");
+    cm.sendSimple("我是阿得拉，请问有什么需要?#b\r\n#L0#我想出售商品.\r\n#L1#我想查看市场价格.\r\n#L2#中介商人是什么？");
 }
 
 function action(mode, type, selection) {
