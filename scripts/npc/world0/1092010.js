@@ -30,6 +30,6 @@ No specific function, useless text.
 */
 
 function start() {
-    cm.sendOk("(Scratch scratch...)");
+    cm.sendOk("(»®ºÛ...)");
     cm.dispose();
 }

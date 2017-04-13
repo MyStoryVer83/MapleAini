@@ -60,25 +60,25 @@ function action(mode, type, selection) {
             var selStr = "那么，你想制作什么样的弓？#b";
             items = [1452002,1452003,1452001,1452000,1452005,1452006,1452007];
             for (var i = 0; i < items.length; i++)
-                selStr += "\r\n#L" + i + "##t" + items[i] + "##k - 弓箭手 等级. " + (10 + (i * 5)) + "#l#b";
+                selStr += "\r\n#L" + i + "##t" + items[i] + "##k - 弓箭手 等级限制. " + (10 + (i * 5)) + "#l#b";
         }else if (selection == 1) { //xbow refine
             var selStr = "那么，你想制作什么样的弩？#b";
             items = [1462001,1462002,1462003,1462000,1462004,1462005,1462006,1462007];
             for (var i = 0; i < items.length; i++)
-                selStr += "\r\n#L" + i + "##t" + items[i] + "##k - 弓箭手 等级. " + (10 + (i * 5)) + "#l#b";
+                selStr += "\r\n#L" + i + "##t" + items[i] + "##k - 弓箭手 等级限制. " + (10 + (i * 5)) + "#l#b";
         }else if (selection == 2) { //glove refine
             var selStr = "那么，你想制作什么样的手套？#b";
             items = [1082012,1082013,1082016,1082048,1082068,1082071,1082084,1082089];
             for (var i = 0; i < items.length; i++)
-                selStr += "\r\n#L" + i + "##t" + items[i] + "##k - 弓箭手 等级. " + (15 + (i * 5) > 40 ? ((i-1) * 10) : 15 + (i * 5)) + "#l#b";
+                selStr += "\r\n#L" + i + "##t" + items[i] + "##k - 弓箭手 等级限制. " + (15 + (i * 5) > 40 ? ((i-1) * 10) : 15 + (i * 5)) + "#l#b";
         }else if (selection == 3) { //glove upgrade
             var selStr = "升级手套？这应该不难，那么你想怎么做？#b";
             items = [1082015,1082014,1082017,1082018,1082049,1082050,1082069,1082070,1082072,1082073,1082085,1082083,1082090,1082091];
             for (var i = 0, x = 0; i < items.length; i++, x += (i+1) % 2 == 0 ? 1 : 0)
-                selStr += "\r\n#L" + i + "##t" + items[i] + "##k" + "##k - 弓箭手 等级. " + (20 + (x * 5) > 40 ? ((x-1) * 10) : 20 + (x * 5)) + "#l#b";
+                selStr += "\r\n#L" + i + "##t" + items[i] + "##k" + "##k - 弓箭手 等级限制. " + (20 + (x * 5) > 40 ? ((x-1) * 10) : 20 + (x * 5)) + "#l#b";
         }else if (selection == 4) { //material refine
             var selStr = "材料吗？我知道一些材料的做法。#b";
-            var materials = ["Make Processed Wood with Tree Branch","Make Processed Wood with Firewood","Make Screws (packs of 15)"];
+            var materials = ["用树枝做木材","用木块做木材","做螺丝钉"];
             for (var i = 0; i < materials.length; i++)
                 selStr += "\r\n#L" + i + "# " + materials[i] + "#l";
         }else if (selection == 5) { //arrow refine

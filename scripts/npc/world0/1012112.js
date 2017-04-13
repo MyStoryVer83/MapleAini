@@ -50,23 +50,23 @@ function action(mode, type, selection) {
         if (cm.getPlayer().getMapId() == 100000200) {
             if (cm.getParty() == null || !cm.isLeader()) {
                 if (status == 0) {
-                    cm.sendNext("Hi there! I'm Tory. This place is covered with mysterious aura of the full moon, and no one person can enter here by him/herself.");
+                    cm.sendNext("你好！ 我是达尔利。 这个地方充满了满月的神秘光环，没有一个人可以通过他/她进入这里。");
                 } else if (status == 1) {
-                    cm.sendOk("If you'd like to enter here, the leader of your party will have to talk to me. Talk to your party leader about this.");
+                    cm.sendOk("若想要进入里面，需要你所属组队的队长，与我进行对话喔！快去找你的队长吧~^^");
                     cm.dispose();
                 }
             } else {
                 if (status == 0) {
-                    cm.sendNext("I'm Tory. Inside here is a beautiful hill where the primrose blooms. There's a tiger that lives in the hill, Growlie, and he seems to be looking for something to eat.");
+                    cm.sendNext("哈啰~我叫达尔利。这里面是开满月花的美丽山丘。听说…里面有一个叫做兴儿的老虎，好像四处在寻找可以填饱肚子的食物…");
                 } else if (status == 1) {
-                    cm.sendSimple("Would you like to head over to the hill of primrose and join forces with your party members to help Growlie out?\r\n#b#L0# Yes, I will go.#l");
+                    cm.sendSimple("#e<组队任务：月妙组队任务>#n\r\n你想和队员们一起努力，完成任务吗？\r\n#b#L0#我想执行组队任务。#l");
                 } else if (status == 2) {
                     var party = cm.getPartyMembers();
                     var onmap = 0;
                     for (var i = 0; i < party.size(); i++) {
                         if (party.get(i).getMap().getId() == 100000200) {
                             if (party.get(i).getLevel() < minLevel) {
-                                cm.sendOk("A member of your party does not meet the level requirement.");
+                                cm.sendOk("请确认你的组队员：\r\n\r\n#b组队员等级必须要在" + minLevel + "以上。");
                                 cm.dispose();
                                 return;
                             }
@@ -74,18 +74,18 @@ function action(mode, type, selection) {
                         }
                     }
                     if (onmap < min) {
-                        cm.sendOk("A member of your party is not presently in the map.");
+                        cm.sendOk("请确认你的组队员都在同一张地图上。");
                         cm.dispose();
                         return;
                     }
                     if (cm.getClient().getChannelServer().getMapFactory().getMap(910010000).getAllPlayer().size() > 0) {
-                        cm.sendOk("Someone is already attempting the PQ. Please wait for them to finish, or find another channel.");
+                        cm.sendOk("组队任务正在进行中...请稍等!");
                         cm.dispose();
                         return;
                     }
                     var em = cm.getEventManager("HenesysPQ");
                     if (em == null) { 
-                        cm.sendOk("This PQ is currently broken. Please report it on the forum!");
+                        cm.sendOk("组队任务正在修复中，因此无法进行！");
                         cm.dispose();
                         return;
                     }
@@ -96,7 +96,7 @@ function action(mode, type, selection) {
                         em.setProperty("latestLeader", cm.getPlayer().getName());
                         em.startInstance(cm.getParty(), cm.getPlayer().getMap());
                     } else {
-                        cm.sendOk("Someone is already attempting the PQ. Please wait for them to finish, or find another channel.");
+                        cm.sendOk("组队任务正在进行中...请稍等片刻!");
                         cm.dispose();
                         return;
                     }
@@ -105,16 +105,16 @@ function action(mode, type, selection) {
             }
         } else if (cm.getPlayer().getMap().getId() == 910010100 || cm.getPlayer().getMap().getId() == 910010400) {
             if (status == 0) {
-                cm.sendSimple("I appreciate you giving some rice cakes for the hungry Growlie. It looks like you have nothing else to do now. Would you like to leave this place?\r\n#L0#I want to give you the rest of my rice cakes.#l\r\n#L1#Yes, please get me out of here.#l");
+                cm.sendSimple("我感谢你给饥饿的生长者提供一些年糕。 看起来你还没有别的事情了，你想离开这个地方吗？\r\n#L0#我想给你剩下的年糕。#l\r\n#L1#是的，请让我离开这里。#l");
             } else if (status == 1) {
                 chosen = selection;
                 if (selection == 0) {
                     if (cm.getPlayer().getGivenRiceCakes() >= 20) {
                         if (cm.getPlayer().getGottenRiceHat()) {
-                            cm.sendNext("Do you like the hat I gave you? I ate so much of your rice cake that I will have to say no to your offer of rice cake for a little while.");
+                            cm.sendNext("你喜欢我给你的帽子吗？ 我吃了很多你的年糕，真的很感谢你。");
                             cm.dispose();
                         } else {
-                            cm.sendYesNo("I appreciate the thought, but I am okay now. I still have some of the rice cakes you gave me stored at home. To show you my appreciation, I prepared a small gift for you. Would you like to accept it?");
+                            cm.sendYesNo("我很欣赏你这个想法，但我现在没事了。我家里还有一些你给我的年糕。为了表示对你的感激，我为你准备了一份小礼物。你愿意接受吗？");
                         }
                     }
                 } else if (selection == 1) {
@@ -127,13 +127,13 @@ function action(mode, type, selection) {
                     if (cm.canHold(1002798)) { // we will let them try again if they can't
                         cm.gainItem(1002798);
                         cm.setGottenRiceHat(true);
-                        cm.sendNext("It will really go well with you. I promise.");
+                        cm.sendNext("祝你好运。");
                     } else {
                         cm.getPlayer().dropMessage(1, "EQUIP inventory full.");
                     }
                     cm.dispose();
                 } else if (cm.getPlayer().getGivenRiceCakes() < 20) {
-                    cm.sendOk("Thank you for rice cake number " + cm.getPlayer().getGivenRiceCakes() + "!! I really appreciate it!");
+                    cm.sendOk("谢谢你的" + cm.getPlayer().getGivenRiceCakes() + "个年糕!!我真的很感激！");
                 }
             }
         }

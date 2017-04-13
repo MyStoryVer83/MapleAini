@@ -158,7 +158,7 @@ function action(mode, type, selection) {
 	} else if (status == 15) {
 		cm.sendYesNo("消耗25万金币，确定要购买吗？");
 	} else if (status == 16) {
-		if (cm.getMeso() < 250000) {
+		if (cm.getMeso() < 250000 || !cm.canHold(4160011)) {
 			cm.sendOk("好像你的道具栏没有空格或者你的金币不足。");
 		} else {
 			cm.gainMeso(-250000);

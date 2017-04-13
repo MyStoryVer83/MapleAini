@@ -19,7 +19,7 @@ function action(mode, type, selection) {
             status--;
 		
 		if(status == 0){
-			cm.sendYesNo("Would you like to leave?");
+			cm.sendYesNo("ÄãÏëÀë¿ªÂğ£¿");
 		}else if(status == 1){
 			if(cm.getMapId() == 108010101)cm.getPlayer().changeMap(105040305);
 			if(cm.getMapId() == 108010201)cm.getPlayer().changeMap(100040106);

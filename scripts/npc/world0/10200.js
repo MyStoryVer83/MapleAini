@@ -22,19 +22,19 @@
 var status = -1;
 
 function start() {
-    cm.sendNext("Bowmen are blessed with dexterity and power, taking charge of long-distance attacks, providing support for those at the front line of the battle. Very adept at using landscape as part of the arsenal.");
+    cm.sendNext("弓手拥有高敏捷及力量,在战斗中负责远距离攻击,假如弓手职业能巧妙地运用地势的话,打猎可是非常轻松厉害。");
 }
 
 function action(mode, type, selection) {
     status++;
     if (mode != 1){
         if(mode == 0)
-           cm.sendNext("If you wish to experience what it's like to be a Bowman, come see me again.");
+           cm.sendNext("如果你想体验弓箭手的话，就来找我吧。");
         cm.dispose();
         return;
     }
     if (status == 0) {
-        cm.sendYesNo("Would you like to experience what it's like to be a Bowman?");
+        cm.sendYesNo("怎么样？你想体验弓箭手吗？");
     } else if (status == 1){
 	cm.lockUI();
         cm.warp(1020300, 0);

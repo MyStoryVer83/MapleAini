@@ -49,8 +49,8 @@ function action(mode, type, selection) {
     else
         cm.dispose();
     if (status == 0 && mode == 1) {
-        var selStr = "Welcome to my eco-safe refining operation! What would you like today?#b"
-        var options = new Array("Make a glove","Upgrade a glove","Upgrade a hat","Make a wand","Make a staff");
+        var selStr = "好呀！这不就是互相帮助吗？请你选择吧...#b"
+        var options = new Array("制作手套","手套合成","帽子合成","制作短杖","制作长杖");
         for (var i = 0; i < options.length; i++){
             selStr += "\r\n#L" + i + "# " + options[i] + "#l";
         }
@@ -60,45 +60,45 @@ function action(mode, type, selection) {
     else if (status == 1 && mode == 1) {
         selectedType = selection;
         if (selectedType == 0){ //glove refine
-            var selStr = "So, what kind of glove would you like me to make?#b";
-            var items = new Array ("Lemona#k - Magician Lv. 15#b","Blue Morrican#k - Magician Lv. 20#b","Ocean Mesana#k - Magician Lv. 25#b","Red Lutia#k - Magician Lv. 30#b","Red Noel#k - Magician Lv. 35#b","Red Arten#k - Magician Lv. 40#b",
-                "Red Pennance#k - Magician Lv. 50#b","Steel Manute#k - Magician Lv. 60#b");
+            var selStr = "要是你能收集各种材料，我用魔法做给你手套。你想做什么样的手套？#b";
+            var items = new Array ("魔法手套#k(等级限制 : 15, 魔法师)#b","蓝色梅林手套#k(等级限制 : 20, 魔法师)#b","蓝贤者手套#k(等级限制 : 25, 魔法师)#b","红守护手套#k(等级限制 : 30, 魔法师)#b","红神圣手套#k(等级限制 : 35, 魔法师)#b","红精灵手套#k(等级限制 : 40, 魔法师)#b",
+				"红元素手套#k(等级限制 : 50, 魔法师)#b","钢铁封印手套#k(等级限制 : 60, 魔法师)#b");
             for (var i = 0; i < items.length; i++){
                 selStr += "\r\n#L" + i + "# " + items[i] + "#l";
             }
             cm.sendSimple(selStr);
         }
         else if (selectedType == 1){ //glove upgrade
-            var selStr = "So, what kind of glove are you looking to upgrade to?#b";
-            var items = new Array ("Green Morrican#k - Magician Lv. 20#b","Purple Morrican#k - Magician Lv. 20#b","Blood Mesana#k - Magician Lv. 25#b","Dark Mesana#k - Magician Lv. 25#b","Blue Lutia#k - Magician Lv. 30#b","Black Lutia#k - Magician Lv. 30#b",
-                "Blue Noel#k - Magician Lv. 35#b","Dark Noel#k - Magician Lv. 35#b","Blue Arten#k - Magician Lv. 40#b","Dark Arten#k - Magician Lv. 40#b","Blue Pennance#k - Magician Lv. 50#b","Dark Pennance#k - Magician Lv. 50#b",
-                "Gold Manute#k - Magician Lv. 60#b","Dark Manute#k - Magician Lv. 60#b");
+            var selStr = "嗯...你想合成什么样的手套？#b";
+            var items = new Array ("绿色梅林手套#k(等级限制 : 20, 魔法师)#b","紫色梅林手套#k(等级限制 : 20, 魔法师)#b","红贤者手套#k(等级限制 : 25, 魔法师)#b","黑贤者手套#k(等级限制 : 25, 魔法师)#b","蓝守护手套#k(等级限制 : 30, 魔法师)#b","黑守护手套#k(等级限制 : 30, 魔法师)#b",
+                "蓝神圣手套#k(等级限制 : 35, 魔法师)#b","黑神圣手套#k(等级限制 : 35, 魔法师)#b","蓝精灵手套#k(等级限制 : 40, 魔法师)#b","黑精灵手套#k(等级限制 : 40, 魔法师)#b","蓝元素手套#k(等级限制 : 50, 魔法师)#b","黑元素手套#k(等级限制 : 50, 魔法师)#b",
+                "黄金封印手套#k(等级限制 : 60, 魔法师)#b","黑封印手套#k(等级限制 : 60, 魔法师)#b");
             for (var i = 0; i < items.length; i++){
                 selStr += "\r\n#L" + i + "# " + items[i] + "#l";
             }
             cm.sendSimple(selStr);
         }
         else if (selectedType == 2){ //hat upgrade
-            var selStr = "A hat? Which one were you thinking of?#b";
-            var items = new Array ("Steel Pride#k - Magician Lv. 30#b","Golden Pride#k - Magician Lv. 30#b");
+            var selStr = "嗯...你想合成什么样的帽子？#b";
+            var items = new Array ("孙悟空钢制头箍#k(等级限制 : 30, 魔法师)#b","孙悟空头箍#k(等级限制 : 30, 魔法师)#b");
             for (var i = 0; i < items.length; i++){
                 selStr += "\r\n#L" + i + "# " + items[i] + "#l";
             }
             cm.sendSimple(selStr);
         }
         else if (selectedType == 3){ //wand refine
-            var selStr = "A wand, huh? Prefer the smaller weapon that fits in your pocket? Which type are you seeking?#b";
-            var items = new Array ("Wooden Wand#k - Common Lv. 8#b","Hardwood Wand#k - Common Lv. 13#b","Metal Wand#k - Common Lv. 18#b","Ice Wand#k - Magician Lv. 23#b","Mithril Wand#k - Magician Lv. 28#b",
-                "Wizard Wand#k - Magician Lv. 33#b","Fairy Wand#k - Magician Lv. 38#b","Cromi#k - Magician Lv. 48#b");
+            var selStr = "要是你能收集各种材料，我就用魔法给你做短杖。你想做什么样的短杖？#b";
+            var items = new Array ("木制短杖#k(等级限制 : 8, 公用)#b","高级木制短杖#k(等级限制 : 13, 公用)#b","金属短杖#k(等级限制 : 18, 公用)#b","冰精短杖#k(等级限制 : 23, 魔法师)#b","锂矿短杖#k(等级限制 : 28, 魔法师)#b",
+                "法师短杖#k(等级限制 : 33, 魔法师)#b","妖精短杖#k(等级限制 : 38, 魔法师)#b","大魔法师短杖#k(等级限制 : 48, 魔法师)#b");
             for (var i = 0; i < items.length; i++){
                 selStr += "\r\n#L" + i + "# " + items[i] + "#l";
             }
             cm.sendSimple(selStr);
         }
         else if (selectedType == 4){ //staff refine
-            var selStr = "Ah, a staff, a great symbol of one's power! Which are you looking to make?#b";
-            var items = new Array ("Wooden Staff#k - Magician Lv. 10#b","Sapphire Staff#k - Magician Lv. 15#b","Emerald Staff#k - Magician Lv. 15#b","Old Wooden Staff#k - Magician Lv. 20#b","Wizard Staff#k - Magician Lv. 25#b",
-                "Arc Staff#k - Magician Lv. 45#b");
+            var selStr = "要是你能收集各种材料，我就用魔法给你做长杖。你想做什么样的长杖？#b";
+            var items = new Array ("木制长杖#k(等级限制 : 10, 魔法师)#b","蓝宝石长杖#k(等级限制 : 15, 魔法师)#b","祖母缘长杖#k(等级限制 : 15, 魔法师)#b","古树长杖#k(等级限制 : 20, 魔法师)#b","法师长杖#k(等级限制 : 25, 魔法师)#b",
+                "精灵长杖#k(等级限制 : 45, 魔法师)#b");
             for (var i = 0; i < items.length; i++){
                 selStr += "\r\n#L" + i + "# " + items[i] + "#l";
             }
@@ -165,7 +165,7 @@ function action(mode, type, selection) {
             cost = costSet[selectedItem];
         }
 		
-        var prompt = "You want me to make a #t" + item + "#? In that case, I'm going to need specific items from you in order to make it. Make sure you have room in your inventory, though!#b";
+        var prompt = "你想做一个#t" + item + "#吗？这需要下面的道具。怎么样？想做吗？#b";
 
         if (mats instanceof Array){
             for(var i = 0; i < mats.length; i++){
@@ -177,7 +177,7 @@ function action(mode, type, selection) {
         }
 		
         if (cost > 0)
-            prompt += "\r\n#i4031138# " + cost + " meso";
+            prompt += "\r\n#i4031138# " + cost + " 金币";
 		
         cm.sendYesNo(prompt);
     }
@@ -185,7 +185,7 @@ function action(mode, type, selection) {
         var complete = true;
         if (cm.getMeso() < cost)
         {
-            cm.sendOk("Sorry, but all of us need money to live. Come back when you can pay my fees, yes?")
+            cm.sendOk("请你确认是否有需要的物品或者背包的装备窗有没有空间。")
         }
         else
         {
@@ -211,7 +211,7 @@ function action(mode, type, selection) {
         }
 			
         if (!complete)
-            cm.sendOk("Uhm... I don't keep extra material on me. Sorry. ");
+            cm.sendOk("请你确认是否有需要的物品或者背包的装备窗有没有空间。");
         else {
             if (mats instanceof Array) {
                 for (var i = 0; i < mats.length; i++){
@@ -225,7 +225,7 @@ function action(mode, type, selection) {
                 cm.gainMeso(-cost);
 				
             cm.gainItem(item, 1);
-            cm.sendOk("It's a success! Oh, I've never felt so alive! Please come back again!");
+            cm.sendOk("好！你的东西已经做好了，我的手艺果然不错！你看见过这么完美的东西吗？下次再来吧。");
         }
         cm.dispose();
     }

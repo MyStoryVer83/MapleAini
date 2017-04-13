@@ -5,7 +5,7 @@ var selectedMap = -1;
 var mesos;
 
 function start() {
-    cm.sendNext("Hello, I drive the Regular Cab. If you want to go from town to town safely and fast, then ride our cab. We'll glady take you to your destination with an affordable price.");
+    cm.sendNext("您好~！我是魔法密林中巴。你想不想又快捷又安全的到达其他地方去？那么请使用我们的出租车吧。它会马上将你送到你想去的地方，价格很便宜哦！");
 }
 
 function action(mode, type, selection) {
@@ -16,7 +16,7 @@ function action(mode, type, selection) {
             cm.dispose();
             return;
         } else if (status >= 2 && mode == 0) {
-            cm.sendNext("There's a lot to see in this town, too. Come back and find us when you need to go to a different town.");
+            cm.sendNext("在这个村子里还有许多漂亮的景点，如果你想去其他地方，欢迎随时使用我们的出租车服务。");
             cm.dispose();
             return;
         }
@@ -27,17 +27,17 @@ function action(mode, type, selection) {
         if (status == 1) {
             var selStr = "";
             if (cm.getJobId() == 0)
-                selStr += "We have a special 90% discount for beginners.";
-            selStr += "Choose your destination, for fees will change from place to place.#b";
+                selStr += "新手可以享受#b9折#k的价格优惠。";
+            selStr += "请选择你的目的地吧。按照目的地不同，车费也有所不同。#b";
             for (var i = 0; i < maps.length; i++)
-                selStr += "\r\n#L" + i + "##m" + maps[i] + "# (" + (cm.getJobId() == 0 ? cost[i] / 10 : cost[i]) + " mesos)#l";
+                selStr += "\r\n#L" + i + "##m" + maps[i] + "# (" + (cm.getJobId() == 0 ? cost[i] / 10 : cost[i]) + " 金币)#l";
             cm.sendSimple(selStr);
         } else if (status == 2) {
-            cm.sendYesNo("You don't have anything else to do here, huh? Do you really want to go to #b#m" + maps[selection] + "##k? It'll cost you #b"+ (cm.getJobId() == 0 ? cost[selection] / 10 : cost[selection]) + " mesos#k.");
+            cm.sendYesNo("看来这里的事情你已经办完了嘛。你确定要去 #b#m" + maps[selection] + "##k吗？票价是 #b"+ (cm.getJobId() == 0 ? cost[selection] / 10 : cost[selection]) + " 金币#k.");
             selectedMap = selection;
         } else if (status == 3) {
             if (cm.getMeso() < (cm.getJobId() == 0 ? cost[selection] / 10 : cost[selection])) {
-                cm.sendNext("You don't have enough mesos. Sorry to say this, but without them, you won't be able to ride the cab.");
+                cm.sendNext("你好象没有足够的金币，这样的话，我不能为你服务。");
                 cm.dispose();
                 return;
             }

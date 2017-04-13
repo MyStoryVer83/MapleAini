@@ -37,7 +37,7 @@ function start() {
     returnmap = cm.getPlayer().getSavedLocation("FLORINA");
     if (returnmap == -1)
         returnmap = 104000000;
-    cm.sendNext("So you want to leave #b#m110000000##k? If you want, I can take you back to #b#m"+returnmap+"##k.");
+    cm.sendNext("在#b#m110000000##k已没别的事情了吗?如果有需要的话，我送你去#b#m"+returnmap+"##k吧！");
 }
 
 function action(mode, type, selection) {
@@ -45,13 +45,13 @@ function action(mode, type, selection) {
         cm.dispose();
         return;
     } else if (mode == 0) {
-        cm.sendNext("You must have some business to take care of here. It's not a bad idea to take some rest at #m"+returnmap+"# Look at me; I love it here so much that I wound up living here. Hahaha anyway, talk to me when you feel like going back.");
+        cm.sendNext("看来你在这里有些事还没有办完嘛？身心疲惫的时候到这黄金海滩休息放松一下也不错。");
         cm.dispose();
         return;
     } else if (mode == 1) {
         status++;
         if (status == 1)
-            cm.sendYesNo("Are you sure you want to return to #b#m"+returnmap+"##k? Alright, we'll have to get going fast. Do you want to head back to #m"+returnmap+"# now?")
+            cm.sendYesNo("想回#b#m"+returnmap+"##k吗？好~那现在准备出航吧。那…现在马上去#m"+returnmap+"#吗？")
         else {
             cm.warp(returnmap);
             cm.dispose();

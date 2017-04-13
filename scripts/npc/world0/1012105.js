@@ -1,50 +1,33 @@
-/*
-	This file is part of the OdinMS Maple Story Server
-    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
-		       Matthias Butz <matze@odinms.de>
-		       Jan Christian Meyer <vimes@odinms.de>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-/* Ms. Tan
+/* Ms. Tan 
 	Henesys Skin Change.
 */
 var status = 0;
-var skin = Array(0, 1, 2, 3, 4);
-var price = 1000000;
+var skin = Array(0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11);
 
 function start() {
-    cm.sendSimple("Well, hello! Welcome to the Henesys Skin-Care! Would you like to have a firm, tight, healthy looking skin like mine?  With a #b#t5153000##k, you can let us take care of the rest and have the kind of skin you've always wanted~!\r\n#L1#I would like to buy a #b#t5153000##k for " + price + " mesos, please!#l\r\n\#L2#I already have a Coupon!#l");
+    status = -1;
+    action(1, 0, 0);
 }
 
 function action(mode, type, selection) {
-    if (mode < 1)
+    if (mode == 0) {
         cm.dispose();
-    else {
+        return;
+    } else {
         status++;
-        if (status == 1)
-            cm.sendStyle("With our specialized machine, you can see yourself after the treatment in advance. What kind of skin-treatment would you like to do? Choose the style of your liking.", skin);
-        else {
-            if (cm.haveItem(5153000)){
-                cm.gainItem(5153000, -1);
-                cm.setSkin(selection);
-                cm.sendOk("Enjoy your new and improved skin!");
-            } else
-                cm.sendOk("Um... you don't have the skin-care coupon you need to receive the treatment. Sorry, but I am afraid we can't do it for you...");
-            cm.dispose();
+    }
+    if (status == 0) {
+        cm.sendNext("你好！欢迎光临射手村护肤中心。你想获得和我一样健康紧绷的皮肤吗？只要有#b万能会员卡#k的话，我就可以按照你的要求为你护理皮肤。你想尝试一下吗？");
+    } else if (status == 1) {
+        cm.sendStyle("用我们护肤中心开放的机械，可以查看护肤后的效果。你想要什么样的皮肤呢？请挑选一下～", 5153000, skin);
+    } else if (status == 2) {
+		if (cm.haveItem(5153000)){
+            cm.gainItem(5153000, -1);
+            cm.setSkin(selection);
+            cm.sendOk("完成了,让朋友们赞叹你的新肤色吧!");
+        } else {
+            cm.sendOk("嗯……你好像没有护肤券啊。对不起，没有护肤券的话，我就不能帮你护理皮肤。");
         }
+        cm.dispose();
     }
 }

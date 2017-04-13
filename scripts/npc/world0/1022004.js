@@ -48,8 +48,8 @@ function action(mode, type, selection) {
     else
         cm.dispose();
     if (status == 0 && mode == 1) {
-        var selStr = "Um... Hi, I'm Mr. Thunder's apprentice. He's getting up there in age, so he handles most of the heavy-duty work while I handle some of the lighter jobs. What can I do for you?#b"
-        var options = new Array("Make a glove","Upgrade a glove","Create materials");
+        var selStr = "好！服务贵不太贵，你不用太担心。你想做什么？#b"
+        var options = new Array("制作手套","合成手套","制作材料");
         for (var i = 0; i < options.length; i++){
             selStr += "\r\n#L" + i + "# " + options[i] + "#l";
         }
@@ -59,9 +59,9 @@ function action(mode, type, selection) {
     else if (status == 1 && mode == 1) {
         selectedType = selection;
         if (selectedType == 0){ //glove refine
-            var selStr = "Okay, so which glove do you want me to make?#b";
-            var items = new Array ("Juno#k - Warrior Lv. 10#b","Steel Fingerless Gloves#k - Warrior Lv. 15#b","Venon#k - Warrior Lv. 20#b","White Fingerless Gloves#k - Warrior Lv. 25#b",
-                "Bronze Missel#k - Warrior Lv. 30#b","Steel Briggon#k - Warrior Lv. 35#b","Iron Knuckle#k - Warrior Lv. 40#b","Steel Brist#k - Warrior Lv. 50#b","Bronze Clench#k - Warrior Lv. 60#b");
+            var selStr = "在这个村落我做的手套是最好的！好~你想做什么样的手套呢？#b";
+            var items = new Array ("腕甲#k(等级限制 : 10, 战士)#b","钢制短手套#k(等级限制 : 15, 战士)#b","皮手套#k(等级限制 : 20, 战士)#b","白纹短手套#k(等级限制 : 25, 战士)#b",
+				"青铜机器手套#k(等级限制 : 30, 战士)#b","铁制轻便手套#k(等级限制 : 35, 战士)#b","钢铁指节手套#k(等级限制 : 40, 战士)#b","钢铁合金手套#k(等级限制 : 50, 战士)#b","钢铁战斗手套#k(等级限制 : 60, 战士)0#b");
             for (var i = 0; i < items.length; i++){
                 selStr += "\r\n#L" + i + "# " + items[i] + "#l";
             }
@@ -69,10 +69,10 @@ function action(mode, type, selection) {
             equip = true;
         }
         else if (selectedType == 1){ //glove upgrade
-            var selStr = "Upgrade a glove? That shouldn't be too difficult. Which did you have in mind?#b";
-            var crystals = new Array ("Steel Missel#k - Warrior Lv. 30#b","Orihalcon Missel#k - Warrior Lv. 30#b","Yellow Briggon#k - Warrior Lv. 35#b","Dark Briggon#k - Warrior Lv. 35#b",
-                "Adamantium Knuckle#k - Warrior Lv. 40#b","Dark Knuckle#k - Warrior Lv. 40#b","Mithril Brist#k - Warrior Lv. 50#b","Gold Brist#k - Warrior Lv. 50#b",
-                "Sapphire Clench#k - Warrior Lv. 60#b","Dark Clench#k - Warrior Lv. 60#b");
+            var selStr = "好...你想合成做什么手套？#b";
+            var crystals = new Array ("钢制机器手套#k(等级限制 : 30, 战士)#b","紫矿机器手套#k(等级限制 :30, 战士)#b","黄轻便手套#k(等级限制 : 35, 战士)#b","黑轻便手套#k(等级限制 : 35, 战士)#b",
+				"朱矿指节手套#k(等级限制 : 40, 战士)#b","黑指节手套#k(等级限制 : 40, 战士)#b","锂矿合金手套#k(等级限制 : 50, 战士)#b","黄金合金手套#k(等级限制 : 50, 战士)#b",
+				"蓝战斗手套#k(等级限制 : 60, 战士)#b","黑战斗手套#k(等级限制 : 60, 战士)#b");
             for (var i = 0; i < crystals.length; i++){
                 selStr += "\r\n#L" + i + "# " + crystals[i] + "#l";
             }
@@ -80,8 +80,8 @@ function action(mode, type, selection) {
             equip = true;
         }
         else if (selectedType == 2){ //material refine
-            var selStr = "Materials? I know of a few materials that I can make for you...#b";
-            var materials = new Array ("Make Processed Wood with Tree Branch","Make Processed Wood with Firewood","Make Screws (packs of 15)");
+            var selStr = "你想做材料？好...你想做什么材料？#b";
+            var materials = new Array ("用树枝做木材","用木块做木材","做螺丝钉");
             for (var i = 0; i < materials.length; i++){
                 selStr += "\r\n#L" + i + "# " + materials[i] + "#l";
             }
@@ -104,7 +104,7 @@ function action(mode, type, selection) {
             cost = costSet[selectedItem];
         }
 		
-        var prompt = "So, you want me to make some #t" + item + "#s? In that case, how many do you want me to make?";
+        var prompt = "你要我做一些#t" + item + "#，所以你应该谢谢我。怎么样？你想做几次？";
 		
         cm.sendGetNumber(prompt,1,1,100)
     }
@@ -140,13 +140,13 @@ function action(mode, type, selection) {
             cost = costSet[selectedItem];
         }
 		
-        var prompt = "You want me to make ";
+        var prompt = "你想做";
         if (qty == 1)
-            prompt += "a #t" + item + "#?";
+            prompt += "1个#t" + item + "#吗？";
         else
-            prompt += qty + " #t" + item + "#?";
+            prompt += qty + "个#t" + item + "#吗？";
 			
-        prompt += " In that case, I'm going to need specific items from you in order to make it. Make sure you have room in your inventory, though!#b";
+        prompt += "那需要下面的物品，怎么样？想做吗？#b";
 		
         if (mats instanceof Array){
             for(var i = 0; i < mats.length; i++){
@@ -158,7 +158,7 @@ function action(mode, type, selection) {
         }
 		
         if (cost > 0)
-            prompt += "\r\n#i4031138# " + cost * qty + " meso";
+            prompt += "\r\n#i4031138# " + cost * qty + " 金币";
 		
         cm.sendYesNo(prompt);
     }
@@ -167,7 +167,7 @@ function action(mode, type, selection) {
 		
         if (cm.getMeso() < cost * qty)
         {
-            cm.sendOk("I may still be an apprentice, but I do need to earn a living.")
+            cm.sendOk("请你确认有需要的物品或背包的其它窗口有空间。")
         }
         else
         {
@@ -193,7 +193,7 @@ function action(mode, type, selection) {
         }
 			
         if (!complete)
-            cm.sendOk("I'm still an apprentice, I don't know if I can substitute other items in yet... Can you please bring what the recipe calls for?");
+            cm.sendOk("请你确认有需要的物品或背包的其它窗口有空间。");
         else {
             if (mats instanceof Array) {
                 for (var i = 0; i < mats.length; i++){
@@ -210,7 +210,7 @@ function action(mode, type, selection) {
                 cm.gainItem(4003000, 15 * qty);
             else
                 cm.gainItem(item, qty);
-            cm.sendOk("Did that come out right? Come by me again if you have anything for me to practice on.");
+            cm.sendOk("好！你的东西已经做好了，我的手艺果然不错！你看见过这么完美的东西吗？下次再来吧。");
         }
         cm.dispose();
     }

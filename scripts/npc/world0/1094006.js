@@ -19,12 +19,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    Author: XxOsirisxX 锛圔ubblesDev 0.75)
+    Author: XxOsirisxX （BubblesDev 0.75)
     NPC: Bush - Abel Glasses Quest
 */
 
 function start(mode, type, selection){
-    cm.sendGetText("Do you want to obtain a glasses?");
+    cm.sendGetText("你想要获得眼镜吗？");
 }
 
 function action(mode, type, selection) {

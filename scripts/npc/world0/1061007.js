@@ -20,7 +20,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 function start() {
-    cm.sendYesNo("Would you like to leave?");
+    cm.sendYesNo("ÄãÏëÀë¿ªÂğ£¿");
 }
 
 function action(mode, type, selection) {

@@ -30,7 +30,7 @@ No specific function, useless text.
 -- GMS LIKE --
 */
 function start() {
-    cm.sendOk("Who are you talking to me? If you're just bored, go bother somebody else.");
+    cm.sendOk("你是谁？你来这里要做什么？你在跟我说话吗？");
     cm.dispose();
 }
 

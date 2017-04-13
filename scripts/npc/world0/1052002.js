@@ -55,8 +55,8 @@ function action(mode, type, selection) {
     else
         cm.dispose();
     if (status == 0 && mode == 1) {
-        var selStr = "Pst... If you have the right goods, I can turn it into something niice...#b"
-        var options = new Array("Create a glove","Upgrade a glove","Create a claw","Upgrade a claw","Create materials");
+        var selStr = "好~服务费不会太贵，你不用担心。你想做什么？#b"
+        var options = new Array("制造手套","合成手套","制造拳套","合成拳套","制造材料");
         for (var i = 0; i < options.length; i++)
             selStr += "\r\n#L" + i + "# " + options[i] + "#l";
         cm.sendSimple(selStr);
@@ -64,27 +64,27 @@ function action(mode, type, selection) {
     else if (status == 1 && mode == 1) {
         selectedType = selection;
         if (selectedType == 0){ //glove refine
-            var selStr = "So, what kind of glove would you like me to make?#b";
-            var gloves = new Array ("Work Gloves#k - Common Lv. 10#b","Brown Duo#k - Thief Lv. 15#b","Blue Duo#k - Thief Lv. 15#b","Black Duo#k - Thief Lv. 15#b","Bronze Mischief#k - Thief Lv. 20#b","Bronze Wolfskin#k - Thief Lv. 25#b","Steel Sylvia#k - Thief Lv. 30#b",
-                "Steel Arbion#k - Thief Lv. 35#b","Red Cleave#k - Thief Lv. 40#b","Blue Moon Glove#k - Thief Lv. 50#b","Bronze Pow#k - Thief Lv. 60#b");
+            var selStr = "好...你想做什么手套？#b";
+            var gloves = new Array ("工地手套#k(等级限制 : 10, 公用)#b","褐短指手套#k(等级限制 : 15, 飞侠)#b","蓝短指手套#k(等级限制 : 15, 飞侠)#b","黑短指手套#k(等级限制 : 15, 飞侠)#b","青铜飞侠手套#k(等级限制 : 20, 飞侠)#b","青铜精神手套#k(等级限制 : 25, 飞侠)#b","钢铁暴风手套#k(等级限制 : 30, 飞侠)#b",
+				"钢铁追击手套#k(等级限制 : 35, 飞侠)#b","红侠客手套#k(等级限制 : 40, 飞侠)#b","青月手套#k(等级限制 : 50, 飞侠)#b","青铜柔丝手套#k(等级限制 : 60, 飞侠)#b");
             for (var i = 0; i < gloves.length; i++)
                 selStr += "\r\n#L" + i + "# " + gloves[i] + "#l";
             equip = true;
             cm.sendSimple(selStr);
         }
         else if (selectedType == 1){ //glove upgrade
-            var selStr = "An upgraded glove? Sure thing, but note that upgrades won't carry over to the new item... #b";
-            var gloves = new Array ("Mithril Mischief#k - Thief Lv. 20#b","Dark Mischief#k - Thief Lv. 20#b","Mithril Wolfskin#k - Thief Lv. 25#b",
-                "Dark Wolfskin#k - Thief Lv. 25#b","Silver Sylvia#k - Thief Lv. 30#b","Gold Sylvia#k - Thief Lv. 30#b","Orihalcon Arbion#k - Thief Lv. 35#b","Gold Arbion#k - Thief Lv. 35#b","Gold Cleave#k - Thief Lv. 40#b",
-                "Dark Cleave#k - Thief Lv. 40#b","Red Moon Glove#k - Thief Lv. 50#b","Brown Moon Glove#k - Thief Lv. 50#b","Silver Pow#k - Thief Lv. 60#b","Gold Pow#k - Thief Lv. 60#b");
+            var selStr = "好...你想合成什么手套？#b";
+            var gloves = new Array ("锂矿飞侠手套#k(等级限制 : 20, 飞侠)#b","黑飞侠手套#k(等级限制 : 20, 飞侠)#b","锂矿精神手套#k(等级限制 : 25, 飞侠)#b",
+				"黑精神手套#k(等级限制 : 25, 飞侠)#b","银暴风手套#k(等级限制 : 30, 飞侠)#b","黄金暴风手套#k(等级限制 : 30, 飞侠)#b","紫矿追击手套#k(等级限制 : 35, 飞侠)#b","黄金追击手套#k(等级限制 : 35, 飞侠)#b","黄金侠客手套#k(等级限制 : 40, 飞侠)#b",
+				"黑侠客手套#k(等级限制 : 40, 飞侠)#b","赤月手套#k(等级限制 : 50, 飞侠)#b","黄月手套#k(等级限制 : 5, 飞侠)#b","钢铁柔丝手套#k(等级限制 : 60, 飞侠)#b","黄金柔丝手套#k(等级限制 : 60, 飞侠)#b");
             for (var i = 0; i < gloves.length; i++)
                 selStr += "\r\n#L" + i + "# " + gloves[i] + "#l";
             equip = true;
             cm.sendSimple(selStr);
         }
         else if (selectedType == 2){ //claw refine
-            var selStr = "So, what kind of claw would you like me to make?#b";
-            var claws = new Array ("Steel Titans#k - Thief Lv. 15#b","Bronze Igor#k - Thief Lv. 20#b","Meba#k - Thief Lv. 25#b","Steel Guards#k - Thief Lv. 30#b","Bronze Guardian#k - Thief Lv. 35#b","Steel Avarice#k - Thief Lv. 40#b","Steel Slain#k - Thief Lv. 50#b");
+            var selStr = "拳套是投飞镖时戴在手上的装备。对主要用短刀的飞侠作用不大。怎么样？你想做什么样的拳套？#b";
+            var claws = new Array ("钢铁拳套#k(等级限制 : 15, 飞侠)#b","青铜指虎#k(等级限制 : 20, 飞侠)#b","狼牙#k(等级限制 : 25, 飞侠)#b","钢铁斗拳#k(等级限制 : 30, 飞侠)#b","青铜守护拳套#k(等级限制 : 35, 飞侠)#b","钢铁护腕#k(等级限制 : 40, 飞侠)#b","钢铁手甲#k(等级限制 : 50, 飞侠)#b");
             for (var i = 0; i < claws.length; i++){
                 selStr += "\r\n#L" + i + "# " + claws[i] + "#l";
             }
@@ -92,9 +92,9 @@ function action(mode, type, selection) {
             cm.sendSimple(selStr);
         }
         else if (selectedType == 3){ //claw upgrade
-            var selStr = "An upgraded claw? Sure thing, but note that upgrades won't carry over to the new item...#b";
-            var claws = new Array ("Mithril Titans#k - Thief Lv. 15#b","Gold Titans#k - Thief Lv. 15#b","Steel Igor#k - Thief Lv. 20#b","Adamantium Igor#k - Thief Lv. 20#b","Mithril Guards#k - Thief Lv. 30#b","Adamantium Guards#k - Thief Lv. 30#b",
-                "Silver Guardian#k - Thief Lv. 35#b","Dark Guardian#k - Thief Lv. 35#b","Blood Avarice#k - Thief Lv. 40#b","Adamantium Avarice#k - Thief Lv. 40#b","Dark Avarice#k - Thief Lv. 40#b","Blood Slain#k - Thief Lv. 50#b","Sapphire Slain#k - Thief Lv. 50#b");
+            var selStr = "拳套是投飞镖时戴在手上的装备。对主要用短刀的飞侠作用不大。怎么样？你想做什么样的拳套？#b";
+            var claws = new Array ("锂矿拳套#k(等级限制 : 15, 飞侠)#b","黄金拳套#k(等级限制 : 15, 飞侠)#b","钢铁指虎#k(等级限制 : 20, 飞侠)#b","朱矿指虎#k(等级限制 : 20, 飞侠)#b","锂矿斗拳#k(等级限制 : 30, 飞侠)#b","朱矿斗拳#k(等级限制 : 30, 飞侠)#b",
+			"银守护拳套#k(等级限制 : 35, 飞侠)#b","黑守护拳套#k(等级限制 : 35, 飞侠)#b","赤红护腕#k(等级限制 : 40, 飞侠)#b","朱矿护腕#k(等级限制 : 40, 飞侠)#b","黑护腕#k(等级限制 : 40, 飞侠)#b","赤红手甲#k(等级限制 : 50, 飞侠)#b","蓝宝石手甲#k(等级限制 : 50, 飞侠)#b");
             for (var i = 0; i < claws.length; i++){
                 selStr += "\r\n#L" + i + "# " + claws[i] + "#l";
             }
@@ -102,8 +102,8 @@ function action(mode, type, selection) {
             cm.sendSimple(selStr);
         }
         else if (selectedType == 4){ //material refine
-            var selStr = "Materials? I know of a few materials that I can make for you...#b";
-            var materials = new Array ("Make Processed Wood with Tree Branch","Make Processed Wood with Firewood","Make Screws (packs of 15)");
+            var selStr = "你说你想做材料？好~你想做什么材料？#b";
+            var materials = new Array ("用树枝做木材","用木块做木材","做螺丝钉");
             for (var i = 0; i < materials.length; i++){
                 selStr += "\r\n#L" + i + "# " + materials[i] + "#l";
             }
@@ -126,7 +126,7 @@ function action(mode, type, selection) {
             cost = costSet[selectedItem];
         }
 		
-        var prompt = "So, you want me to make some #t" + item + "#s? In that case, how many do you want me to make?";
+        var prompt = "所以，你想我做一些#t" + item + "#s？要是你给我材料，我给你免费服务。怎么样？你想做几次？";
 		
         cm.sendGetNumber(prompt,1,1,100)
     }
@@ -180,13 +180,13 @@ function action(mode, type, selection) {
             cost = costSet[selectedItem];
         }
 		
-        var prompt = "You want me to make ";
+        var prompt = "你说你想做";
         if (qty == 1)
-            prompt += "a #t" + item + "#?";
+            prompt += "一个#t" + item + "#?";
         else
             prompt += qty + " #t" + item + "#?";
 			
-        prompt += " In that case, I'm going to need specific items from you in order to make it. Make sure you have room in your inventory, though!#b";
+        prompt += "这需要下面的物品，怎么样？想做吗？#b";
 		
         if (mats instanceof Array){
             for(var i = 0; i < mats.length; i++){
@@ -198,7 +198,7 @@ function action(mode, type, selection) {
         }
 		
         if (cost > 0)
-            prompt += "\r\n#i4031138# " + cost * qty + " meso";
+            prompt += "\r\n#i4031138# " + cost * qty + " 金币";
 		
         cm.sendYesNo(prompt);
     }
@@ -207,7 +207,7 @@ function action(mode, type, selection) {
 		
         if (cm.getMeso() < cost * qty)
         {
-            cm.sendOk("I'm afraid you cannot afford my services.")
+            cm.sendOk("请你确认是否有需要的物品或者背包的装备窗有没有空间。")
         }
         else
         {
@@ -226,7 +226,7 @@ function action(mode, type, selection) {
         }
 			
         if (!complete)
-            cm.sendOk("What are you tyring to pull? I can't make anything unless you bring me what I ask for.");
+            cm.sendOk("请你确认是否有需要的物品或者背包的装备窗有没有空间。");
         else {
             if (mats instanceof Array) {
                 for (var i = 0; i < mats.length; i++){
@@ -241,7 +241,7 @@ function action(mode, type, selection) {
                 cm.gainItem(4003000, 15 * qty);
             else
                 cm.gainItem(item, qty);
-            cm.sendOk("All done. If you need anything else... Well, I'm not going anywhere.");
+            cm.sendOk("好！你的东西已经做好了，我的手艺果然不错！你看见过这么完美的东西吗？下次再来吧。");
         }
         cm.dispose();
     }

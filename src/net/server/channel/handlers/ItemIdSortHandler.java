@@ -45,34 +45,47 @@ public final class ItemIdSortHandler extends AbstractMaplePacketHandler {
 
     @Override
     public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        final MapleInventoryType pInvType = MapleInventoryType.getByType(slea.readByte());
-        if (pInvType == MapleInventoryType.UNDEFINED) {
-            c.announce(MaplePacketCreator.enableActions());
+    	MapleCharacter chr = c.getPlayer();
+        chr.getAutobanManager().setTimestamp(4, slea.readInt(), 3);
+        byte inventoryType = slea.readByte();
+        
+        if(!chr.isGM() || !ServerConstants.USE_ITEM_SORT) {
+			c.announce(MaplePacketCreator.enableActions());
+			return;
+		}
+        
+	if (inventoryType < 1 || inventoryType > 5) {
+            c.disconnect(false, false);
             return;
         }
-        final MapleInventory pInv = c.getPlayer().getInventory(pInvType); // Mode should correspond with MapleInventoryType
-        boolean sorted = false;
-
-        while (!sorted) {
-            final byte freeSlot = (byte) pInv.getNextFreeSlot();
-            if (freeSlot != -1) {
-                byte itemSlot = -1;
-                for (byte i = (byte) (freeSlot + 1); i <= pInv.getSlotLimit(); i++) {
-                    if (pInv.getItem(i) != null) {
-                        itemSlot = i;
-                        break;
-                    }
-                }
-                if (itemSlot > 0) {
-                    MapleInventoryManipulator.move(c, pInvType, itemSlot, freeSlot);
-                } else {
-                    sorted = true;
-                }
-            } else {
-                sorted = true;
+		
+         MapleInventory inventory = chr.getInventory(MapleInventoryType.getByType(inventoryType));
+         ArrayList<Item> itemarray = new ArrayList<>();
+         List<ModifyInventory> mods = new ArrayList<>();
+         for (short i = 1; i <= inventory.getSlotLimit(); i++) {
+             Item item = inventory.getItem(i);
+             if (item != null) {
+             	itemarray.add((Item) item.copy());
+             }
+         }
+         
+         Collections.sort(itemarray);
+         for (Item item : itemarray) {
+         	inventory.removeItem(item.getPosition());
+         }
+         
+         for (Item item : itemarray) {
+         	//short position = item.getPosition();
+             inventory.addItem(item);
+             if (inventory.getType().equals(MapleInventoryType.EQUIP)) {
+ 	            mods.add(new ModifyInventory(3, item));
+ 	            mods.add(new ModifyInventory(0, item.copy()));//to prevent crashes
+ 	            //mods.add(new ModifyInventory(2, item.copy(), position));
             }
         }
-        c.announce(MaplePacketCreator.finishedSort(pInvType.getType()));
+        itemarray.clear();
+        c.announce(MaplePacketCreator.modifyInventory(true, mods));
+        c.announce(MaplePacketCreator.finishedSort2(inventoryType));
         c.announce(MaplePacketCreator.enableActions());
     }
 }

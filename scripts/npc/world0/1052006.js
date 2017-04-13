@@ -3,7 +3,7 @@ var zones = 0;
 var cost = 1000;
 
 function start() {
-    cm.sendNext("Hi, I'm the ticket salesman.");
+    cm.sendNext("你好，我是售票员。");
     if (cm.isQuestStarted(2055) || cm.isQuestCompleted(2055))
         zones++;
     if (cm.isQuestStarted(2056) || cm.isQuestCompleted(2056))
@@ -22,14 +22,14 @@ function action(mode, type, selection) {
         if (zones == 0)
             cm.dispose();
         else {
-            var selStr = "Which ticket would you like?#b";
+            var selStr = "你想进去就要买票。买票后你通过右边的#p1052007#可以进去。买什么票？#b";
             for (var i = 0; i < zones; i++)
-                selStr += "\r\n#L" + i + "#Construction site B" + (i+1) + " (" + cost + " mesos)#l";
+                selStr += "\r\n#L" + i + "#工地B" + (i+1) + " (" + cost + "金币)#l";
             cm.sendSimple(selStr);
         }
     } else if (status == 1) {
         if (cm.getMeso() < cost)
-            cm.sendOk("You do not have enough mesos.");
+            cm.sendOk("你没有足够的金币。");
         else {
             cm.gainMeso(-cost);
 			if(selection < 0 || selection > zones) {

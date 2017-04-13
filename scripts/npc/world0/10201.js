@@ -22,19 +22,19 @@
 var status = -1;
 
 function start() {
-    cm.sendNext("Magicians are armed with flashy element-based spells and secondary magic that aids party as a whole. After the 2nd job adv., the elemental-based magic will provide ample amount of damage to enemies of opposite element.");
+    cm.sendNext("魔法师可以使用华丽效果的属性魔法,并可以在组队打猎中使用非常有用的辅助魔法.二转后学习的属性魔法可以给相反属性的敌人致命的伤害哦。");
 }
 
 function action(mode, type, selection) {
     status++;
     if (mode != 1){
         if(mode == 0)
-           cm.sendNext("If you wish to experience what it's like to be a Magician, come see me again.");
+           cm.sendNext("如果你想体验魔法师的话，就来找我吧。");
         cm.dispose();
         return;
     }
     if (status == 0) {
-        cm.sendYesNo("Would you like to experience what it's like to be a Magician?");
+        cm.sendYesNo("怎么样？你想体验魔法师吗？");
     } else if (status == 1){
 	cm.lockUI();
         cm.warp(1020200, 0);
