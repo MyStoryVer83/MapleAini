@@ -83,18 +83,17 @@ public class PortalScriptManager {
     }
 
     public boolean executePortalScript(MaplePortal portal, MapleClient c) {
-        try {
-            PortalScript script = getPortalScript(portal.getScriptName());
-            if (script != null) {
+        PortalScript script = getPortalScript(portal.getScriptName());
+        if (script != null) {
+            try {
                 System.err.println("正在使用" + portal.getScriptName() + "进行传送。");
                 return script.enter(new PortalPlayerInteraction(c, portal));
-            } else {
+            } catch (Exception e) {
+                System.err.println("脚本出错" + portal.getScriptName() + ":" + e);
+                FilePrinter.printError(FilePrinter.PORTAL + portal.getScriptName() + ".txt", e);
+            }            
+        } else {
             System.out.println("缺少脚本" + portal.getScriptName() + " 所在地图：" + c.getPlayer().getMapId());
-            }
-        } catch (UndeclaredThrowableException ute) {
-            FilePrinter.printError(FilePrinter.PORTAL + portal.getScriptName() + ".txt", ute);
-        } catch (final Exception e) {
-            FilePrinter.printError(FilePrinter.PORTAL + portal.getScriptName() + ".txt", e);
         }
         return false;
     }
