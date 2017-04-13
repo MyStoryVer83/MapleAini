@@ -41,7 +41,7 @@ function action(mode, type, selection) {
     } else {
         status++;
         if (status == 0) 
-            cm.sendSimple("I'm the head of this hair salon. If you have a #b#t5150001##k or a #b#t5151001##k allow me to take care of your hairdo. Please choose the one you want.\r\n#L0#I want to buy a coupon!#l\r\n#L1#Haircut: #i5150001##t5150001##l\r\n#L2#Dye your hair: #i5151001##t5151001##l");
+            cm.sendSimple("你好,我是射手村人见人爱的射手村店长!如果你有#b射手村美发店高级会员卡#k或#b射手村染发高级会员卡#k,你就放心的把发型交给我,我会让你满意的.那么你要做什么?请选择吧!.\r\n#L0#I want to buy a coupon!#l\r\n#L1#Haircut: #i5150001##t5150001##l\r\n#L2#Dye your hair: #i5151001##t5151001##l");
         else if (status == 1) {
             if (selection == 0) {
                 beauty = 0;

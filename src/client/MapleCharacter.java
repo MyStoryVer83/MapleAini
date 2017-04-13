@@ -845,8 +845,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
             return FameStatus.OK;
         } else if (lastfametime >= System.currentTimeMillis() - 3600000 * 24) {
             return FameStatus.NOT_TODAY;
-        } else if (lastmonthfameids.contains(Integer.valueOf(from.getId()))) {
-            return FameStatus.NOT_THIS_MONTH;
+        //} else if (lastmonthfameids.contains(Integer.valueOf(from.getId()))) {
+            //return FameStatus.NOT_THIS_MONTH;
         } else {
             return FameStatus.OK;
         }
@@ -5283,5 +5283,18 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 
     public boolean isRideFinished() {
         return travelTime < System.currentTimeMillis();
+    }
+    
+    public int partyMembersInMap() {
+        int inMap = 0;
+        if (getParty() == null) {
+            return inMap;
+        }
+        for (MapleCharacter char2 : getMap().getCharactersThreadsafe()) {
+            if (char2.getParty() != null && char2.getParty().getId() == getParty().getId()) {
+                inMap++;
+            }
+        }
+        return inMap;
     }
 }

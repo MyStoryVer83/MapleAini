@@ -2,13 +2,13 @@
     if(cm.haveItem(4031045)){
         var em = cm.getEventManager("Boats");
         if (em.getProperty("entry") == "true")
-            cm.sendYesNo("Do you want to go to Orbis?");
+            cm.sendYesNo("坐上船之后，需要飞很久才能到达目的地。如果你在这里有急事要办的话，请先把事情办完，怎么样？你要上船吗？");
         else{
-            cm.sendOk("The boat to Orbis is ready to take off, please be patience for next one.");
+            cm.sendOk("脚本发生错误，请联系管理员解决.");
             cm.dispose();
         }
     }else{
-        cm.sendOk("Make sure you got a Orbis ticket to travel in this boat. Check your inventory.");
+        cm.sendOk("请在前方购买船票.");
         cm.dispose();
     }
 }

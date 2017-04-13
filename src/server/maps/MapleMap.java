@@ -135,6 +135,7 @@ public class MapleMap {
     // CPQ
     private boolean respawning = true;
     private MCWZData mcpqData;
+    private final ReentrantReadWriteLock charactersLock = new ReentrantReadWriteLock();
 
     public MapleMap(int mapid, int world, int channel, int returnMapId, float monsterRate) {
         this.mapid = mapid;
@@ -2393,5 +2394,20 @@ public class MapleMap {
 
     public void setMCPQData(MCWZData data) {
         this.mcpqData = data;
+    }
+    
+    public final List<MapleCharacter> getCharactersThreadsafe() {
+        final List<MapleCharacter> chars = new ArrayList<MapleCharacter>();
+
+
+        charactersLock.readLock().lock();
+        try {
+            for (MapleCharacter mc : characters) {
+                chars.add(mc);
+            }
+        } finally {
+            charactersLock.readLock().unlock();
+        }
+        return chars;
     }
 }

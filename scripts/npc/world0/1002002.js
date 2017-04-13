@@ -1,68 +1,70 @@
-/*
-	This file is part of the OdinMS Maple Story Server
-    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
-		       Matthias Butz <matze@odinms.de>
-		       Jan Christian Meyer <vimes@odinms.de>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 /* Author: Xterminator
 	NPC Name: 		Pison
 	Map(s): 		Victoria Road : Lith Harbor (104000000)
 	Description: 		Florina Beach Tour Guide
- */
+*/
+importPackage(net.sf.cherry.server.maps);
+
 var status = 0;
 
 function start() {
-    cm.sendSimple("Have you heard of the beach with a spectacular view of the ocean called #bFlorina Beach#k, located near Lith Harbor? I can take you there right now for either #b1500 mesos#k, or if you have a #bVIP Ticket to Florina Beach#k with you, in which case you'll be there for free.\r\n\r\n#L0##b I'll pay 1500 mesos.#l\r\n#L1# I have a VIP Ticket to Florina Beach.#l\r\n#L2# What is a VIP Ticket to Florina Beach#k?#l");
+	status = -1;
+	action(1, 0, 0);
 }
 
 function action(mode, type, selection) {
-    status++;
-    if (mode != 1)
-        if((mode == 0 && type == 1) || mode == -1 || (mode == 0 && status == 1)){
-            if(type == 1)
-                cm.sendNext("You must have some business to take care of here. You must be tired from all that traveling and hunting. Go take some rest, and if you feel like changing your mind, then come talk to me.");
-            cm.dispose();
-            return;
-        } else
-            status -= 2;
-    if (selection == 0)
-        status++;
-    if(status == 1){
-        if(selection == 1)
-            cm.sendYesNo("So you have a #bVIP Ticket to Florina Beach#k? You can always head over to Florina Beach with that. Alright then, but just be aware that you may be running into some monsters there too. Okay, would you like to head over to Florina Beach right now?");
-        else if (selection == 2)
-            cm.sendNext("You must be curious about a #bVIP Ticket to Florina Beach#k. Haha, that's very understandable. A VIP Ticket to Florina Beach is an item where as long as you have in possession, you may make your way to Florina Beach for free. It's such a rare item that even we had to buy those, but unfortunately I lost mine a few weeks ago during my precious summer break.");
-    } else if (status == 2){
-        if(type != 1 && selection != 0) {
-            cm.sendNextPrev("I came back without it, and it just feels awful not having it. Hopefully someone picked it up and put it somewhere safe. Anyway, this is my story and who knows, you may be able to pick it up and put it to good use. If you have any questions, feel free to ask.");
+	if (mode == -1) {
+		cm.dispose();
+	} else {
+		if (status == 0 && mode == 0) {
 			cm.dispose();
-		} else{
-            if (cm.getMeso() < 1500 && selection == 0)
-                cm.sendNext("I think you're lacking mesos. There are many ways to gather up some money, you know, like... selling your armor... defeating monsters... doing quests... you know what I'm talking about.");
-            else if(!cm.haveItem(4031134) && selection != 0){
-                cm.sendNext("Hmmm, so where exactly is your #bVIP Ticket to Florina\r\nBeach#k? Are you sure you have one? Please double-check.");
-            }else{
-                if(selection == 0)
-                    cm.gainMeso(-1500);
-                cm.getPlayer().saveLocation("FLORINA");
-                cm.warp(110000000);
-            }
-            cm.dispose();
-        }
-    }
+			return;
+		} else if (status <= 2 && mode == 0) {
+			cm.sendNext("看来你在这里有些事还没有办完嘛？身心疲惫的时候到这黄金海滩休息放松一下也不错。");
+			cm.dispose();
+			return;
+		}
+		if (mode == 1)
+			status++;
+		else
+			status--;
+		if (status == 0) {
+			cm.sendSimple("你听说过在离明珠港不远的地方有个叫#b黄金海滩#k的美丽海滩吗？只要你有#b1500金币#k或#b自由旅行卷#k，我就送你到那里去。怎么样？想不想去黄金海滩？\r\n\r\n#L0##b我想付1500金币#l\r\n#L1#我有自由旅行卷#l\r\n#L2#自由旅行卷#k是什么?#l");
+		} else if (status == 1) {
+			if (selection == 0) {
+				cm.sendYesNo("你要付#b1500金币#k去黄金海滩吗？好~但那里也有怪物。你不要忘记准备。那我去准备出发。怎么样？你想现在去黄金海滩吗？");
+			} else if (selection == 1) {
+				status = 2;
+				cm.sendYesNo("你有#b自由旅行卷#k吗？有那个随时可以去黄金海滩。好~但那里也有怪物。你不要忘记准备。那我去准备出发怎么样？你想现在去黄金海滩吗？");
+			} else if (selection == 2) {
+				status = 4;
+				cm.sendNext("呼呼。。。你想知道#b自由旅行卷#k是什么？如果你有自由旅行卷，你随时可以免费去黄金海滩。这张票是很特别的，我们也一直严格管理，但几天前我去地球本部的时候弄丢了。");
+			}
+		} else if (status == 2) {
+			if (cm.getMeso() < 1500) {
+				cm.sendNext("你金币好像不够吧？多赚点钱再来吧。你可以把你穿的衣服卖掉……或者在海边打猎，怪物会掉落金币……赚钱的办法很多呀！");
+				cm.dispose();
+			} else {
+				cm.gainMeso(-1500);
+				cm.getChar().saveLocation(SavedLocationType.FLORINA);
+				cm.warp(110000000, 0);
+				cm.dispose();
+			}
+		} else if (status == 3) {
+			if (cm.haveItem(4031134)) {
+				cm.getChar().saveLocation(SavedLocationType.FLORINA);
+				cm.warp(110000000, 0);
+				cm.dispose();
+			} else {
+				cm.sendNext("哼……#b自由旅行卷#k在哪里？确实有吗？你再确认吧。");
+				cm.dispose();
+			}
+		} else if (status == 4) {
+			cm.sendNext("呼呼……你想知道#b自由旅行卷#k是什么？如果你有自由旅行卷，你随时可以免费去黄金海滩。这张票是很特别的，我们也一直严格管理，但几天前我去地球本部的时候弄丢了。");
+		} else if (status == 5) {
+			cm.sendNextPrev("可惜我还没找回了它。希望地球本部的某人能找到它。如果你有机会去地球本部找我们那个票吧。可能对你很有用。");
+		} else if (status == 6) {
+			cm.dispose();
+		}
+	}
 }

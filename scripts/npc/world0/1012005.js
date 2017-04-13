@@ -1,145 +1,170 @@
-/*
-	This file is part of the OdinMS Maple Story Server
-    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
-		       Matthias Butz <matze@odinms.de>
-		       Jan Christian Meyer <vimes@odinms.de>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 /* Author: Xterminator
-	NPC Name: 		Cloy
+	NPC Name: 		Cloy(科洛伊)
 	Map(s): 		Victoria Road : Henesys Park (100000200)
-	Description: 		Pet Master
- */
-var status = -1;
-var sel;
+	Description: 		Pet Master(宠物专家)
+*/
+var status = 0;
 
 function start() {
-    cm.sendNext("Hmm... are you raising one of my kids by any chance? I perfected a spell that uses Water of Life to blow life into a doll. People call it the #bPet#k. If you have one with you, feel free to ask me questions.");
+	status = -1;
+	action(1, 0, 0);
 }
 
 function action(mode, type, selection) {
-    status++;
-    if (mode != 1) {
-        if(mode == 0 && status >= 2)
-            status -= 2;
-        else{
-            cm.dispose();
-            return;
-        }
-    }
-    if (status == 0)
-        cm.sendSimple("What do you want to know more of?#b\r\n#L0#Tell me more about Pets.#l\r\n#L1#How do I raise Pets?#l\r\n#L2#Do Pets die too?#l\r\n#L3#What are the commands for Brown and Black Kitty?#l\r\n#L4#What are the commands for Brown Puppy?#l\r\n#L5#What are the commands for Pink and White Bunny?#l\r\n#L6#What are the commands for Mini Kargo?#l\r\n#L7#What are the commands for Rudolph and Dasher?#l\r\n#L8#What are the commands for Black Pig?#l\r\n#L9#What are the commands for Panda?#l\r\n#L10#What are the commands for Husky?#l\r\n#L11#What are the commands for Dino Boy and Dino Girl?#l\r\n#L12#What are the commands for Monkey?#l\r\n#L13#What are the commands for Turkey?#l\r\n#L14#What are the commands for White Tiger?#l\r\n#L15#What are the commands for Penguin?#l\r\n#L16#What are the commands for Golden Pig?#l\r\n#L17#What are the commands for Robot?#l\r\n#L18#What are the commands for Mini Yeti?#l\r\n#L19#What are the commands for Jr. Balrog?#l\r\n#L20#What are the commands for Baby Dragon?#l\r\n#L21#What are the commands for Green/Red/Blue Dragon?#l\r\n#L22#What are the commands for Black Dragon?#l\r\n#L23#What are the commands for Jr. Reaper?#l\r\n#L24#What are the commands for Porcupine?#l\r\n#L25#What are the commands for Snowman?#l\r\n#L26#What are the commands for Skunk?#l\r\n#L27#Please teach me about transferring pet ability points.#l");
-    else if (status == 1) {
-        sel = selection;
-        if (selection == 0) {
-            status = 3;
-            cm.sendNext("So you want to know more about Pets. Long ago I made a doll, sprayed Water of Life on it, and cast spell on it to create a magical animal. I know it sounds unbelievable, but it's a doll that became an actual living thing. They understand and follow people very well.");
-        } else if (selection == 1) {
-            status = 6;
-            cm.sendNext("Depending on the command you give, pets can love it, hate, and display other kinds of reactions to it. If you give the pet a command and it follows you well, your intimacy goes up. Double click on the pet and you can check the intimacy, level, fullness and etc...");
-        } else if (selection == 2) {
-            status = 11;
-            cm.sendNext("Dying... well, they aren't technically ALIVE per se, so I don't know if dying is the right term to use. They are dolls with my magical power and the power of Water of Life to become a live object. Of course while it's alive, it's just like a live animal...");
-        } else if (selection == 3)
-            cm.sendNext("These are the commands for #rBrown Kitty and Black Kitty#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badgirl, badboy#k (Level 1 ~ 30)\r\n#bstupid, ihateyou, dummy#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1~30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#btalk, say, chat#k (Level 10 ~ 30)\r\n#bcutie#k (Level 10 ~ 30)\r\n#bup, stand, rise#k (Level 20 ~ 30)");
-        else if (selection == 4)
-            cm.sendNext("These are the commands for #rBrown Puppy#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badgirl, badboy#k (Level 1 ~ 30)\r\n#bstupid, ihateyou, baddog, dummy#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1~30)\r\n#bpee#k (Level 1 ~ 30)\r\n#btalk, say, chat#k (Level 10 ~ 30)\r\n#bdown#k (Level 10 ~ 30)\r\n#bup, stand, rise#k (Level 20 ~ 30)");
-        else if (selection == 5)
-            cm.sendNext("These are the commands for #rPink Bunny and White Bunny#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badgirl, badboy#k (Level 1 ~ 30)\r\n#bup, stand, rise#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1~30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#btalk, say, chat#k (Level 10 ~ 30)\r\n#bhug#k (Level 10 ~ 30)\r\n#bsleep, sleepy, gotobed#k (Level 20 ~ 30)");
-        else if (selection == 6)
-            cm.sendNext("These are the commands for #rMini Kargo#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badgirl, badboy#k (Level 1 ~ 30)\r\n#bup, stand, rise#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1~30)\r\n#bpee#k (Level 1 ~ 30)\r\n#btalk, say, chat#k (Level 10 ~ 30)\r\n#bthelook, charisma#k (Level 10 ~ 30)\r\n#bdown#k (Level 10 ~ 30)\r\n#bgoodboy, goodgirl#k (Level 20 ~ 30)");
-        else if (selection == 7)
-            cm.sendNext("These are the commands for #rRudolph and Dasher#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badgirl, badboy#k (Level 1 ~ 30)\r\n#bup, stand#k (Level 1 ~ 30)\r\n#bstupid, ihateyou, dummy#k (Level 1 ~ 30)\r\n#bmerryxmas, merrychristmas#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1~30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#btalk, say, chat#k (Level 11 ~ 30)\r\n#blonely, alone#k (Level 11 ~ 30)\r\n#bcutie#k (Level 11 ~ 30)\r\n#bmush, go#k (Level 21 ~ 30)");
-        else if (selection == 8)
-            cm.sendNext("These are the commands for #rBlack Pig#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badgirl, badboy#k (Level 1 ~ 30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1~30)\r\n#bhand#k (Level 1 ~ 30)\r\n#bstupid, ihateyou, dummy#k (Level 1 ~ 30)\r\n#btalk, chat, say#k (Level 10 ~ 30)\r\n#bsmile#k (Level 10 ~ 30)\r\n#bthelook, charisma#k (Level 20 ~ 30)");
-        else if (selection == 9)
-            cm.sendNext("These are the commands for #rPanda#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bchill, relax#k (Level 1 ~ 30)\r\n#bbad, no, badgirl, badboy#k (Level 1 ~ 30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1 ~ 30)\r\n#bup, stand, rise#k (Level 1 ~ 30)\r\n#btalk, chat, say#k (Level 10 ~ 30)\r\n#bletsplay#k (Level 10 ~ 30)\r\n#bmeh, bleh#k (Level 10 ~ 30)\r\n#bsleep#k (Level 20 ~ 30)");
-        else if (selection == 10)
-            cm.sendNext("These are the commands for #rHusky#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badgirl, badboy#k (Level 1 ~ 30)\r\n#bstupid, ihateyou, baddog, dummy#k (Level 1 ~ 30)\r\n#bhand#k (Level 1 ~ 30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1 ~ 30)\r\n#bdown#k (Level 10 ~ 30)\r\n#btalk, chat, say#k (Level 10 ~ 30)\r\n#bup, stand, rise#k (Level 20 ~ 30)");
-        else if (selection == 11)
-            cm.sendNext("These are the commands for #rDino Boy and Dino Girl#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badboy, badgirl#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1 ~ 30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#bsmile, laugh#k (Level 1 ~ 30)\r\n#bstupid, ihateyou, dummy#k (Level 1 ~ 30)\r\n#btalk, chat, say#k (Level 10 ~ 30)\r\n#bcutie#k (Level 10 ~ 30)\r\n#bsleep, nap, sleepy#k (Level 20 ~ 30)");
-        else if (selection == 12)
-            cm.sendNext("These are the commands for #rMonkey#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#brest#k (Level 1 ~ 30)\r\n#bbad, no, badboy, badgirl#k (Level 1 ~ 30)\r\n#bpee#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1 ~ 30)\r\n#bup, stand#k (Level 1 ~ 30)\r\n#btalk, chat, say#k (Level 10 ~ 30)\r\n#bplay#k (Level 10 ~ 30)\r\n#bmelong#k (Level 10 ~ 30)\r\n#bsleep, gotobed, sleepy#k (Level 20 ~ 30)");
-        else if (selection == 13)
-            cm.sendNext("These are the commands for #rTurkey#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bno, rudeboy, mischief#k (Level 1 ~ 30)\r\n#bstupid#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1 ~ 30)\r\n#bup, stand#k (Level 1 ~ 30)\r\n#btalk, chat, gobble#k (Level 10 ~ 30)\r\n#byes, goodboy#k (Level 10 ~ 30)\r\n#bsleepy, birdnap, doze#k (Level 20 ~ 30)\r\n#bbirdeye, thanksgiving, fly, friedbird, imhungry#k (Level 30)");
-        else if (selection == 14)
-            cm.sendNext("These are the commands for #rWhite Tiger#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badboy, badgirl#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1 ~ 30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#brest, chill#k (Level 1 ~ 30)\r\n#bstupid, ihateyou, dummy#k (Level 1 ~ 30)\r\n#btalk, chat, say#k (Level 10 ~ 30)\r\n#bactsad, sadlook#k (Level 10 ~ 30)\r\n#bwait#k (Level 20 ~ 30)");
-        else if (selection == 15)
-            cm.sendNext("These are the commands for #rPenguin#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badboy, badgirl#k (Level 1 ~ 30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#bup, stand, rise#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1 ~ 30)\r\n#btalk, chat, say#k (Level 10 ~ 30)\r\n#bhug, hugme#k (Level 10 ~ 30)\r\n#bwing, hand#k (Level 10 ~ 30)\r\n#bsleep#k (Level 20 ~ 30)\r\n#bkiss, smooch, muah#k (Level 20 ~ 30)\r\n#bfly#k (Level 20 ~ 30)\r\n#bcute, adorable#k (Level 20 ~ 30)");
-        else if (selection == 16)
-            cm.sendNext("These are the commands for #rGolden Pig#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badboy, badgirl#k (Level 1 ~ 30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1 ~ 30)\r\n#btalk, chat, say#k (Level 11 ~ 30)\r\n#bloveme, hugme#k (Level 11 ~ 30)\r\n#bsleep, sleepy, gotobed#k (Level 21 ~ 30)\r\n#bignore / impressed / outofhere#k (Level 21 ~ 30)\r\n#broll, showmethemoney#k (Level 21 ~ 30)");
-        else if (selection == 17)
-            cm.sendNext("These are the commands for #rRobot#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bup, stand, rise#k (Level 1 ~ 30)\r\n#bstupid, ihateyou, dummy#k (Level 1 ~ 30)\r\n#bbad, no, badgirl, badboy#k (Level 1 ~ 30)\r\n#battack, charge#k (Level 1 ~ 30)\r\n#biloveyou#k (Level 1 ~ 30)\r\n#bgood, thelook, charisma#k (Level 11 ~ 30)\r\n#bspeack, talk, chat, say#k (Level 11 ~ 30)\r\n#bdisguise, change, transform#k (Level 11 ~ 30)");
-        else if (selection == 18)
-            cm.sendNext("These are the commands for #rMini Yeti#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad, no, badboy, badgirl#k (Level 1 ~ 30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#bdance, boogie, shakeit#k (Level 1 ~ 30)\r\n#bcute, cutie, pretty, adorable#k (Level 1 ~ 30)\r\n#biloveyou, likeyou, mylove#k (Level 1 ~ 30)\r\n#btalk, chat, say#k (Level 11 ~ 30)\r\n#bsleep, nap, sleepy, gotobed#k (Level 11 ~ 30)");
-        else if (selection == 19)
-            cm.sendNext("These are the commands for #rJr. Balrog#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bliedown#k (Level 1 ~ 30)\r\n#bno|bad|badgirl|badboy#k (Level 1 ~ 30)\r\n#biloveyou|mylove|likeyou#k (Level 1 ~ 30)\r\n#bcute|cutie|pretty|adorable#k (Level 1 ~ 30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#bsmirk|crooked|laugh#k (Level 1 ~ 30)\r\n#bmelong#k (Level 11 ~ 30)\r\n#bgood|thelook|charisma#k (Level 11 ~ 30)\r\n#bspeak|talk|chat|say#k (Level 11 ~ 30)\r\n#bsleep|nap|sleepy#k (Level 11 ~ 30)\r\n#bgas#k (Level 21 ~ 30)");
-        else if (selection == 20)
-            cm.sendNext("These are the commands for #rBaby Dragon#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bno|bad|badgirl|badboy#k (Level 1 ~ 30)\r\n#biloveyou|loveyou#k (Level 1 ~ 30)\r\n#bpoop#k (Level 1 ~ 30)\r\n#bstupid|ihateyou|dummy#k (Level 1 ~ 30)\r\n#bcutie#k (Level 11 ~ 30)\r\n#btalk|chat|say#k (Level 11 ~ 30)\r\n#bsleep|sleepy|gotobed#k (Level 11 ~ 30)");
-        else if (selection == 21)
-            cm.sendNext("These are the commands for #rGreen/Red/Blue Dragon#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 15 ~ 30)\r\n#bno|bad|badgirl|badboy#k (Level 15 ~ 30)\r\n#biloveyou|loveyou#k (Level 15 ~ 30)\r\n#bpoop#k (Level 15 ~ 30)\r\n#bstupid|ihateyou|dummy#k (Level 15 ~ 30)\r\n#btalk|chat|say#k (Level 15 ~ 30)\r\n#bsleep|sleepy|gotobed#k (Level 15 ~ 30)\r\n#bchange#k (Level 21 ~ 30)");
-        else if (selection == 22)
-            cm.sendNext("These are the commands for #rBlack Dragon#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 15 ~ 30)\r\n#bno|bad|badgirl|badboy#k (Level 15 ~ 30)\r\n#biloveyou|loveyou#k (Level 15 ~ 30)\r\n#bpoop#k (Level 15 ~ 30)\r\n#bstupid|ihateyou|dummy#k (Level 15 ~ 30)\r\n#btalk|chat|say#k (Level 15 ~ 30)\r\n#bsleep|sleepy|gotobed#k (Level 15 ~ 30)\r\n#bcutie, change#k (Level 21 ~ 30)");
-        else if (selection == 23)
-            cm.sendNext("These are the commands for #rJr. Reaper#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bno|bad|badgirl|badboy#k (Level 1 ~ 30)\r\n#bplaydead, poop#k (Level 1 ~ 30)\r\n#btalk|chat|say#k (Level 1 ~ 30)\r\n#biloveyou, hug#k (Level 1 ~ 30)\r\n#bsmellmyfeet, rockout, boo#k (Level 1 ~ 30)\r\n#btrickortreat#k (Level 1 ~ 30)\r\n#bmonstermash#k (Level 1 ~ 30)");
-        else if (selection == 24)
-            cm.sendNext("These are the commands for #rPorcupine#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bno|bad|badgirl|badboy#k (Level 1 ~ 30)\r\n#biloveyou|hug|goodboy#k (Level 1 ~ 30)\r\n#btalk|chat|say#k (Level 1 ~ 30)\r\n#bcushion|sleep|knit|poop#k (Level 1 ~ 30)\r\n#bcomb|beach#k (Level 10 ~ 30)\r\n#btreeninja#k (Level 20 ~ 30)\r\n#bdart#k (Level 20 ~ 30)");
-        else if (selection == 25)
-            cm.sendNext("These are the commands for #rSnowman#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bstupid, ihateyou, dummy#k (Level 1 ~ 30)\r\n#bloveyou, mylove, ilikeyou#k (Level 1 ~ 30)\r\n#bmerrychristmas#k (Level 1 ~ 30)\r\n#bcutie, adorable, cute, pretty#k (Level 1 ~ 30)\r\n#bcomb, beach/bad, no, badgirl, badboy#k (Level 1 ~ 30)\r\n#btalk, chat, say/sleep, sleepy, gotobed#k (Level 10 ~ 30)\r\n#bchang#k (Level 20 ~ 30)");
-        else if (selection == 26)
-            cm.sendNext("These are the commands for #rSkunk#k. The level mentioned next to the command shows the pet level required for it to respond.\r\n#bsit#k (Level 1 ~ 30)\r\n#bbad/no/badgirl/badboy#k (Level 1 ~ 30)\r\n#brestandrelax, poop#k (Level 1 ~ 30)\r\n#btalk/chat/say, iloveyou#k (Level 1 ~ 30)\r\n#bsnuggle/hug, sleep, goodboy#k (Level 1 ~ 30)\r\n#bfatty, blind, badbreath#k (Level 10 ~ 30)\r\n#bsuitup, bringthefunk#k (Level 20 ~ 30)");
-        else if (selection == 27) {
-            status = 14;
-            cm.sendNext("In order to transfer the pet ability points, closeness and level, Pet AP Reset Scroll is required. If you take this\r\nscroll to Mar the Fairy in Ellinia, she will transfer the level and closeness of the pet to another one. I am especially giving it to you because I can feel your heart for your pet. However, I can't give this out for free. I can give you this book for 250,000 mesos. Oh, I almost forgot! Even if you have this book, it is no use if you do not have a new pet to transfer the Ability points.");
-        }
-        if(selection > 2 && selection < 27)
-            cm.dispose();
-    } else if (status == 2) {
-        if(sel == 0)
-            cm.sendNextPrev("But Water of Life only comes out little at the very bottom of the World Tree, so I can't give him too much time in life... I know, it's very unfortunate... but even if it becomes a doll again I can always bring life back into it so be good to it while you're with it.");
-        else if (sel == 1)
-            cm.sendNextPrev("Talk to the pet, pay attention to it and its intimacy level will go up and eventually his overall level will go up too. As the intimacy level rises, the pet's overall level will rise soon after. As the overall level rises, one day the pet may even talk like a person a little bit, so try hard raising it. Of course it won't be easy doing so...");
-        else if (sel == 2)
-            cm.sendNextPrev("After some time... that's correct, they stop moving. They just turn back to being a doll, after the effect of magic dies down and Water of Life dries out. But that doesn't mean it's stopped forever, because once you pour Water of Life over, it's going to be back alive.");
-        else if (sel == 27)
-            cm.sendYesNo("250,000 mesos will be deducted. Do you really want to buy?");
-    } else if (status == 3) {
-        if (sel == 0)
-            cm.sendNextPrev("Oh yeah, they'll react when you give them special commands. You can scold them, love them... it all\r\ndepends on how you take care of them. They are afraid to leave their masters so be nice to them, show them love. They can get sad and lonely fast...");
-        else if (sel == 1){
-            cm.sendNextPrev("It may be a live doll but they also have life so they can feel the hunger too. #bFullness#k shows the level of hunger the pet's in. 100 is the max, and the lower it gets, it means that the pet is getting hungrier. After a while, it won't even follow your command and be on the offensive, so watch out over that.");
-            return;
-        }else if (sel == 2)
-            cm.sendNextPrev("Even if it someday moves again, it's sad to see them stop altogether. Please be nice to them while they are alive and moving. Feed them well, too. Isn't it nice to know that there's something alive that follows and listens to only you?");
-        else if (sel == 27){
-            if (cm.getMeso() < 250000 || !cm.canHold(4160011))
-                cm.sendOk("Please check if your inventory has empty slot or you don't have enough mesos.");
-            else {
-                cm.gainMeso(-250000);
-                cm.gainItem(4160011, 1);
-            }
-            cm.dispose();
-        }
-    } else if (status == 4){
-        if(sel != 1)
-            cm.dispose();
-        cm.sendNextPrev("Oh yes! Pets can't eat the normal human food. Instead my disciple #bDoofus#k sells #bPet Food#k at the Henesys Market so if you need food for your pet, find Henesys. It'll be a good idea to buy the food in advance and feed the pet before it gets really hungry.");
-    } else if (status == 5)
-        cm.sendNextPrev("Oh, and if you don't feed the pet for a long period of time, it goes back home by itself. You can take it out of its home and feed it but it's not really good for the pet's health, so try feeding him on a regular basis so it doesn't go down to that level, alright? I think this will do.");
-    else if (status == 6)
-        cm.dispose();
+	if (mode == -1) {
+		cm.dispose();
+	} else {
+	if (status == 1 && mode == 0 || status == 5 && mode == 1 || status == 10 && mode == 1 || status == 13 && mode == 1 || status == 15 && mode == 0) {
+		cm.dispose();
+		return;
+	}
+	if (mode == 1)
+		status++;
+	else
+		status--;
+	if (status == 0) {
+		cm.sendNext("你…是不是带着我的孩子啊？用生命水的魔法，我成功研究出催生纸娃娃的魔法。人家把这样诞生的孩子叫宠物。如果你也有#b宠物#k，可以问我。");
+	} else if (status == 1) {
+		cm.sendSimple("你想问什么？#b\r\n#L0#告诉我关于宠物。#l\r\n#L1#怎么养宠物？#l\r\n#L2#宠物也会死吗？#l\r\n#L3#告诉我褐色小猫和黑色小猫的命令。#l\r\n#L4#告诉我褐色小狗的命令。#l\r\n#L5#告诉我粉红兔子和白色兔子的命令。#l\r\n#L6#告诉我小怪猫的命令。#l\r\n#L7#告诉我雪犬的命令。#l\r\n#L8#告诉我黑小猪的命令。#l\r\n#L9#告诉我熊猫的命令。#l\r\n#L10#告诉我猴子的命令。#l\r\n#L11#告诉我圣诞鹿的命令。#l\r\n#L12#告诉我恐龙王子的命令。#l\r\n#L13#告诉我恐龙公主的命令。#l\r\n#L14#告诉我云豹的命令。#l\r\n#L15#告诉我小白虎的命令。#l\r\n#L16#告诉我小白雪人的命令。#l\r\n#L17#告诉我小金猪的命令。#l\r\n#L18#告诉我小企企的命令。#l\r\n#L19#告诉我蝙蝠怪的命令。#l\r\n#L20#告诉我宝贝龙的命令。#l\r\n#L21#告诉我绿龙/红龙/蓝龙的命令。#l\r\n#L22#告诉我黑龙的命令。#l\r\n#L23#告诉我齐天大圣的命令。#l\r\n#L24#告诉我猪八戒的命令。#l\r\n#L25#W告诉我鬼灵精怪的命令。#l\r\n#L26#告诉我雪娃娃的命令。#l\r\n#L27#告诉我娃娃机器人的命令。#l\r\n#L28#告诉我机器人的命令。#l\r\n#L29#告诉我大猩猩机器人的命令。#l\r\n#L30#告诉我火鸡的命令。#l\r\n#L31#告诉我水晶银圣诞鹿的命令。#l\r\n#L32#告诉我巨嘴鸟的命令。#l\r\n#L33#告诉我品克缤的命令。#l\r\n#L34#告诉如何转移宠物能力值的命令。#l");
+	} else if (status == 2) {
+		if (selection == 0) {
+			status = 3;
+			cm.sendNext("想知道关于宠物的信息？很久以前，我在自己做的娃娃身上淋了点生命水，然后用魔法成功地把它变成魔法动物。你肯定不会相信吧！但是它们确实变成了有生命的动物，它们很听人类的话，而且天真可爱。");
+		} else if (selection == 1) {
+			status = 6;
+			cm.sendNext("宠物听到命令的时候，会表现出喜欢或不喜欢等多种的反应。如果你想你的宠物很听你的话，你们之间的亲密度要不断上升。如果它反抗的话，亲密度就会下降。你通过双击宠物，可以看到宠物的亲密度、等级、饱满度等。");
+		} else if (selection == 2) {
+			status = 11;
+			cm.sendNext("死亡嘛~其实这些宠物不是生命体，所以我也不能确定它们不会死。它们是用我的魔法和生命水做的，虽然外表和一般的动物一样…");
+		} else if (selection == 3) {
+			cm.sendNext("这些是#r褐色小猫和黑色小猫的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b笨蛋|傻瓜|讨厌#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b便便#k（等级1-30)\r\n#b说|说话|说吧#k（等级1-30）\r\n#b干得漂亮#k（等级1-30）\r\n#b站|站起来|起来#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 4) {
+			cm.sendNext("这些是#r褐色小狗的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b笨蛋|傻瓜|讨厌#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b嘘嘘#k（等级1-30）\r\n#b说|说话|说吧|叫#k（等级1-30）\r\n#b趴下#k（等级1-30）\r\n#b站|站起来|起来#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 5) {
+			cm.sendNext("这些是#r粉红兔子和白色兔子的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b站|站起来|起来#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b说|说话|说吧#k（等级1-30）\r\n#b拥抱#k（等级10-30）\r\n#b睡觉|休息#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 6) {
+			cm.sendNext("这些是#r小怪猫的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b站|站起来|起来#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b嘘嘘#k（等级1-30）\r\n#b说|说话|说吧#k（等级10-30）\r\n#b眨眼|眼光#k（等级10-30）\r\n#b卧倒#k（等级10-30）\r\n#b可爱|善良#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 7) {
+			cm.sendNext("这些是#r雪犬的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b笨蛋|傻瓜|讨厌#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b嘘嘘#k（等级1-30）\r\n#b说|说话|说吧|叫#k（等级1-30）\r\n#b趴下#k（等级1-30）\r\n#b站|站起来|起来#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 8) {
+			cm.sendNext("这些是#r黑小猪的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许可#k（等级1-30）\r\n#b笨蛋|傻瓜|讨厌#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b手#k（等级1-30）\r\n#b说|说话|说吧#k（等级10-30）\r\n#b笑|笑容#k（等级10-30）\r\n#b酷#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 9) {
+			cm.sendNext("这些是#r熊猫的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b站|站起来|起来#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b说|说话|说吧#k（等级10-30）\r\n#b拥抱#k（等级10-30）\r\n#b睡觉|休息#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 10) {
+			cm.sendNext("这些是#r猴子的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b休息#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b站|站起来|起来#k（等级10-30）\r\n#b说|说话|说吧#k（等级10-30）\r\n#b玩#k（等级10-30）\r\n#b吐舌头#k（等级10-30）\r\n#b睡觉|打瞌睡#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 11) {
+			cm.sendNext("这些是#r圣诞鹿的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b走#k（等级1-30）\r\n#b圣诞快乐#k（等级1-30）\r\n#b说|说话|说吧#k（等级10-30）\r\n#b站|站起来|起来#k（等级10-30）\r\n#b孤单#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 12) {
+			cm.sendNext("这些是#r恐龙王子的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b笑|笑容#k（等级1-30）\r\n#b笨蛋|傻瓜|讨厌#k（等级1-30）\r\n#b说|说话|说吧#k（等级10-30）\r\n#b可爱#k（等级10-30）\r\n#b睡觉|瞌睡吧|该睡了#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 13) {
+			cm.sendNext("这些是#r恐龙王子的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b笑|笑容#k（等级1-30）\r\n#b笨蛋|傻瓜|讨厌#k（等级1-30）\r\n#b说|说话|说吧#k（等级10-30）\r\n#b可爱#k（等级10-30）\r\n#b睡觉|瞌睡吧|该睡了#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 14) {
+			cm.sendNext("这些是#r云豹的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b休息#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b嘘嘘#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b站|站起来|起来#k（等级10-30）\r\n#b说|说话|说吧#k（等级20-30）\r\n#b吃东西|吃吧#k（等级10-30）\r\n#b笨蛋|傻瓜#k（等级10-30）\r\n#b没听到#k（等级10-30）");
+			cm.dispose();
+		} else if (selection == 15) {
+			cm.sendNext("这些是#r小白虎的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b休息#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b笨蛋|傻瓜|讨厌#k（等级10-30）\r\n#b说|说话|说吧#k（等级10-30）\r\n#b伤心|难受#k（等级10-30）\r\n#b等等#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 16) {
+			cm.sendNext("这些是#r小白雪人的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b跳舞|热舞|舞#k（等级1-30）\r\n#b喜欢|爱你|我的爱|最爱|喜欢小白雪人#k（等级1-30）\r\n#b说|说话|说吧#k（等级1-30）\r\n#b可爱|真可爱|漂亮|真棒|漂漂|美美#k（等级1-30）\r\n#b睡觉|休息|困#k（等级10-30）");
+			cm.dispose();
+		} else if (selection == 17) {
+			cm.sendNext("这些是#r小金猪#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b说|说话|说吧#k（等级10-30）\r\n#b爱我|拥抱#k（等级10-30）\r\n#b没听到#k（等级10-30）\r\n#b睡觉|瞌睡吧|该睡了#k（等级20-30）\r\n#b感动了#k（等级20-30）\r\n#b离开#k（等级20-30）\r\n#b给我看看金币|滚金币#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 18) {
+			cm.sendNext("这些是#r小企企的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不要|住手|不行|不许做#k（等级1-30）\r\n#b亲亲#k（等级1-30）\r\n#b站|起来|跳#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b说话|聊天|谈#k（等级10-30）\r\n#b抱抱|拥抱#k（等级10-30）\r\n#b飞翔|煽动#k（等级10-30）\r\n#b睡觉|瞌睡吧|该睡了#k（等级20-30）\r\n#b亲吻#k（等级20-30）\r\n#b飞#k（等级20-30）\r\n#b可爱|漂亮#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 19) {
+			cm.sendNext("这些是#r蝙蝠怪的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b躺下#k（等级1-30）\r\n#b不要|什么|会被揍|想挨揍？#k（等级1-30）\r\n#b爱你|喜欢你|我的爱#k（等级1-30）\r\n#b可爱|真可爱|漂亮|真棒|漂漂|美美#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b笑|微笑|笑一个|勉强笑#k（等级1-30）\r\n#b噜啦啦#k（等级10-30）\r\n#b眨眼|眼神#k（等级10-30）\r\n#b说|说话|说吧#k（等级10-30）\r\n#b睡觉|困|ZZ|好好睡#k（等级10-30）\r\n#b放屁|BungBung#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 20) {
+			cm.sendNext("这些是#r宝贝龙的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b#b坐#k（等级1-30）\r\n#b别乱来|住手|不行|不可以#k（等级1-30）\r\n#b爱你#k（等级1-30）\r\n#b笨蛋|傻瓜|讨厌#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b说|说话|讲话#k（等级10-30）\r\n#b可爱|漂亮#k（等级10-30）\r\n#b睡|睡觉|困#k（等级10-30）");
+			cm.dispose();
+		} else if (selection == 21) {
+			cm.sendNext("这些是#r绿龙/红龙/蓝龙的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐下#k（等级15-30）\r\n#b住手|不行|不可以#k（等级15-30）\r\n#b笨蛋|傻瓜|讨厌#k（等级15-30）\r\n#b便便#k（等级15-30）\r\n#b爱你#k（等级15-30）\r\n#b说|说话|讲话#k（等级15-30）\r\n#b睡|睡觉|困#k（等级15-30）\r\n#b变身#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 22) {
+			cm.sendNext("这些是#r黑龙的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐下#k（等级15-30）\r\n#b住手|不行|不可以#k（等级15-30）\r\n#b笨蛋|傻瓜|讨厌#k（等级15-30）\r\n#b便便#k（等级15-30）\r\n#b爱你#k（等级15-30）\r\n#b说|说话|讲话#k（等级15-30）\r\n#b睡|睡觉|困#k（等级15-30）\r\n#b可爱#k（等级20-30）\r\n#b变身#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 23) {
+			cm.sendNext("这些是#r齐天大圣的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b#b休息#k（等级1-30）\r\n#b别乱来|住手|不行|不可以#k（等级1-30）\r\n#b爱你|喜欢|我的爱#k（等级1-30）\r\n#b飞|飞起来|咻~#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b跳起来|跳跳|jump#k（等级1-30）\r\n#b乖乖|好乖#k（等级10-30）\r\n#b说|说吧|你说#k（等级10-30）\r\n#b睡觉|困|zzz|晚安#k（等级10-30）\r\n#b变身#k（等级10-30）");
+			cm.dispose();
+		} else if (selection == 24) {
+			cm.sendNext("这些是#r猪八戒的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐下#k（等级1-30）\r\n#b别乱来|住手|不行|不可以#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b可爱|漂亮|美丽|美美|漂漂|最棒|最赞|真美|#k（等级1-30）\r\n#b爱你|喜欢|我的爱|最爱#k（等级1-30）\r\n#b说|说吧|你说#k（等级10-30）\r\n#b睡觉|困|zzz|晚安#k（等级10-30）\r\n#b变身#k（等级10-30）");
+			cm.dispose();
+		} else if (selection == 25) {
+			cm.sendNext("这些是#r鬼灵精怪的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b坏的|否|坏女孩|坏男孩#k（等级1-30）\r\n#b装死#k（等级1-30）\r\n#b便便#k（等级1-30）\r\n#b交谈|聊天|说话#k（等级1-30）\r\n#b我爱你#k（等级1-30）\r\n#b拥抱#k（等级1-30）\r\n#b嗅我的脚#k（等级1-30）\r\n#b不给糖就捣蛋#k（等级1-30）\r\n#b怪兽撒娇#k（等级1-30）\r\n#b滚出去#k（等级1-30）\r\n#b发出嘘声#k（等级1-30）");
+			cm.dispose();
+		} else if (selection == 26) {
+			cm.sendNext("这些是#r雪娃娃的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b笨蛋|傻瓜|讨厌#k（等级1-30）\r\n#b爱你|喜欢|我的爱#k（等级1-30）\r\n#b圣诞快乐#k（等级1-30）\r\n#b可爱|漂亮|美丽|可爱#k（等级1-30）\r\n#b住手|不行|不可以|别乱来#k（等级1-30）\r\n#b说|说话|讲话#k（等级10-30）\r\n#b睡|睡觉|困|晚安#k（等级10-30）\r\n#b变身#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 27) {
+			cm.sendNext("这些是#r娃娃机器人的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐下#k（等级1-30）\r\n#b睡吧|困了吧|呼呼|晚安#k（等级1-30）\r\n#b教训|不行|发火|发怒#k（等级1-30）\r\n#b我爱你|我喜欢你|我的爱#k（等级1-30）\r\n#b傻瓜|讨厌|笨蛋#k（等级10-30）\r\n#b攻击|攻击开始#k（等级10-30）\r\n#b说话|说|告诉我#k（等级10-30）\r\n#b变身|出动#k（等级15-30）");
+			cm.dispose();
+		} else if (selection == 28) {
+			cm.sendNext("这些是#r机器人的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐下#k（等级15-30）\r\n#b站起|起立#k（等级15-30）\r\n#b傻瓜|讨厌|笨蛋#k（等级15-30）\r\n#b不行|发火|发怒#k（等级15-30）\r\n#b手|伸手#k（等级15-30）\r\n#b我爱你#k（等级15-30）\r\n#b攻击开始|攻击#k（等级50-30）\r\n#b睡吧|困了吧|呼呼|晚安#k（等级15-30）");
+			cm.dispose();
+		} else if (selection == 29) {
+			cm.sendNext("这些是#r大猩猩机器人的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐下#k（等级15-30）\r\n#b傻瓜|讨厌|笨蛋#k（等级15-30）\r\n#b不行|发火|发怒#k（等级15-30）\r\n#b我爱你#k（等级15-30）\r\n#b说话#k（等级15-30）\r\n#b攻击开始|攻击#k（等级15-30）\r\n#b睡吧|困了吧|呼呼|晚安#k（等级15-30）\r\n#b变身#k（等级15-30）");
+			cm.dispose();
+		} else if (selection == 30) {
+			cm.sendNext("这些是#r火鸡的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐下|送给我#k（等级1-30）\r\n#b做得好|很好|真善良|好善良#k（等级1-30）\r\n#b打它|不行|发火|发怒#k（等级1-30）\r\n#b做得漂亮|可爱|漂亮|真漂亮#k（等级1-30）\r\n#b我爱你|喜欢你|我的爱#k（等级1-30）\r\n#b说话啊|说话|和我说话#k（等级10-30）\r\n#b来|困了吧|呼呼|睡吧#k（等级10-30）");
+			cm.dispose();
+		} else if (selection == 31) {
+			cm.sendNext("这些是#r水晶银圣诞鹿的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐下#k（等级1-30）\r\n#b教训|不行|发火|发怒#k（等级1-30）\r\n#b开玩笑|别开玩笑#k（等级1-30）\r\n#b变身|使用特技#k（等级1-30）\r\n#b我爱你|很喜欢你|我的爱#k（等级1-30）\r\n#b说话|说|告诉我#k（等级10-30）\r\n#b睡吧|困了|想睡觉|好累#k（等级10-30）");
+			cm.dispose();
+		} else if (selection == 32) {
+			cm.sendNext("这些是#r巨嘴鸟的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐下#k（等级1-30）\r\n#b不行|发火|发怒#k（等级1-30）\r\n#b傻瓜|讨厌|笨蛋#k（等级1-30）\r\n#b我爱你#k（等级10-30）\r\n#b说话#k（等级10-30）\r\n#b睡吧|困了吧|呼呼|晚安#k（等级10-30）\r\n#b开始攻击#k（等级20-30）\r\n#b吹口哨#k（等级20-30）");
+			cm.dispose();
+		} else if (selection == 33) {
+			cm.sendNext("这些是#r品克缤的命令#k，命令旁边的数字是能听的懂这些命令的宠物等级。\r\n#b坐#k（等级1-30）\r\n#b不是|糟糕|糟糕的女孩|糟糕的男孩#k（等级1-30）\r\n#b拨弄|恶臭|傀儡|我讨厌你#k（等级1-30）\r\n#b噗#k（等级1-30）\r\n#b懒惰|傀儡|我讨厌你#k（等级10-30）\r\n#b说话|聊天|讲|喃喃自语#k（等级10-30）\r\n#b开我爱你|抱我|爱你#k（等级10-30）\r\n#b摇晃|音乐|魅力哨|晚安#k（等级20-30）\r\n#b鬼脸|笑话|嘘声#k（等级20-30）\r\n#b睡吧|睡觉|眼困#k（等级20-30）\r\n#b豆豆#k（等级30）");
+			cm.dispose();
+		} else if (selection == 34) {
+			status = 14;
+			cm.sendNext("需要魔法卷轴，宠物的能力值才能转移。拿着这本书去找在魔法森林的妖精玛丽，她会亲切的帮你把宠物的等级和亲密度转移到另一个宠物上。看在你对宠物百般爱惜的份上我就把书转给你。没有免费的哦。。。你要给我25万金币的话，我就转给你了。对了，有了书没有另一个宠物的话，是没有用的。");
+		}
+	} else if (status == 3) {
+		cm.sendNext("需要魔法卷轴，宠物的能力值才能转移。拿着这本书去找在魔法森林的妖精玛丽，她会亲切的帮你把宠物的等级和亲密度转移到另一个宠物上。看在你对宠物百般爱惜的份上我就把书转给你。没有免费的哦。。。你要给我25万金币的话，我就转给你了。对了，有了书没有另一个宠物的话，是没有用的。");
+	} else if (status == 4) {
+		cm.sendNextPrev("但是生命水只在这个世界的地下深处才能找到，而且数量很少。因此我不能长时间让它保持现在的状态。真可怜！不过，即使变回娃娃，也可以给它新的生命。所以你跟它在一起的时候一定要好好待它阿。");
+	} else if (status == 5) {
+		cm.sendNextPrev("啊！给那个孩子发出特定的命令，它们就会有反应。你可以带着它们奔跑，也可以逗它们玩。都由你决定。时间长了它们恐怕很难再离开你，所以你应该要宠爱它们。它们很怕孤独的…");
+	} else if (status == 6) {
+		cm.sendNext("宠物听到命令的时候，会表现出喜欢或不喜欢等多种的反应。如果你想你的宠物很听你的话，你们之间的亲密度要不断上升。如果它反抗的话，亲密度就会下降。你通过双击宠物，可以看到宠物的亲密度、等级、饱满度等。");
+	} else if (status == 7) {
+		cm.sendNextPrev("你跟宠物说关心它的话，亲密度和等级会上升。亲密度达到一定的数值宠物就会升级，高等级的宠物可以说人类的话。所以你应该好好的养宠物，虽然不太容易。");
+	} else if (status == 8) {
+		cm.sendNextPrev("虽然这些宠物的原型是娃娃，但现在它们都有自己的生命。所以它们也会觉得饿，#b饱满度#k表示它们饥饿的程度，100是最高的。但是饱满度降到一定的值，宠物就会反抗主人说的话，所以你要注意这一点。");
+	} else if (status == 9) {
+		cm.sendNextPrev("是啊！宠物不能吃人类的菜。所以我的门下#b科尔#k在射手村市场卖#b宠物食品#k。要是你需要宠物食品，就去射手村吧。宠物没力气的时候应该给多吃点宠物食品。");
+	} else if (status == 10) {
+		cm.sendNextPrev("啊！你很长时间不给它食物的话，它会自己跑回家的，当然你也可以叫他出来喂食，但是这样做对宠物的健康不太好。所以你要注意，每顿饭都要让它们吃。要防止发生这样的事儿！这么说明你明白了吧？");
+	} else if (status == 11) {
+		cm.sendNext("死亡嘛~其实这些宠物不是生命体，所以我也不能确定它们不会死。它们是用我的魔法和生命水做的，虽然外表和一般的动物一样…");
+	} else if (status == 12) {
+		cm.sendNextPrev("过一定的时间~对！它们会停止。它们会返回原来娃娃的样子，这是因为魔法和生命水的能力消失了。但是这却不是永远停止，再给它生命水的话，它又会复原的。");
+	} else if (status == 13) {
+		cm.sendNextPrev("虽然能够让它复活，但是让它停止也是很可怜的。所以你要真心地喜爱它们。应该每顿都给它们吃饭。不过怎么说，有个听从你的动物不也是一件很高兴的事吗？");
+	} else if (status == 15) {
+		cm.sendYesNo("消耗25万金币，确定要购买吗？");
+	} else if (status == 16) {
+		if (cm.getMeso() < 250000) {
+			cm.sendOk("好像你的道具栏没有空格或者你的金币不足。");
+		} else {
+			cm.gainMeso(-250000);
+			cm.gainItem(4160011, 1);
+			}
+			cm.dispose();
+		}
+	}
 }
