@@ -50,10 +50,10 @@ function action(mode, type, selection) {
 				if (status == 0)
 					cm.sendNext("Ohhhhh.. 你搜集到了#r30个含有黑暗力量的珠子#k 真是令人难以置信.. 你已经通过了测试，带上 #b英雄证书#k回去吧。");
 				else if (status == 1) {
-					cm.removeItem(4031013);
+					cm.removeAll(4031013);
 					cm.gainItem(4031011, -1);
 					cm.gainItem(4031012);
-					cm.warp(102020300, 0);
+					cm.warp(102040000, 0);
 					cm.dispose();
 				}
 			} else {
