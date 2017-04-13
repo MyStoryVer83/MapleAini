@@ -320,8 +320,8 @@ public class Commands {
 		case "commands":   //脚本命令不支持大写字母
 			player.yellowMessage("After you vote, talk to Rooney to get a leaf and redeem it for prizes!");
 			player.message("@jiasi: 解卡.");
-                        player.message("@reloadportal: 重载传送脚本.");
-                        player.message("@reloadevent: 重载事件脚本.");
+                        player.message("@reloadp: 重载传送脚本.");
+                        player.message("@reloade: 重载事件脚本.");
                         player.message("@reloadshop: 重载商店.");
                         player.message("@reloaddrop: 重载爆率.");
                         player.message("@mapid: 查看所在地图ID.");

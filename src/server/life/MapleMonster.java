@@ -374,7 +374,7 @@ public class MapleMonster extends AbstractLoadedMapleLife {
             }
             if (attacker.getParty() != null){
                 if (attacker.partyMembersInMap() > 1) {
-                    partyExp = attacker.partyMembersInMap() * personalExp; 
+                    partyExp += attacker.partyMembersInMap() * personalExp; 
                 }
             }
             attacker.gainExp(personalExp, partyExp, true, false, isKiller);
