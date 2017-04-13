@@ -1025,7 +1025,7 @@ public class MapleItemInformationProvider {
                 return false;
         }
     }
-
+       
     public boolean isCash(int itemId) {
         return itemId / 1000000 == 5 || getEquipStats(itemId).get("cash") == 1;
     }
