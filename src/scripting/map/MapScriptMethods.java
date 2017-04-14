@@ -107,7 +107,7 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
             smp.append("你获得了 <").append(questName).append(">").append(rewardstring);
             getPlayer().announce(MaplePacketCreator.getShowQuestCompletion(quest.getId()));
         } else {
-            getPlayer().announce(MaplePacketCreator.earnTitleMessage(status + "/" + infoex + " regions explored."));
+            getPlayer().announce(MaplePacketCreator.earnTitleMessage(status + "/" + infoex + " 地区探索."));
             etm.append("正在进行 ").append(questName).append(" 称号获取中.");
             smp.append("正在进行 ").append(questName).append(" 的称号. ").append(status).append("/").append(infoex);
         }

@@ -25,7 +25,7 @@ var cost;
 var status = 0;
 
 function start() {
-    cm.sendSimple("我可以兑换点卷\r\n#L0##b用枫叶兑换点卷#k#l\r\n#L1##aini叼不刁？#k#l");
+    cm.sendSimple("我可以兑换点卷\r\n#L0##b用枫叶兑换点卷#k#l\r\n#L1###kaini叼不刁？#l");
 }
 
 function action(mode, type, selection) {
@@ -46,21 +46,21 @@ function action(mode, type, selection) {
             cm.dispose();
         }
     } else if(status == 2) {
-        cm.sendGetNumber("#b#t4001126##k 每个可以换30点卷!",0,0,9999);
+        cm.sendGetNumber("#b#t4001126##k 每个可以换50点卷!",0,0,9999);
     } else if(status == 3) {
         if(selection == 0) {
             cm.sendOk("0是不允许的.");
             cm.dispose();
         } else {
             temp = selection;
-            cost = temp * 30;
+            cost = temp * 50;
             cm.sendYesNo("使用 #b"+temp+" 个#t4001126##k 换 #b"+cost+" 点卷#k . 真的这样做吗?");
         }
     } else if(status == 4) {
         if(!cm.haveItem(4001126, temp)) {
             cm.sendOk("你他吗的有这么多枫叶吗？别乱BB.");
         } else {
-            cm.sendOk("88~");
+            cm.sendOk("换好了 #b"+cost+" 点卷#k，88~");
             cm.gainItem(4001126, -temp);
             cm.getPlayer().getCashShop().gainCash(1, cost);
         }

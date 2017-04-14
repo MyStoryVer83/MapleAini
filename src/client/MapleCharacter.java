@@ -2713,6 +2713,15 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         }
         levelUpMessages();
         guildUpdate();
+        List<MapleMapObject> monsters = getMap().getMapObjectsInRange(getPosition(), Double.POSITIVE_INFINITY, Arrays.asList(MapleMapObjectType.MONSTER));
+	MapleMap map = getMap();
+	    for (MapleMapObject monstermo : monsters) {
+		MapleMonster monster = (MapleMonster) monstermo;
+		    if (!monster.getStats().isFriendly() || !monster.isBoss()) {
+			map.killMonster(monster, this, true);
+			monster.giveExpToCharacter(this, monster.getExp() * getExpRate(), true, 1);
+                    }
+            }
     }
 
     public void gainAp(int amount) {
