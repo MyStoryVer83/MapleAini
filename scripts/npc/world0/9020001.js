@@ -36,13 +36,13 @@ importPackage(java.awt);
 
 var status;
 var curMap;
-var questions = Array("Here's the question. Collect the same number of coupons as the minimum level required to make the first job advancement as warrior.",
-    "Here's the question. Collect the same number of coupons as the minimum amount of STR needed to make the first job advancement as a warrior.",
-    "Here's the question. Collect the same number of coupons as the minimum amount of INT needed to make the first job advancement as a magician.",
-    "Here's the question. Collect the same number of coupons as the minimum amount of DEX needed to make the first job advancement as a bowman.",
-    "Here's the question. Collect the same number of coupons as the minimum amount of DEX needed to make the first job advancement as a thief.",
-    "Here's the question. Collect the same number of coupons as the minimum level required to advance to 2nd job.",
-	"Here's the question. Collect the same number of coupons as the minimum level required to make the first job advancement as a magician.");
+var questions = Array("第一个问题：转职成战士的最低等级是多少？#b\r\n（打倒怪物，获取相应数量的证书。）",
+    "第一个问题：转职成战士的最低力量值（SEX）是多少？#b\r\n（打倒怪物，获取相应数量的证书。）",
+    "第一个问题：转职成魔法师的最低智力值（INT）是多少？#b\r\n（打倒怪物，获取相应数量的证书。）",
+    "第一个问题：转职成弓箭手的最低敏捷值（DEX）是多少？#b\r\n（打倒怪物，获取相应数量的证书。）",
+    "第一个问题：转职成飞侠的最低敏捷值（DEX）是多少？#b\r\n（打倒怪物，获取相应数量的证书。）",
+    "第一个问题：二转的最低等级是多少？#b\r\n（打倒怪物，获取相应数量的证书。）",
+	"第一个问题：转职成魔法师的最低等级是多少？#b\r\n（打倒怪物，获取相应数量的证书。）");
 var qanswers = Array(10, 35, 20, 25, 25, 30, 8);
 var party;
 var preamble; // we dont even need this mother fucker ! --
@@ -107,22 +107,22 @@ function action(mode, type, selection) {
             party = eim.getPlayers();
             preamble = eim.getProperty("leader1stpreamble");
             if (preamble == null) {
-				cm.sendNext("Hello. Welcome to the first stage. Look around and you'll see Ligators wandering around. When you defeat them, they will cough up a #bcoupon#k. Every member of the party other than the leader should talk to me, geta  question, and gather up the same number of #bcoupons#k as the answer to the question I'll give to them.\r\nIf you gather up the right amount of #bcoupons#k, I'll give the #bpass#k to that player. Once all the party members other than the leader gather up the #bpasses#k and give them to the leader, the leader will hand over the #bpasses#k to me, clearing the stage in the process. The faster you take care of the stages, the more stages you'll be able to challenge. So I suggest you take care of things quickly and swiftly. Well then, best of luck to you.");
+				cm.sendNext("你好，欢迎来到第一个阶段，在这里你可能会考到很多凶狠的鳄鱼，跟我对话，我会给你们每一个人出一道题目，你们再打倒凶狠的鳄鱼获取相应数目的证书卡交给我，就行了。之后我会给你们一张通行证，你们把通行证全部交给组队长，组队长再和我讲话，就可以顺利通关了，那么祝你一切顺利！");
                 eim.setProperty("leader1stpreamble","done");
 				cm.dispose();
             } else {
                 var complete = eim.getProperty(curMap + "stageclear");
                 if (complete != null) {
-                    cm.sendNext("Please hurry on to the next stage, the portal opened!");
+                    cm.sendNext("缩地门已打开，现在可以到下一个关卡了。");
                     cm.dispose();
                 } else {
                     var numpasses = party.size() - 1; // All the players in the party need to get a pass besides the leader.
                     var strpasses = "#b" + numpasses + " passes#k";
                     if (!cm.haveItem(4001008, numpasses)) {
-                        cm.sendNext("I'm sorry, but you are short on the number of passes. You need to give me the right number of passes; it should be the number of members of your party minus the leader, " + strpasses + " to clear the stage. Tell your party members to solve the questions, gather up the passes, and give them to you.");
+                        cm.sendNext("对不起，你收集的通行证数量没有达到我所需求的。");
                         cm.dispose();
                     } else {
-                        cm.sendNext("You gathered up " + strpasses + "! Congratulations on clearing the stage! I'll make the portal that sends you to the next stage. There's a time limit on getting there, so please hurry. Best of luck to you all!");
+                        cm.sendNext("不敢相信你们组队已经成功完成了第一阶段。好了，我将开启通往下一个关卡的结界，时间不多了，你们赶快到那里进行第二阶段的挑战吧。");
                         clear(1, eim, cm);
 						cm.givePartyExp("KerningPQ1st");
                         cm.gainItem(4001008, -numpasses);
@@ -144,11 +144,11 @@ function action(mode, type, selection) {
                         var questionNum = Math.floor(Math.random() * questions.length);
                         eim.setProperty(qstring, questionNum);
                     }
-                    cm.sendNext("Here, you need to collect #bcoupons#k by defeating the same number of Ligators as the answer to the questions asked individually.");
+                    cm.sendNext("好了，你需要收集相应数目的#b证书#k给我。");
                 } else { // Otherwise, check for stage completed
                     var complete = eim.getProperty(curMap + "stageclear");
                     if (complete != null) { // Strage completed
-                        cm.sendNext("Please hurry on to the next stage, the portal is open!");
+                        cm.sendNext("缩地门已打开，现在可以到下一个关卡了。");
                         cm.dispose();
                     } else {
                         // Reply to player correct/incorrect response to the question they have been asked
@@ -157,16 +157,18 @@ function action(mode, type, selection) {
                         var numcoupons = qanswers[parseInt(eim.getProperty(qstring))];
                         var qcorr = cm.itemQuantity(4001007);
 						if(eim.getProperty(qcompletestr) != null) {
-							cm.sendNext("Thanks for bringing me the coupons. Please hand the pass to your party leader to continue.");
+							cm.sendNext("祝贺你，我已经给你了通行证，请把通行证交给队长之后，帮助其它队友吧！");
 							cm.dispose();
 						} else if (numcoupons == qcorr) {
-                            cm.sendNext("That's the right answer! For that you have just received a #bpass#k. Please hand it to the leader of the party.");
+                            cm.sendNext("祝贺你，我已经给你了通行证，请把通行证交给队长之后，帮助其它队友吧！");
                             cm.gainItem(4001007, -numcoupons);
                             cm.gainItem(4001008, 1);
 							eim.setProperty(qcompletestr, "done");
 							cm.dispose();
                         } else
-                            cm.sendNext("I'm sorry, but that is not the right answer! Please have the correct number of coupons in your inventory.");
+							var questionstring = "member1st" + cm.getPlayer().getId();
+						    var thequestion = parseInt(eim.getProperty(questionstring));
+                            cm.sendNext("你给我的证书数量和答案不对应，你的问题是：\r\n" + questions[thequestion]);
                     }
                 }
             } else if (status == 1) {
@@ -193,30 +195,30 @@ function action(mode, type, selection) {
             if (isLeader()) { // Leader
                 if (cm.haveItem(4001008, 10)) {
                     // Clear stage
-                    cm.sendNext("Here's the portal that leads you to the last, bonus stage. It's a stage that allows you to defeat regular monsters a little easier. You'll be given a set amount of time to hunt as much as possible, but you can always leave the stage in the middle of it through the NPC. Again, congratulations on clearing all the stages. Take care...");
+                    cm.sendNext("这里可以通过最后一个关卡，这里有很多凶猛的怪物，我衷心祝福你和你的组队能通过这项挑战。");
                     party = eim.getPlayers();
                     cm.gainItem(4001008, -10);
                     clear(5, eim, cm);
 					cm.givePartyExp("KerningPQFinal");
                     cm.dispose();
                 } else { // Not done yet
-                    cm.sendNext("Hello. Welcome to the 5th and final stage. Walk around the map and you'll be able to find some Boss monsters. Defeat all of them, gather up #bthe passes#k, and please get them to me. Once you earn your pass, the leader of your party will collect them, and then get them to me once the #bpasses#k are gathered up. The monsters may be familiar to you, but they may be much stronger than you think, so please be careful. Good luck!\r\nAs a result of complaints, it is now mandatory to kill all the Slimes! Do it!");
+                    cm.sendNext("你好，欢迎来到第5阶段，到处走走，可能会发现很多凶猛的怪物，打败它们，获取通行证，再把他们交给我。记住，怪物可能比你强大很多，请小心一点，祝你通过这一关。");
                 }
                 cm.dispose();
             } else { // Members
-                cm.sendNext("Welcome to the 5th and final stage.  Walk around the map and you will be able to find some Boss monsters.  Defeat them all, gather up the #bpasses#k, and give them to your leader.  Once you are done, return to me to collect your reward.");
+                cm.sendNext("欢迎来到第5阶段，在地图上走走，你就会看见许多凶猛的怪物，打败他们获取他们身上的通行证，交给你们的组队长。");
                 cm.dispose();
             }
         } else { // Give rewards and warp to bonus
             if (status == 0) {
-                cm.sendNext("Incredible! You cleared all the stages to get to this point. Here's a small prize for your job well done. Before you accept it, however, please make sure your use and etc. inventories have empty slots available.\r\n#bYou will not receive a prize if you have no free slots!#k");
+                cm.sendNext("不敢相信！你和你的组队员们终于完成了所有挑战！做为奖励，我将送你一些东西，请确保你的消耗栏、其它栏、装备栏是否有一个栏目以上的空格？");
             } else if (status == 1) {
                 getPrize(eim,cm);
                 cm.dispose();
             }
         }
     } else { // No map found
-        cm.sendNext("Invalid map, this means the stage is incomplete.");
+        cm.sendNext("无效的地图。");
         cm.dispose();
     }
 }
@@ -281,20 +283,20 @@ function Rectanglestages (cm) {
             party = eim.getPlayers();
             preamble = eim.getProperty("leader" + nthtext + "preamble");
             if (preamble == null) { // first time talking.
-                cm.sendNext("Hi. Welcome to the " + nthtext + " stage. Next to me, you'll see a number of " + nthobj + ". Out of these " + nthobj + ", #b3 are connected to the portal that sends you to the next stage#k. All you need to do is have #b3 party members find the correct " + nthobj + " and " + nthverb + " on them.#k\r\nBUT, it doesn't count as an answer if you " + nthpos + "; please be near the middle of the " + nthobj + " to be counted as a correct answer. Also, only 3 members of your party are allowed on the " + nthobj + ". Once they are " + nthverb + "ing on them, the leader of the party must #bdouble-click me to check and see if the answer's correct or not#k. Now, find the right " + nthobj + " to " + nthverb + " on!");
+                cm.sendNext("欢迎来到第 " + nthtext + " 关卡。 在我旁边你可能会看到很多绳子，让三名组队成员爬上绳子，找到正确的位置，就可以通过此关卡。");
                 eim.setProperty("leader" + nthtext + "preamble","done");
                 var sequenceNum = Math.floor(Math.random() * curCombo.length);
                 eim.setProperty("stage" + nthtext + "combo", sequenceNum.toString());
                 cm.dispose();
             } else {
 				if(cm.getPlayer().getMap().getCharacters().size() != eim.getPlayerCount()) {
-					cm.sendOk("Please make sure all of your party members are here before you continue.");
+					cm.sendOk("在你开始之前，请确保所有的组队员都在这里。");
 					cm.dispose();
 					return;
 				}
                 var complete = eim.getProperty(curMap + "stageclear");
                 if (complete != null) {
-                    cm.sendNext("Please hurry on to the next stage, the portal opened!");
+                    cm.sendNext("缩地门已打开，现在可以到下一个关卡了。");
                     cm.dispose();
                 } else { // Check for people on ropes and their positions
                     var playersOnCombo = 0;
@@ -322,7 +324,7 @@ function Rectanglestages (cm) {
                             cm.dispose();
                         }
                     } else {
-                        cm.sendNext("It looks like you haven't found the 3 " + nthobj + " just yet. Please think of a different combination of " + nthobj + ". Only 3 are allowed to " + nthverb + " on " + nthobj + ", and if you " + nthpos + " it may not count as an answer, so please keep that in mind. Keep going!");
+                        cm.sendNext("你看起来好像没有发现正确的位置，别气馁，让组队成员在绳子上找到正确的位置。");
                         cm.dispose();
                     }
                 }
@@ -339,9 +341,9 @@ function Rectanglestages (cm) {
     } else { // Not leader
         var complete = eim.getProperty(curMap.toString() + "stageclear");
         if (complete != null) {
-            cm.sendNext("Please hurry on to the next stage, the portal opened!");
+            cm.sendNext("时间不多了，请快点到达下一个关卡。");
         } else {
-            cm.sendNext("Please have the party leader talk to me.");
+            cm.sendNext("请让你的组队长和我谈话。");
         }
         cm.dispose();
     }
