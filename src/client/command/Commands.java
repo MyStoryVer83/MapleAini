@@ -1068,6 +1068,8 @@ public class Commands {
 			}
 		} else if (sub[0].equals("unbug")) {
 			c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.enableActions());
+                } else if (sub[0].equals("exp")) {
+			player.gainExp(Integer.parseInt(sub[1]) - 1, false, false);
 		} else if (sub[0].equals("level")) {
 			player.setLevel(Integer.parseInt(sub[1]) - 1);
 			player.gainExp(-player.getExp(), false, false);
