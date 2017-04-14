@@ -2718,8 +2718,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	    for (MapleMapObject monstermo : monsters) {
 		MapleMonster monster = (MapleMonster) monstermo;
 		    if (!monster.getStats().isFriendly() || !monster.isBoss()) {
-			map.killMonster(monster, this, true);
-			monster.giveExpToCharacter(this, monster.getExp() * getExpRate(), true, 1);
+			map.damageMonster(this, monster, monster.getHp());
+			//monster.giveExpToCharacter(this, monster.getExp() * getExpRate(), true, 1);
                     }
             }
     }
