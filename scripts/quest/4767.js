@@ -15,10 +15,14 @@ function start(mode, type, selection) {
 			}else{
 			qm.sendNext("恭喜你当前等级已经到达#b50#k级。");
 			}
-		} else if (status == 1) {
-			qm.sendOk("恭喜你获得系统奖励！\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0#\r\n#v4001126# 1000");
-			qm.gainItem(4001126, 1000);
+		} else if (status == 1) { //奖励双倍经验值卡5 - 每天
+		  if(qm.canHold(5211018){			
+			qm.sendOk("恭喜你获得系统奖励！\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0#\r\n#v5211018# 1张");
+			qm.gainItem(5211018, 1);
 			qm.forceCompleteQuest(4767);
+		} else {          
+     		cm.sendOk("请确保你的背包是否有足够的空间。");
+	    }				
 			qm.dispose();
 		} 
 	}

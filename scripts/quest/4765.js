@@ -16,10 +16,14 @@ function start(mode, type, selection) {
 			}else{
 			qm.sendNext("恭喜你当前等级已经到达#b30#k级。");
 			}
-		} else if (status == 1) {
-			qm.sendOk("恭喜你获得系统奖励！\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0#\r\n#v4001126# 500");
-			qm.gainItem(4001126, 500);
+		} else if (status == 1) { //奖励快乐百宝劵
+		  if(qm.canHold(5220000){			
+			qm.sendOk("恭喜你获得系统奖励！\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0#\r\n#v5220000# 10个");
+			qm.gainItem(5220000, 10);
 			qm.forceCompleteQuest(4765);
+		} else {          
+     		cm.sendOk("请确保你的背包是否有足够的空间。");
+	    }			
 			qm.dispose();
 		} 
 	}

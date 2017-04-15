@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2017-04-11 22:08:45
+Date: 2017-04-15 11:42:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -10613,7 +10613,7 @@ INSERT INTO `drop_data` VALUES ('10577', '8200010', '4020009', '1', '1', '0', '1
 INSERT INTO `drop_data` VALUES ('10578', '8200011', '4020009', '1', '1', '0', '1000');
 INSERT INTO `drop_data` VALUES ('10579', '8200012', '4020009', '1', '1', '0', '1000');
 INSERT INTO `drop_data` VALUES ('10580', '9300000', '4001008', '1', '1', '0', '999999');
-INSERT INTO `drop_data` VALUES ('10581', '9300001', '4001007', '1', '1', '0', '200000');
+INSERT INTO `drop_data` VALUES ('10581', '9300001', '4001007', '1', '1', '0', '999999');
 INSERT INTO `drop_data` VALUES ('10582', '9300002', '4001008', '1', '1', '0', '999999');
 INSERT INTO `drop_data` VALUES ('10583', '9300003', '4001008', '1', '1', '0', '999999');
 INSERT INTO `drop_data` VALUES ('11218', '4230109', '1452016', '1', '1', '0', '700');
@@ -10627,14 +10627,14 @@ INSERT INTO `drop_data` VALUES ('10591', '9300012', '4001023', '1', '1', '0', '9
 INSERT INTO `drop_data` VALUES ('10592', '9300170', '4001156', '1', '1', '0', '999999');
 INSERT INTO `drop_data` VALUES ('10593', '9300171', '4001156', '1', '1', '0', '999999');
 INSERT INTO `drop_data` VALUES ('10594', '9300169', '4001156', '1', '1', '0', '999999');
-INSERT INTO `drop_data` VALUES ('10595', '9000100', '4031013', '1', '1', '0', '300000');
-INSERT INTO `drop_data` VALUES ('10596', '9000101', '4031013', '1', '1', '0', '300000');
-INSERT INTO `drop_data` VALUES ('10597', '9000000', '4031013', '1', '1', '0', '300000');
-INSERT INTO `drop_data` VALUES ('10598', '9000001', '4031013', '1', '1', '0', '300000');
-INSERT INTO `drop_data` VALUES ('10599', '9000200', '4031013', '1', '1', '0', '300000');
-INSERT INTO `drop_data` VALUES ('10600', '9000201', '4031013', '1', '1', '0', '300000');
-INSERT INTO `drop_data` VALUES ('10601', '9000300', '4031013', '1', '1', '0', '300000');
-INSERT INTO `drop_data` VALUES ('10602', '9000301', '4031013', '1', '1', '0', '300000');
+INSERT INTO `drop_data` VALUES ('10595', '9000100', '4031013', '1', '1', '0', '999999');
+INSERT INTO `drop_data` VALUES ('10596', '9000101', '4031013', '1', '1', '0', '999999');
+INSERT INTO `drop_data` VALUES ('10597', '9000000', '4031013', '1', '1', '0', '999999');
+INSERT INTO `drop_data` VALUES ('10598', '9000001', '4031013', '1', '1', '0', '999999');
+INSERT INTO `drop_data` VALUES ('10599', '9000200', '4031013', '1', '1', '0', '999999');
+INSERT INTO `drop_data` VALUES ('10600', '9000201', '4031013', '1', '1', '0', '999999');
+INSERT INTO `drop_data` VALUES ('10601', '9000300', '4031013', '1', '1', '0', '999999');
+INSERT INTO `drop_data` VALUES ('10602', '9000301', '4031013', '1', '1', '0', '999999');
 INSERT INTO `drop_data` VALUES ('10603', '8180000', '4031511', '1', '1', '6904', '600000');
 INSERT INTO `drop_data` VALUES ('10604', '8180001', '4031511', '1', '1', '6904', '600000');
 INSERT INTO `drop_data` VALUES ('10605', '9400407', '4000343', '1', '1', '0', '100000');
@@ -11245,7 +11245,7 @@ INSERT INTO `drop_data` VALUES ('11209', '9001001', '4031059', '1', '1', '0', '9
 INSERT INTO `drop_data` VALUES ('11210', '9001002', '4031059', '1', '1', '0', '999999');
 INSERT INTO `drop_data` VALUES ('11211', '9001003', '4031059', '1', '1', '0', '999999');
 INSERT INTO `drop_data` VALUES ('11212', '9001008', '4031059', '1', '1', '0', '499999');
-INSERT INTO `drop_data` VALUES ('11213', '9001005', '4031013', '1', '1', '0', '300000');
+INSERT INTO `drop_data` VALUES ('11213', '9001005', '4031013', '1', '1', '0', '999999');
 INSERT INTO `drop_data` VALUES ('11214', '9001012', '4032311', '1', '1', '0', '300000');
 INSERT INTO `drop_data` VALUES ('11215', '9001012', '4032311', '1', '1', '0', '300000');
 INSERT INTO `drop_data` VALUES ('11216', '9001013', '4032312', '1', '1', '0', '999999');
@@ -11444,7 +11444,7 @@ INSERT INTO `drop_data` VALUES ('11629', '6220001', '1472055', '1', '1', '0', '1
 INSERT INTO `drop_data` VALUES ('11628', '6220000', '1472055', '1', '1', '0', '1250');
 INSERT INTO `drop_data` VALUES ('11627', '5120500', '1472055', '1', '1', '0', '750');
 INSERT INTO `drop_data` VALUES ('11626', '5120000', '1472055', '1', '1', '0', '750');
-INSERT INTO `drop_data` VALUES ('11625', '9001006', '4031013', '1', '1', '0', '400000');
+INSERT INTO `drop_data` VALUES ('11625', '9001006', '4031013', '1', '1', '0', '999999');
 INSERT INTO `drop_data` VALUES ('11624', '8190003', '4031461', '1', '1', '6169', '1000');
 INSERT INTO `drop_data` VALUES ('11623', '9400218', '4001106', '25', '50', '0', '999999');
 INSERT INTO `drop_data` VALUES ('11622', '9400217', '4001106', '1', '3', '0', '999999');

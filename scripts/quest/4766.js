@@ -11,15 +11,19 @@ function start(mode, type, selection) {
 		if (status == 0) {
 			if(qm.getQuestStatus(4766)==2){
 			qm.sendOk("你已经领取过奖励，继续努力到50级可以获得更多奖励喔");
-						qm.forceCompleteQuest(4766);
+			qm.forceCompleteQuest(4766);
 			qm.dispose();
 			}else{
 			qm.sendNext("恭喜你当前等级已经到达#b40#k级。");
 			}
-		} else if (status == 1) {
-			qm.sendOk("恭喜你获得系统奖励！\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0#\r\n#v4001126# 1000");
-			qm.gainItem(4001126, 1000);
+		} else if (status == 1) { //奖励原地复活术
+		  if(qm.canHold(5510000){			
+			qm.sendOk("恭喜你获得系统奖励！\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0#\r\n#v5510000# 10个");
+			qm.gainItem(5510000, 10);
 			qm.forceCompleteQuest(4766);
+		} else {          
+     		cm.sendOk("请确保你的背包是否有足够的空间。");
+	    }			
 			qm.dispose();
 		} 
 	}

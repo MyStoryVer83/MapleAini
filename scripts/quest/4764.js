@@ -16,10 +16,14 @@ function start(mode, type, selection) {
 			}else{
 			qm.sendNext("恭喜你当前等级已经到达#b20#k级。");
 			}
-		} else if (status == 1) {
-			qm.sendOk("恭喜你获得系统奖励！\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0#\r\n#v5220007# 1张");
-			qm.gainItem(5220007, 1);
+		} else if (status == 1) { //奖励高级瞬移之石
+		  if(qm.canHold(5041000){			
+			qm.sendOk("恭喜你获得系统奖励！\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0#\r\n#v5041000# 3个");
+			qm.gainItem(5041000, 3);
 			qm.forceCompleteQuest(4764);
+		} else {          
+     		cm.sendOk("请确保你的背包是否有足够的空间。");
+	    }				
 			qm.dispose();
 		} 
 	}
