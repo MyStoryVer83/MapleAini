@@ -21,7 +21,7 @@ function end(mode, type, selection) {
     	qm.sendYesNo("Have you made your decision? The decision will be final, so think carefully before deciding what to do. Are you sure you want to become a Soul Master?");
     } else if (status == 1) {
     	qm.sendNext("I have just molded your body to make it perfect for a Soul Master. If you wish to become more powerful, use Stat Window (S) to raise the appropriate stats. If you arn't sure what to raise, just click on #bAuto#k.");
-	if (qm.getPlayer().getJob().getId() != 1100) {
+	if (qm.getPlayer().getJobId() != 1100) {
 	    qm.gainItem(1302077, 1);
 	    qm.gainItem(1142066, 1);
 	    qm.changeJob(MapleJob.DAWNWARRIOR1);
