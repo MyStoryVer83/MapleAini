@@ -602,13 +602,13 @@ public class Commands {
                                 MapleShopFactory.getInstance().clear();
                                 player.yellowMessage("商店重载完毕" );
 			break;
-                case "reloadevent":
+                case "reloade":
                             for (Channel instance : Server.getInstance().getChannelsFromWorld(player.getWorld())) {
                                     instance.reloadEventScriptManager();
                                     player.yellowMessage("事件脚本重载完毕" );
                             }
 			break;
-                case "reloadportal":
+                case "reloadp":
                             PortalScriptManager.getInstance().reloadPortalScripts();
                             player.yellowMessage("传送脚本重载完毕" );
 			break;
