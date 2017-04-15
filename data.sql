@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : localhost_3306
 Source Server Version : 50628
 Source Host           : localhost:3306
-Source Database       : sad
+Source Database       : datasolaxia
 
 Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2017-04-10 23:40:29
+Date: 2017-04-14 21:30:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -671,8 +671,8 @@ DROP TABLE IF EXISTS `gifts`;
 CREATE TABLE `gifts` (
 `id`  int(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
 `to`  int(11) NOT NULL ,
-`from`  varchar(13) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`message`  tinytext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
+`from`  varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`message`  tinytext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 `sn`  int(10) UNSIGNED NOT NULL ,
 `ringid`  int(10) NOT NULL ,
 PRIMARY KEY (`id`)
@@ -897,7 +897,7 @@ CREATE TABLE `inventoryitems` (
 `petid`  int(11) NOT NULL DEFAULT '-1' ,
 `flag`  int(11) NOT NULL ,
 `expiration`  bigint(20) NOT NULL DEFAULT '-1' ,
-`giftFrom`  varchar(26) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
+`giftFrom`  varchar(26) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 PRIMARY KEY (`inventoryitemid`),
 INDEX `CHARID` (`characterid`) USING BTREE 
 )
@@ -1613,7 +1613,7 @@ CREATE TABLE `rings` (
 `partnerRingId`  int(11) NOT NULL DEFAULT 0 ,
 `partnerChrId`  int(11) NOT NULL DEFAULT 0 ,
 `itemid`  int(11) NOT NULL DEFAULT 0 ,
-`partnername`  varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
+`partnername`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
