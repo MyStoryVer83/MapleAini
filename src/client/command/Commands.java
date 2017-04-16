@@ -98,6 +98,7 @@ import constants.GameConstants;
 import constants.ItemConstants;
 import constants.ServerConstants;
 import java.util.ArrayList;
+import scripting.quest.QuestScriptManager;
 import scripting.reactor.ReactorScriptManager;
 import server.maps.FieldLimit;
 
@@ -321,6 +322,7 @@ public class Commands {
 			player.yellowMessage("After you vote, talk to Rooney to get a leaf and redeem it for prizes!");
 			player.message("@jiasi: 解卡.");
                         player.message("@reloadp: 重载传送脚本.");
+                        player.message("@reloadq: 重载任务脚本.");
                         player.message("@reloade: 重载事件脚本.");
                         player.message("@reloadshop: 重载商店.");
                         player.message("@reloaddrop: 重载爆率.");
@@ -607,6 +609,10 @@ public class Commands {
                                     instance.reloadEventScriptManager();
                                     player.yellowMessage("事件脚本重载完毕" );
                             }
+			break;
+                case "reloadq":
+                            QuestScriptManager.getInstance().reloadQuestScripts();
+                            player.yellowMessage("任务脚本重载完毕" );
 			break;
                 case "reloadp":
                             PortalScriptManager.getInstance().reloadPortalScripts();
