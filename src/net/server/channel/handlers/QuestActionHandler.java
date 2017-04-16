@@ -23,10 +23,10 @@ package net.server.channel.handlers;
 
 import client.MapleCharacter;
 import client.MapleClient;
-import client.MapleQuestStatus;
 import net.AbstractMaplePacketHandler;
 import scripting.quest.QuestScriptManager;
 import server.quest.MapleQuest;
+import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
@@ -37,7 +37,6 @@ public final class QuestActionHandler extends AbstractMaplePacketHandler {
     public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
         byte action = slea.readByte();
         short questid = slea.readShort();
-        //System.out.println("Quest Run: " + slea);
         MapleCharacter player = c.getPlayer();
         MapleQuest quest = MapleQuest.getInstance(questid);
         if (action == 1) { //Start Quest
@@ -51,21 +50,25 @@ public final class QuestActionHandler extends AbstractMaplePacketHandler {
             slea.readInt();
             if (slea.available() >= 2) {
                 int selection = slea.readShort();
-                MapleQuest.getInstance(questid).complete(player, npc, selection);
+                quest.complete(player, npc, selection);
             } else {
-                MapleQuest.getInstance(questid).complete(player, npc);
+                quest.complete(player, npc);
             }
         } else if (action == 3) {// forfeit quest
             quest.forfeit(player);
-        } else if (action == 4) { //�ű���ʼ����
+        } else if (action == 4) { // scripted start quest
             int npc = slea.readInt();
-            slea.readInt(); // dont know *o*
-            QuestScriptManager.getInstance().start(c, questid, npc);
+            slea.readInt();
+			if(quest.canStart(player, npc)) {
+				QuestScriptManager.getInstance().start(c, questid, npc);
+			}
         } else if (action == 5) { // scripted end quests
             //System.out.println(slea.toString());
             int npc = slea.readInt();
             slea.readInt();
-            QuestScriptManager.getInstance().end(c, questid, npc);
+			if(quest.canComplete(player, npc)) {
+				QuestScriptManager.getInstance().end(c, questid, npc);
+			}
         }
     }
 }
