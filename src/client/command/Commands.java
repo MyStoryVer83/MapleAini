@@ -610,6 +610,10 @@ public class Commands {
                                     player.yellowMessage("事件脚本重载完毕" );
                             }
 			break;
+                case "reloadq":
+                            QuestScriptManager.getInstance().reloadQuestScripts();
+                            player.yellowMessage("任务脚本重载完毕" );
+			break;
                 case "reloadp":
                             PortalScriptManager.getInstance().reloadPortalScripts();
                             player.yellowMessage("传送脚本重载完毕" );
