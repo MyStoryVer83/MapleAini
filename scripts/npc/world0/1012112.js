@@ -50,7 +50,7 @@ function action(mode, type, selection) {
         if (cm.getPlayer().getMapId() == 100000200) {
             if (cm.getParty() == null || !cm.isLeader()) {
                 if (status == 0) {
-                    cm.sendNext("你好！ 我是达尔利。 这个地方充满了满月的神秘光环，没有一个人可以通过他/她进入这里。");
+                    cm.sendNext("你好！我是达尔利。这个地方充满了满月的神秘光环，如果你是一个人的话就无法进入这里。");
                 } else if (status == 1) {
                     cm.sendOk("若想要进入里面，需要你所属组队的队长，与我进行对话喔！快去找你的队长吧~^^");
                     cm.dispose();
@@ -74,7 +74,7 @@ function action(mode, type, selection) {
                         }
                     }
                     if (onmap < min) {
-                        cm.sendOk("请确认你的组队员都在同一张地图上。");
+                        cm.sendOk("你所属的组队队员不足3名不能入场。");
                         cm.dispose();
                         return;
                     }

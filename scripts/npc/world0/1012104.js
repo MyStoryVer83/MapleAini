@@ -48,11 +48,11 @@ function action(mode, type, selection) {
         else
             status--;
         if (status == 0) {
-            cm.sendSimple("I'm Brittany the assistant. If you have #b#t5150010##k or #b#t5151000##k by any chance, then how about letting me change your hairdo?\r\n#L0#I want to buy a coupon!#l\r\n#L1#Haircut: #i5150010##t5150010##l\r\n#L2#Dye your hair: #i5151000##t5151000##l");
+            cm.sendSimple("你好,我是美发店的助手!如果你有#b射手村美发店普通会员卡#k或#b射手村染色普通会员卡#k,你就放心的把发型交给我,我会让你满意的.那么你要做什么?请选择吧!\r\n#L0#我想购买会员卡。#l\r\n#L1#改变发型(使用#i5150010##t5150010##l)\r\n#L2#染色(使用#i5151000##t5151000##l)");
         } else if (status == 1) {
             if (selection == 0) {
                 beauty = 0;
-                cm.sendSimple("Which coupon would you like to buy?\r\n#L0#Haircut for " + hairprice + " mesos: #i5150010##t5150010##l\r\n#L1#Dye your hair for " + haircolorprice + " mesos: #i5151000##t5151000##l");
+                cm.sendSimple("你想购买哪种会员卡？\r\n#L0#射手村美发店普通会员卡" + hairprice + " 金币: #i5150010##t5150010##l\r\n#L1#射手村染色普通会员卡" + haircolorprice + " 金币: #i5151000##t5151000##l");
             } else if (selection == 1) {
                 beauty = 1;
                 hairnew = Array();
@@ -64,14 +64,14 @@ function action(mode, type, selection) {
                     for(var i = 0; i < fhair.length; i++)
                         hairnew.push(fhair[i] + parseInt(cm.getPlayer().getHair() % 10));
                 }
-                cm.sendYesNo("If you use the EXP coupon your hair will change RANDOMLY with a chance to obtain a new experimental style that even you didn't think was possible. Are you going to use #b#t5150010##k and really change your hairstyle?");
+                cm.sendYesNo("如果你有#b射手村美发店普通会员卡#k,那么我将帮你随机改变一种发型,你确定要改变发型吗?");
             } else if (selection == 2) {
                 beauty = 2;
                 haircolor = Array();
                 var current = parseInt(cm.getPlayer().getHair()/10)*10;
                 for(var i = 0; i < 8; i++)
                     haircolor.push(current + i);
-                cm.sendYesNo("If you use a regular coupon your hair will change RANDOMLY. Do you still want to use #b#t5151000##k and change it up?");
+                cm.sendYesNo("如果你有#b射手村染发普通会员卡#k,那么我将帮你随机改变一种发色,你确定要改变发色吗?");
             }
         }
         else if (status == 2){
@@ -80,31 +80,31 @@ function action(mode, type, selection) {
                 if (cm.haveItem(5150010) == true){
                     cm.gainItem(5150010, -1);
                     cm.setHair(hairnew[Math.floor(Math.random() * hairnew.length)]);
-                    cm.sendOk("Enjoy your new and improved hairstyle!");
+                    cm.sendOk("好了,让朋友们赞叹你的新发型吧!");
                 } else {
-                    cm.sendOk("Hmmm...it looks like you don't have our designated coupon...I'm afraid I can't give you a haircut without it. I'm sorry...");
+                    cm.sendOk("看起来你并没有我们的会员卡,我恐怕不能给你理发,我很抱歉...");
                 }
             }
             if (beauty == 2){
                 if (cm.haveItem(5151000) == true){
                     cm.gainItem(5151000, -1);
                     cm.setHair(haircolor[Math.floor(Math.random() * haircolor.length)]);
-                    cm.sendOk("Enjoy your new and improved haircolor!");
+                    cm.sendOk("好了,让朋友们赞叹你的新发色吧!");
                 } else {
-                    cm.sendOk("Hmmm...it looks like you don't have our designated coupon...I'm afraid I can't dye your hair without it. I'm sorry...");
+                    cm.sendOk("看起来你并没有我们的会员卡,我恐怕不能给你染发,我很抱歉...");
                 }
             }
             if (beauty == 0){
                 if (selection == 0 && cm.getMeso() >= hairprice) {
                     cm.gainMeso(-hairprice);
                     cm.gainItem(5150010, 1);
-                    cm.sendOk("Enjoy!");
+                    cm.sendOk("购买成功!");
                 } else if (selection == 1 && cm.getMeso() >= haircolorprice) {
                     cm.gainMeso(-haircolorprice);
                     cm.gainItem(5151000, 1);
-                    cm.sendOk("Enjoy!");
+                    cm.sendOk("购买成功!");
                 } else {
-                    cm.sendOk("You don't have enough mesos to buy a coupon!");
+                    cm.sendOk("看起来你没有足够的金币来购买我们的会员卡!");
                 }
             }
         }

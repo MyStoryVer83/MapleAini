@@ -1,3 +1,3 @@
 function start() {
-	cm.sendOk("NPC: " + cm.getNpc() + " is not found, please report this.");
+	cm.sendOk("»±…ŸΩ≈±æ" + cm.getNpc() + "«ÎºÏ≤È°£");
 }

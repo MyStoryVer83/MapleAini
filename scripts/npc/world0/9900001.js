@@ -26,7 +26,7 @@
  * @Purpose:     Levels people up.
  */
 function start() {
-    cm.sendYesNo("Do you want to level up?");
+    cm.sendYesNo("ÄãÏëÉı¼¶Âğ£¿");
 }
 
 function action(i, am, pro) {

@@ -33,31 +33,31 @@ function start() {
     if (cm.getJobId() == 0) {
         actionx["1stJob"] = true;
         if (cm.getLevel() >= 10)
-            cm.sendNext("So you decided to become a #rBowman#k?");
+            cm.sendNext("你真的想成为一名#r弓箭手#k吗?");
         else {
-            cm.sendOk("Train a bit more and I can show you the way of the #rBowman#k.");
+            cm.sendOk("你还需要更多的修炼,我才能告诉你怎样成为一名出色的#r弓箭手#k.");
             cm.dispose();
         }
     } else if (cm.getLevel() >= 30 && cm.getJobId() == 300) {
         actionx["2ndJob"] = true;
         if (cm.haveItem(4031012))
-            cm.sendNext("Haha...I knew you'd breeze through that test. I'll admit, you are a great bowman. I'll make you much stronger than you're right now. before that, however... you;ll need to choose one of two paths given to you. It'll be a difficult decision for you to make, but... if there's any question to ask, please do so.");
+            cm.sendNext("哦……你平安地回来了！我知道你会轻而易举的通过……我承认你是个强大的弓箭手……好吧，现在我会让你变得更加强大…在这之前！你需要选择#b二转弓箭手#k的两个路径，这并不是一件容易的事，所以如果你有任何问题，可以随时问我。");
         else if (cm.haveItem(4031011)){
-            cm.sendOk("Go and see the #b#p1072002##k.");
+            cm.sendOk("你怎么还在这里？把我给你的#b推荐信#k交给#b弓箭手转职教官#k,据说他现在在#b迷宫通道#k。通过他的考试获得#b#z4031012##k然后在回来和我对话。");
             cm.dispose();
         } else
-            cm.sendYesNo("Hmmm... you have grown a lot since I last saw you. I don't see the weakling I saw before, and instead, look much more like a bowman now. Well, what do you think? Don't you want to get even more powerful than that? Pass a simple test and I'll do just that for you. Do you want to do it?");
+            cm.sendYesNo("嗯...自上次见到你以来，你已经有了很大的成长。怎么样？你想不想变得更加强大吗？通过一个简单的测试，我会让你变得更大强大。准备好开始了吗？");
     } else if (actionx["3thJobI"] || (cm.getPlayer().gotPartyQuestItem("JB3") && cm.getLevel() >= 70 && cm.getJobId() % 10 == 0 && parseInt(cm.getJobId() / 100) == 3 && !cm.getPlayer().gotPartyQuestItem("JBP"))){
         actionx["3thJobI"] = true;
-        cm.sendNext("There you are. A few days ago, #b#p2020010##k of Ossyria talked to me about you. I see that you are interested in making the leap to the amazing world of the third job advancement for archers. To achieve that goal, I will have to test your strength in order to see whether you are worthy of the advancement. There is an opening in the middle of a deep forest in Victoria Island, where it'll lead you to a secret passage. Once inside, you'll face a clone of myself. Your task is to defeat him and bring #b#t4031059##k back with you.");
+        cm.sendNext("试炼非常简单……你只需要打败我的分身取得黑符然后回来交给就行。但在这之前你需要去#b森林迷宫Ⅴ#k的#b异界之门#k里面找到我的分身并且打败他。");
     } else if (cm.getPlayer().gotPartyQuestItem("JBP") && !cm.haveItem(4031059)){
-        cm.sendNext("Please, bring me the #b#t4031059##k.");
+        cm.sendNext("试炼非常简单……你只需要打败我的分身取得黑符然后回来交给就行。但在这之前你需要去#b森林迷宫Ⅴ#k的#b异界之门#k里面找到我的分身并且打败他。");
         cm.dispose();
     } else if (cm.haveItem(4031059) && cm.getPlayer().gotPartyQuestItem("JBP")){
         actionx["3thJobC"] = true;
-        cm.sendNext("Nice work. You have defeated my clone and brought #b#t4031059##k back safely. You have now proven yourself worthy of the 3rd job advancement from the physical standpoint. Now you should give this necklace to #b#p2020011##k in Ossyria to take on the second part of the test. Good luck. You'll need it.");
+        cm.sendNext("没想到你这么快就把分身打败了。怎么样？取得黑符了吧？好的,我这就把力气项链给你……");
     } else {
-        cm.sendOk("You have chosen wisely.");
+        cm.sendOk("你的选择是明智的.");
         cm.dispose();
     }
 }
@@ -71,7 +71,7 @@ function action(mode, type, selection) {
         return;
     } else if (mode != 1 || status == 7 && type != 1 || (actionx["1stJob"] && status == 4) || (cm.haveItem(4031008) && status == 2) || (actionx["3thJobI"] && status == 1)){
         if (mode == 0 && status == 2 && type == 1)
-            cm.sendOk("You know there is no other choice...");
+            cm.sendOk("看来你还有其他的事情,等你忙完了在来找我吧！我会在这里等你。");
         if (!(mode == 0 && type != 1)){
             cm.dispose();
             return;
@@ -79,7 +79,7 @@ function action(mode, type, selection) {
     }
     if (actionx["1stJob"]){
         if (status == 0)
-            cm.sendNextPrev("It is an important and final choice. You will not be able to turn back.");
+            cm.sendNextPrev("你现在的条件我可以把你训练成弓箭手。怎么样？你确定进行转职仪式吗？");
         else if (status == 1){
             if (cm.canHold(1452051) && cm.canHold(2060000)){
                 if (cm.getJobId() == 0){
@@ -88,61 +88,61 @@ function action(mode, type, selection) {
 					cm.gainItem(2060000, 1000);
 					cm.resetStats();
                 }
-                cm.sendNext("Alright, from here out, you are a part of us! You'll be living the life of a wanderer at ..., but just be patient as soon, you'll be living the high life. Alright, it ain't much, but I'll give you some of my abilities... HAAAHHH!!!");
+                cm.sendNext("恭喜你转职成功。");
             } else {
-                cm.sendNext("Make some room in your inventory and talk back to me.");
+                cm.sendNext("你没有足够的背包空间,等你整理好在来找我吧！");
                 cm.dispose();
             }
         } else if (status == 2) 
-            cm.sendNextPrev("You've gotten much stronger now. Plus every single one of your inventories have added slots. A whole row, to be exact. Go see for it yourself. I just gave you a little bit of #bSP#k. When you open up the #bSkill#k menu on the lower left corner of the screen, there are skills you can learn by using SP's. One warning, though: You can't raise it all together all at once. There are also skills you can acquire only after having learned a couple of skills first.");
+            cm.sendNextPrev("我现在给你一点#bSP#k。你现在可以打开#b技能窗口#k学习弓箭手的基础技能。");
 		else
 			cm.dispose();
 	} else if(actionx["2ndJob"]){
         if (status == 0){
             if (cm.haveItem(4031012))
-                cm.sendSimple("Alright, when you have made your decision, click on [I'll choose my occupation] at the bottom.#b\r\n#L0#Please explain to me what being the Hunter is all about.\r\n#L1#Please explain to me what being the Crossbowman is all about.\r\n#L2#I'll choose my occupation!");
+                cm.sendSimple("二转弓箭手总共分为两个分支职业,每种职业都有不同的特色。如果你想了解的话,随时可以来问我。#b\r\n#L0#我想了解猎人的特色。\r\n#L1#我想了解弩弓手的特色。\r\n#L2#我想选择职业。");
             else
-                cm.sendNext("Good decision. You look strong, but I need to see if you really are strong enough to pass the test, it's not a difficult test, so you'll do just fine. Here, take my letter first... make sure you don't lose it!");
+                cm.sendNext("好的。你看起来很急切！但是我仍然需要测试你的实力是否合格。测试并不是太难，做好准备接受测试吧！……先把这封信收好,不要弄丢了。");
         } else if (status == 1){
             if (!cm.haveItem(4031012)){
                 if (cm.canHold(4031010)){
                     if (!cm.haveItem(4031010))
                         cm.gainItem(4031010, 1);
-                    cm.sendNextPrev("Please get this letter to #b#p1072002##k who's around #b#m106010000##k near Henesys. She is taking care of the job of an instructor in place of me. Give her the letter and she'll test you in place of me. Best of luck to you.");
+                    cm.sendNextPrev("把我给你的#b推荐信#k交给#b弓箭手转职教官#k,据说他现在在#b迷宫通道#k。通过他的考试获得#b#z4031012##k然后在回来和我对话。");
 					cm.dispose();
 				} else {
-                    cm.sendNext("Please, make some space in your inventory.");
+                    cm.sendNext("你没有足够的背包空间,无法进行下面的任务。");
                     cm.dispose();
                 }
             } else {
                 if (selection < 2){
-                    cm.sendNext("Not done.");
+                    cm.sendNext("尚未完成。");
                     status -= 2;
                 } else
-                    cm.sendSimple("Now... have you made up your mind? Please choose the job you'd like to select for your 2nd job advancement. #b\r\n#L0#Hunter\r\n#L1#Crossbowman");
+                    cm.sendSimple("好吧!那么选择你心仪的职业吧。#b\r\n#L0#猎人\r\n#L1#弩弓手");
             }
         } else if (status == 2){
             job += selection * 10;
-            cm.sendYesNo("So you want to make the second job advancement as the " + (job == 310 ? "#bHunter#k" : "#bCrossbowman#k") + "? You know you won't be able to choose a different job for the 2nd job advancement once you make your desicion here, right?");
+            cm.sendYesNo("你现在确定进行战士的第二次转职成为" + (job == 310 ? "#b猎人#k" : "#b弩弓手#k") + "吗?");
         } else if (status == 3){
             if (cm.haveItem(4031012))
                 cm.gainItem(4031012, -1);
-            cm.sendNext("Alright, you're the " + (job == 310 ? "#bHunter#k" : "#bCrossbowman#k") + " from here on out. Hunters are the intelligent bunch with incredible vision, able to pierce the arrow through the heart of the monsters with ease... please train yourself each and everyday. We'll help you become even stronger than you already are.");
+            cm.sendNext("恭喜你转职成功。你现在已经获得了" + (job == 310 ? "#b猎人#k" : "#b弩弓手#k") + "技能窗口。");
             if (cm.getJobId() != job)
                 cm.changeJobById(job);
         } else if (status == 4)
-            cm.sendNextPrev("I have just given you a book that gives you the list of skills you can acquire as a " + (job == 310 ? "hunter" : "crossbowman") + ". Also your etc inventory has expanded by adding another row to it. Your max HP and MP have increased, too. Go check and see for it yourself.");
+            cm.sendNextPrev("你现在已经获得了" + (job == 310 ? "猎人" : "弩弓手") + "技能窗口。同时你的最大HP和最大MP也增加了……");
         else if (status == 5)
-            cm.sendNextPrev("I have also given you a little bit of #bSP#k. Open the #bSkill Menu#k located at the bottomleft corner. you'll be able to boost up the newer acquired 2nd level skills. A word of warning, though. You can't boost them up all at once. Some of the skills are only available after you have learned other skills. Make sure yo remember that.");
+            cm.sendNextPrev("我送了你1点SP,赶紧去学习技能吧。要记住有些技能只有在你学会了其他技能之后才能得到。");
         else if (status == 6)
-            cm.sendNextPrev((job == 310 ? "Hunter" : "Crossbowman") + " need to be strong. But remember that you can't abuse that power and use it on a weaking. Please use your enormous power the right way, because... for you to use that the right way, that is much harden than just getting stronger. Please find me after you have advanced much further. I'll be waiting for you.");
+            cm.sendNextPrev((job == 310 ? "猎人" : "弩弓手") + "请记住，你不能滥用技能，正确的使用你强大的力量，因为…对你来说，正确掌握使用力量的方法相当的困难。请在你变得更加强大以后再找到我。我会等你的。");
     } else if (actionx["3thJobI"]){
         if (status == 0){
             if (cm.getPlayer().gotPartyQuestItem("JB3")){
                 cm.getPlayer().removePartyQuestItem("JB3");
                 cm.getPlayer().setPartyQuestItemObtained("JBP");
             }
-            cm.sendNextPrev("Since he is a clone of myself, you can expect a tough battle ahead. He uses a number of special attacking skills unlike any you have ever seen, and it is your task to successfully take him one on one. There is a time limit in the secret passage, so it is crucial that you defeat him within the time limit. I wish you the best of luck, and I hope you bring the #b#t4031059##k with you.");
+            cm.sendNextPrev("我的分身很厉害。他会使用许多特殊技能，然而，冒险家们不能长期停留在秘密通道，所以重要的是尽快击败他。祝你...好运，我会期待你带#b#t4031059##k来找我");
         }
     } else if (actionx["3thJobC"]){
         cm.getPlayer().removePartyQuestItem("JBP");
@@ -151,107 +151,3 @@ function action(mode, type, selection) {
         cm.dispose();
     }
 }
-
-/*
-function start() {
-    if (cm.getJobId() == 0) {
-        actionx["1stJob"] = true;
-        if (cm.getLevel() >= 10)
-            
-        else {
-            
-            cm.dispose();
-        }
-    } else {
-        if (cm.getLevel() >= 30 && cm.getJobId() == 300) {
-            actionx["2ndJob"] = true;
-            if (cm.haveItem(4031012))
-                
-            else if (cm.haveItem(4031010)){
-                cm.sendOk("Go and see the #b#p1072002##k.");
-                cm.dispose();
-            } else
-                
-        } else if (cm.isQuestStarted(100100)) {
-            if (cm.isQuestCompleted(100101))
-                cm.sendOk("Alright, now take this to #bRene#k.");
-            else {
-                
-                cm.startQuest(100101);
-            }
-            cm.dispose();
-        } else {
-            cm.sendOk("You have chosen wisely.");
-            cm.dispose();
-        }
-    }
-}
-
-function action(mode, type, selection) {
-    status++;
-    if (mode == 0 && type != 1)
-        status -= 2;
-    if (status == -1){
-        start();
-        return;
-    } else if (mode != 1 || status == 7 && type != 1 || (cm.haveItem(4031010) && status == 2)){
-        if (mode == 0 && status == 2)
-            cm.sendOk("Make up your mind and visit me again.");
-        if (!(mode == 0 && type != 1)){
-            cm.dispose();
-            return;
-        }
-    }
-    if (actionx["1stJob"]){
-        if (status == 0)
-            
-        else if (status == 1)
-            
-        else if (status == 2) {
-            
-                cm.sendOk("So be it! Now go, and go with pride.");
-            } else {
-                cm.sendNext("Make some room in your inventory and talk to me again.");
-                cm.dispose();
-            }
-        }
-    } else if(actionx["2ndJob"]){
-        if (status == 0){
-            if (cm.haveItem(4031012))
-                cm.sendSimple("Alright, when you have made your decision, click on [I'll choose my occupation] at the bottom.#b\r\n#L0#Please explain to me what being the Hunter is all about.\r\n#L1#Please explain to me what being the Crossbowman is all about.\r\n#L2#I'll choose my occupation!");
-            else
-                cm.sendNext("Good decision. You look strong, but I need to see if you really are strong enough to pass the test, it's not a difficult test, so you'll do just fine. Here, take my letter first... make sure you don't lose it!");
-        } else if (status == 1){
-            if (!cm.haveItem(4031012)){
-                if (cm.canHold(4031010)){
-                    if (!cm.haveItem(4031010))
-                        cm.gainItem(4031010, 1);
-                    cm.sendNextPrev("Please get this letter to #b#p1072002##k who's around #b#m106010000##k near Henesys. She is taking care of the job of an instructor in place of me. Give her the letter and she'll test you in place of me. Best of luck to you.");
-                } else {
-                    cm.sendNext("Please, make some space in your inventory.");
-                    cm.dispose();
-                }
-            } else {
-                if (selection < 2){
-                    cm.sendNext("Not done.");
-                    status -= 2;
-                } else
-                    cm.sendSimple("Now... have you made up your mind? Please choose the job you'd like to select for your 2nd job advancement. #b\r\n#L0#Hunter\r\n#L1#Crossbowman");
-            }
-        } else if (status == 2){
-            job += selection * 10;
-            cm.sendYesNo("So you want to make the second job advancement as the " + (job == 310 ? "#bHunter#k" : "#bCrossbowman#k") + "? You know you won't be able to choose a different job for the 2nd job advancement once you make your desicion here, right?");
-        } else if (status == 3){
-            if (cm.haveItem(4031012))
-                cm.gainItem(4031012, -1);
-            cm.sendNext("Alright, you're the " + (job == 310 ? "#bHunter#k" : "#bCrossbowman#k") + " from here on out. Hunters are the intelligent bunch with incredible vision, able to pierce the arrow through the heart of the monsters with ease... please train yourself each and everyday. We'll help you become even stronger than you already are.");
-            if (cm.getJobId() != job)
-                cm.changeJobById(job);
-        } else if (status == 4)
-            cm.sendNextPrev("I have just given you a book that gives you the list of skills you can acquire as a " + (job == 310 ? "hunter" : "crossbowman") + ". Also your etc inventory has expanded by adding another row to it. Your max HP and MP have increased, too. Go check and see for it yourself.");
-        else if (status == 5)
-            cm.sendNextPrev("I have also given you a little bit of #bSP#k. Open the #bSkill Menu#k located at the bottomleft corner. you'll be able to boost up the newer acquired 2nd level skills. A word of warning, though. You can't boost them up all at once. Some of the skills are only available after you have learned other skills. Make sure yo remember that.");
-        else if (status == 6)
-            cm.sendNextPrev((job == 310 ? "Hunter" : "Crossbowman") + " need to be strong. But remember that you can't abuse that power and use it on a weaking. Please use your enormous power the right way, because... for you to use that the right way, that is much harden than just getting stronger. Please find me after you have advanced much further. I'll be waiting for you.");
-    }
-}*/

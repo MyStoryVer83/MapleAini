@@ -25,7 +25,7 @@ var cost;
 var status = 0;
 
 function start() {
-    cm.sendSimple("我可以兑换点卷\r\n#L0##b用枫叶兑换点卷#k#l\r\n#L1###kaini叼不刁？#l");
+    cm.sendSimple("我可以兑换点卷\r\n#L0##b用枫叶兑换点卷#k#l\r\n#L1##kAini叼不叼？#l");
 }
 
 function action(mode, type, selection) {
@@ -33,7 +33,7 @@ function action(mode, type, selection) {
         cm.dispose();
         return;
     } else if (mode == 0) {
-        cm.sendOk("Please think carefully. Once you have made your decision, let me know.");
+        cm.sendOk("请再仔细想想。一旦你作出了决定，就来找我。");
         cm.dispose();
         return;
     }

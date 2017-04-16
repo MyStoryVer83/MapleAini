@@ -14,9 +14,9 @@ function action(mode, type, selection) {
 		status++;
 	}
 	if (status == 0) {
-	    cm.sendNext("You, who are destined to be a Dragon Master... You have finally arrived.", 1);
+	    cm.sendNext("终于找到了，符合契约人条件的人...", 1);
 	} else if (status == 1) {
-	    cm.sendNextPrev("Go and fulfill your duties as the Dragon Master...", 1);
+	    cm.sendNextPrev("履行契约的条件...", 1);
 	} else if (status == 2) {
 	    cm.warp(900090101);
 	    cm.dispose();

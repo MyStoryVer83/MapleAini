@@ -42,7 +42,7 @@ function start() {
     } else if (cm.getLevel() >= 30 && cm.getJobId() == 100) {
         actionx["2ndJob"] = true;
         if (cm.haveItem(4031012))
-            cm.sendNext("哦……你平安地回来了！我知道你会轻而易举的通过……我承认你是强大的，强大的战士……好吧，我会给你一个比你现在更强大的战士…在这之前！你需要选择#b2转战士#k的三个路径，这并不是一件容易的事，所以如果你有任何问题，可以随时问我。");
+            cm.sendNext("哦……你平安地回来了！我知道你会轻而易举的通过……我承认你是个强大的战士……好吧，现在我会让你变得更加强大…在这之前！你需要选择#b二转战士#k的三个路径，这并不是一件容易的事，所以如果你有任何问题，可以随时问我。");
         else if (cm.haveItem(4031008)){
             cm.sendOk("你怎么还在这里？把我给你的#b推荐信#k交给#b武术教官#k,据说他现在在#b西部绝壁IV#k。通过他的考试获得#b#z4031012##k然后在回来和我对话。");
             cm.dispose();
@@ -90,7 +90,7 @@ function action(mode, type, selection) {
                 }
                 cm.sendNext("恭喜你转职成功。");
             } else {
-                cm.sendNext("看来你还有其他的事情,等你忙完了在来找我吧！我会在这里等你。");
+                cm.sendNext("你没有足够的背包空间,等你整理好在来找我吧！");
                 cm.dispose();
             }
         } else if (status == 2) 
@@ -130,13 +130,13 @@ function action(mode, type, selection) {
         } else if (status == 3){
             if (cm.haveItem(4031012))
                 cm.gainItem(4031012, -1);
-            cm.sendNext("恭喜你转职成功。你现在已经获得了" + (job == 110 ? "#b剑客#k" : job == 120 ? "#b准骑士#k" : "#b枪战士#k") + "技能窗口。我送了你1点SP,赶紧去学习技能。同时你的最大MP也增加了……");
+            cm.sendNext("恭喜你转职成功。你现在已经获得了" + (job == 110 ? "#b剑客#k" : job == 120 ? "#b准骑士#k" : "#b枪战士#k") + "技能窗口。");
             if (cm.getJobId() != job)
                 cm.changeJobById(job);
         } else if (status == 4)
-            cm.sendNextPrev("恭喜你转职成功。你现在已经获得了" + (job == 110 ? "剑客" : job == 120 ? "准骑士" : "枪战士") + "技能窗口。我送了你1点SP,赶紧去学习技能。同时你的最大MP也增加了……");
+            cm.sendNextPrev("你现在已经获得了" + (job == 110 ? "剑客" : job == 120 ? "准骑士" : "枪战士") + "技能窗口。同时你的最大HP和最大MP也增加了……");
         else if (status == 5)
-            cm.sendNextPrev("我送了你1点SP,赶紧去学习技能。同时你的最大MP也增加了……要记住有些技能只有在你学会了其他技能之后才能得到。");
+            cm.sendNextPrev("我送了你1点SP,赶紧去学习技能吧。要记住有些技能只有在你学会了其他技能之后才能得到。");
         else if (status == 6)
             cm.sendNextPrev((job == 110 ? "剑客" : job == 120 ? "准骑士" : "枪战士") + "请记住，你不能滥用技能，正确的使用你强大的力量，因为…对你来说，正确掌握使用力量的方法相当的困难。请在你变得更加强大以后再找到我。我会等你的。");
     } else if (actionx["3thJobI"]){

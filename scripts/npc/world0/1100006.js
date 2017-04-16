@@ -10,6 +10,6 @@
 **/
 
 function start() {
-    cm.sendOk("Ah, such lovely winds. This should be a perfect voyage as long as no stupid customer falls off for attempting some weird skill. Of course, I'm talking about you. Please refain from using your skills.");
+    cm.sendOk("啊，这么凉爽的风。只要没有愚蠢的乘客因为尝试一些奇怪的技能而掉下去，应该是一个完美的航程。 当然，我在说你。 请不要使用技能。");
     cm.dispose();
 }

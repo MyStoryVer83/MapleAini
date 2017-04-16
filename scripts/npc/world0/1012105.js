@@ -17,16 +17,16 @@ function action(mode, type, selection) {
         status++;
     }
     if (status == 0) {
-        cm.sendNext("你好！欢迎光临射手村护肤中心。你想获得和我一样健康紧绷的皮肤吗？只要有#b万能会员卡#k的话，我就可以按照你的要求为你护理皮肤。你想尝试一下吗？");
+        cm.sendNext("欢迎光临！欢迎来到我们射手村护肤中心。你是不是希望拥有像我一样健康、美丽的肌肤呢？如果你有#b#t5153000##k我们可以为你精心护理肌肤。请相信我们的能力，怎么样要不要试一试？");
     } else if (status == 1) {
-        cm.sendStyle("用我们护肤中心开放的机械，可以查看护肤后的效果。你想要什么样的皮肤呢？请挑选一下～", 5153000, skin);
+        cm.sendStyle("用我们特殊开发的机器可查看护肤后的效果噢，想换成什么样的皮肤呢？请选择～", 5153000, skin);
     } else if (status == 2) {
 		if (cm.haveItem(5153000)){
             cm.gainItem(5153000, -1);
             cm.setSkin(selection);
             cm.sendOk("完成了,让朋友们赞叹你的新肤色吧!");
         } else {
-            cm.sendOk("嗯……你好像没有护肤券啊。对不起，没有护肤券的话，我就不能帮你护理皮肤。");
+            cm.sendOk("看起来你并没有我们的会员卡,我恐怕不能给你护肤,我很抱歉");
         }
         cm.dispose();
     }
