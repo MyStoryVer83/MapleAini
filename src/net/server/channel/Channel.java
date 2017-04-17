@@ -59,9 +59,6 @@ import server.maps.MapleMapFactory;
 import tools.MaplePacketCreator;
 import client.MapleCharacter;
 import constants.ServerConstants;
-import server.events.Aviao;
-import server.events.Elevador;
-import server.events.Metro;
 
 public final class Channel {
 
@@ -94,7 +91,6 @@ public final class Channel {
             IoBuffer.setAllocator(new SimpleBufferAllocator());
             acceptor = new NioSocketAcceptor();
             TimerManager.getInstance().register(new respawnMaps(), 10000);
-            TimerManager.getInstance().schedule(new LoadNotEventScripts(), 5);
             acceptor.setHandler(new MapleServerHandler(world, channel));
             acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 30);
             acceptor.getFilterChain().addLast("codec", (IoFilter) new ProtocolCodecFilter(new MapleCodecFactory()));
@@ -254,14 +250,6 @@ public final class Channel {
             wlock.unlock();
         }
         }
-
-    public class LoadNotEventScripts implements Runnable {
-        public void run() {
-            new Elevador(); //玩具城电梯
-            new Metro(); //新叶城地铁
-            new Aviao(); //新加坡机场
-        }
-    }
     
     public int[] multiBuddyFind(int charIdFrom, int[] characterIds) {
         List<Integer> ret = new ArrayList<>(characterIds.length);
