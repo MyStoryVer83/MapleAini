@@ -116,10 +116,6 @@ public final class SpecialMoveHandler extends AbstractMaplePacketHandler {
         if (slea.available() == 5) {
             pos = new Point(slea.readShort(), slea.readShort());
         }
-        if (skill.getId() == Priest.MYSTIC_DOOR && !chr.isGM()) {
-        	c.announce(MaplePacketCreator.enableActions());
-        	return;
-        }
         if (chr.isAlive()) {
             if (skill.getId() != Priest.MYSTIC_DOOR || chr.canDoor()) {
                 skill.getEffect(skillLevel).applyTo(c.getPlayer(), pos);
