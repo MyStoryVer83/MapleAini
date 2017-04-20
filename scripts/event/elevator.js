@@ -20,8 +20,9 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 var Ludi99;
-var Korean_to_Ludi;
 var Ludi2;
+var Ludi;
+var Korean_to_Ludi;
 var Korean;
 var Ludi_to_Korean;
 
