@@ -27,10 +27,10 @@ var Ludi_to_Korean;
 
 function init() {
     Ludi99 = em.getChannelServer().getMapFactory().getMap(222020200);
-    Ludi_to_Ludi99 = em.getChannelServer().getMapFactory().getMap(222020111);
+    Ludi_to_Ludi99 = em.getChannelServer().getMapFactory().getMap(222020110);
 	Ludi2 = em.getChannelServer().getMapFactory().getMap(222020100);
 	Korean = em.getChannelServer().getMapFactory().getMap(222020210);
-	Ludi_to_Korean = em.getChannelServer().getMapFactory().getMap(222020211);
+	Ludi_to_Korean = em.getChannelServer().getMapFactory().getMap(222020210);
     scheduleNew();
 }
 
