@@ -2191,21 +2191,15 @@ public class MapleMap {
     public boolean getSummonState() {
         return MapleMap.this.allowSummons;
     }
-
-    public void warpEveryone(int to) {
+   
+      public void warpEveryone(int to) {
         List<MapleCharacter> players;
-        chrRLock.lock();
-        try {
-            players = new ArrayList<>(getCharacters());
-        } finally {
-            chrRLock.unlock();
-        }
-
+        players = new ArrayList<>(getCharacters());
         for (MapleCharacter chr : players) {
             chr.changeMap(to);
         }
-    }
-
+    }  
+        
     // BEGIN EVENTS
     public void setSnowball(int team, MapleSnowball ball) {
         switch (team) {
