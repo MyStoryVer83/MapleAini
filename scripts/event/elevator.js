@@ -20,17 +20,18 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 var Ludi99;
-var Ludi_to_Ludi99;
+var Korean_to_Ludi;
 var Ludi2;
 var Korean;
 var Ludi_to_Korean;
 
 function init() {
     Ludi99 = em.getChannelServer().getMapFactory().getMap(222020200);
-    Ludi_to_Ludi99 = em.getChannelServer().getMapFactory().getMap(222020110);
 	Ludi2 = em.getChannelServer().getMapFactory().getMap(222020100);
+	Ludi = em.getChannelServer().getMapFactory().getMap(222020110);
+    Korean_to_Ludi = em.getChannelServer().getMapFactory().getMap(222020111);
 	Korean = em.getChannelServer().getMapFactory().getMap(222020210);
-	Ludi_to_Korean = em.getChannelServer().getMapFactory().getMap(222020210);
+	Ludi_to_Korean = em.getChannelServer().getMapFactory().getMap(222020211);
     scheduleNew();
 }
 
@@ -48,7 +49,7 @@ function goDown() {
 }
 
 function goingUpNow() {
-	Ludi99.warpEveryone(Ludi_to_Ludi99.getId());
+	Ludi.warpEveryone(Korean_to_Ludi.getId());
     em.setProperty("goingUp", "true");
     em.schedule("isUpNow", 55000);
     Ludi2.setReactorState();
@@ -65,7 +66,7 @@ function goingDownNow() {
 
 function isUpNow() {
     Ludi2.resetReactors();
-    Ludi_to_Ludi99.warpEveryone(Ludi99.getId());
+    Korean_to_Ludi.warpEveryone(Ludi99.getId());
     em.setProperty("goingUp", "false"); // clear
 }
 
