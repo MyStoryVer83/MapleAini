@@ -331,15 +331,15 @@ public class Commands {
                         player.message("@shanghai: 开关显示伤害.");
 			//player.message("@time: Displays the current server time.");
 			player.message("@rates: 查看倍率");
-			player.message("@points: Tells you how many unused vote points you have and when/if you can vote.");
+			player.message("@points: 显示未使用的投票次数,如果有次数可以进行投票.");
 			//player.message("@gm <message>: Sends a message to all online GMs in the case of an emergency.");
 			//player.message("@bug <bug>: Sends a bug report to all developers.");
 			//player.message("@joinevent: If an event is in progress, use this to warp to the event map.");
 			//player.message("@leaveevent: If an event has ended, use this to warp to your original map.");
 			//player.message("@staff: Lists the staff of MapleAini.");
 			player.message("@uptime: 查看服务器运行时间.");
-			player.message("@whatdropsfrom <monster name>: Displays a list of drops and chances for a specified monster.");
-			player.message("@whodrops <item name>: Displays monsters that drop an item given an item name.");
+			player.message("@whatdropsfrom <怪物名>: 显示指定怪物的暴率.");
+			player.message("@whodrops <道具名>:显示指定道具的怪物暴率.");
 			//player.message("@uptime: Shows how long MapleAini has been online.");
 			player.message("@mob: 查看当前地图的怪物ID和HP.");
 			break;
@@ -354,12 +354,6 @@ public class Commands {
 			dateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
 			player.yellowMessage("MapleAini 服务器时间: " + dateFormat.format(new Date()));
 			break;
-                case "guaji":
-						try {//sometimes bugged because the map = null
-							player.getClient().disconnect(true, false);
-						} catch (Exception e) {
-						}
-                                                break;
 		case "uptime":
 			long milliseconds = System.currentTimeMillis() - Server.uptime;
 			int seconds = (int) (milliseconds / 1000) % 60 ;
