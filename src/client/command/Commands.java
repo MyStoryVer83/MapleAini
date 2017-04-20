@@ -328,6 +328,7 @@ public class Commands {
                         player.message("@reloaddrop: 重载爆率.");
                         player.message("@mapid: 查看所在地图ID.");
 			player.message("@online: 查看在线.");
+                        player.message("@shanghai: 开关显示伤害.");
 			//player.message("@time: Displays the current server time.");
 			player.message("@rates: 查看倍率");
 			player.message("@points: Tells you how many unused vote points you have and when/if you can vote.");
@@ -340,25 +341,25 @@ public class Commands {
 			player.message("@whatdropsfrom <monster name>: Displays a list of drops and chances for a specified monster.");
 			player.message("@whodrops <item name>: Displays monsters that drop an item given an item name.");
 			//player.message("@uptime: Shows how long MapleAini has been online.");
-			player.message("@bosshp: Displays the remaining HP of the bosses on your map.");
+			player.message("@mob: 查看当前地图的怪物ID和HP.");
 			break;
+                case "shanghai":
+                            if(c.getPlayer().getshanghai() == 0)
+                                c.getPlayer().gainshanghai(1);
+                            else
+                                c.getPlayer().gainshanghai(-1);
+                            break;
 		case "time":
 			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 			dateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
 			player.yellowMessage("MapleAini 服务器时间: " + dateFormat.format(new Date()));
 			break;
-		case "staff":
-			player.yellowMessage("MapleAini Staff");
-			player.yellowMessage("Aria - Administrator");
-			player.yellowMessage("Twdtwd - Administrator");
-			player.yellowMessage("Exorcist - Developer");
-			player.yellowMessage("SharpAceX - Developer");
-			player.yellowMessage("Zygon - Freelance Developer");
-			player.yellowMessage("SourMjolk - Game Master");
-			player.yellowMessage("Kanade - Game Master");
-			player.yellowMessage("Kitsune - Game Master");
-			break;
-		case "lastrestart":
+                case "guaji":
+						try {//sometimes bugged because the map = null
+							player.getClient().disconnect(true, false);
+						} catch (Exception e) {
+						}
+                                                break;
 		case "uptime":
 			long milliseconds = System.currentTimeMillis() - Server.uptime;
 			int seconds = (int) (milliseconds / 1000) % 60 ;
@@ -618,16 +619,16 @@ public class Commands {
                             PortalScriptManager.getInstance().reloadPortalScripts();
                             player.yellowMessage("传送脚本重载完毕" );
 			break;
-		case "bosshp":
+		case "mob":
 			for(MapleMonster monster : player.getMap().getMonsters()) {
-				if(monster != null && monster.isBoss() && monster.getHp() > 0) {
+				if(monster != null && monster.getHp() > 0) {
 					long percent = monster.getHp() * 100L / monster.getMaxHp();
 					String bar = "[";
 					for (int i = 0; i < 100; i++){
 						bar += i < percent ? "|" : ".";
 					}
 					bar += "]";
-					player.yellowMessage(monster.getName() + " has " + percent + "% HP left.");
+					player.yellowMessage(monster.getName() + " 剩余 " + percent + "% HP ，数值" + monster.getHp() +"");
 					player.yellowMessage("HP: " + bar);
 				}
 			} 

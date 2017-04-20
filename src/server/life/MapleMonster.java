@@ -227,6 +227,9 @@ public class MapleMonster extends AbstractLoadedMapleLife {
                 from.announce(packet);
             }
         }
+        if(from.getshanghai() == 1)
+            from.announce(MaplePacketCreator.sendHint(""+ this.getHp() +" - "+ damage +" = "+ this.getHp() + "\n  还需"+ this.getHp() / damage +" 次攻击", 250, 5));
+            from.announce(MaplePacketCreator.enableActions());
     }
 
     public void heal(int hp, int mp) {

@@ -192,7 +192,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     private long dojoFinish, lastfametime, lastUsedCashItem, lastHealed, lastMesoDrop = -1;
     private transient int localmaxhp, localmaxmp, localstr, localdex, localluk, localint_, magic, watk;
     private boolean hidden, canDoor = true, Berserk, hasMerchant, whiteChat = false;
-    private int linkedLevel = 0;
+    private int linkedLevel = 0, shanghai;
     private String linkedName = null;
     private boolean finishedDojoTutorial, dojoParty;
     private String name;
@@ -671,6 +671,14 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
             medal = "<" + MapleItemInformationProvider.getInstance().getName(medalItem.getItemId()) + "> ";
         }
         return medal;
+    }
+
+    public int getshanghai() {
+		return shanghai;
+	}
+
+    public void gainshanghai(int gain) {
+        this.shanghai += gain;
     }
 
     public static class CancelCooldownAction implements Runnable {
