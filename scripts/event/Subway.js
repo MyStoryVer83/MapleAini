@@ -1,7 +1,7 @@
 //Time Setting is in millisecond
-var closeTime = 30 * 1000; //[30 seconds] The time to close the gate
-var beginTime = 30 * 1000; //[30 seconds] The time to begin the ride
-var rideTime = 30 * 1000; //[30 seconds] The time that require move to destination
+var closeTime = 300 * 1000; //[30 seconds] The time to close the gate
+var beginTime = 360 * 1000; //[30 seconds] The time to begin the ride
+var rideTime = 600 * 1000; //[30 seconds] The time that require move to destination
 var KC_Waiting;
 var Subway_to_KC;
 var KC_docked;

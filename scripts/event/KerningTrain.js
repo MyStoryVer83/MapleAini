@@ -7,7 +7,7 @@ var myRide;
 var returnMap;
 var map;
 var docked;
-var timeOnRide = 10; //Seconds
+var timeOnRide = 300; //Seconds
 var onRide;
 
 function init() {

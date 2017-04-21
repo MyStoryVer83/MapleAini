@@ -3,10 +3,10 @@ importPackage(Packages.tools);
 importPackage(Packages.server.life);
 
 //Time Setting is in millisecond
-var closeTime = 50 * 1000; //The time to close the gate
-var beginTime = 60 * 1000; //The time to begin the ride
-var rideTime = 120 * 1000; //The time that require move to destination
-var invasionTime = 30 * 1000; //The time that spawn balrog
+var closeTime = 300 * 1000; //关门时间
+var beginTime = 360 * 1000; //开船时间
+var rideTime = 1200 * 1000; //坐船时间
+var invasionTime = 300 * 1000; //刷怪时间
 var Orbis_btf;
 var Boat_to_Orbis;
 var Orbis_Boat_Cabin;

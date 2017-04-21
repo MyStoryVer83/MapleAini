@@ -331,6 +331,7 @@ public class Commands {
                         player.message("@shanghai: 开关显示伤害.");
 			//player.message("@time: Displays the current server time.");
 			player.message("@rates: 查看倍率");
+                        player.message("@paihang: 查看排行榜");
 			player.message("@points: 显示未使用的投票次数,如果有次数可以进行投票.");
 			//player.message("@gm <message>: Sends a message to all online GMs in the case of an emergency.");
 			//player.message("@bug <bug>: Sends a bug report to all developers.");
@@ -338,8 +339,8 @@ public class Commands {
 			//player.message("@leaveevent: If an event has ended, use this to warp to your original map.");
 			//player.message("@staff: Lists the staff of MapleAini.");
 			player.message("@uptime: 查看服务器运行时间.");
-			player.message("@whatdropsfrom <怪物名>: 显示指定怪物的暴率.");
-			player.message("@whodrops <道具名>:显示指定道具的怪物暴率.");
+			player.message("@diaoluo <怪物名>: 显示指定怪物的暴率.");
+			player.message("@daoju <道具名>:显示指定道具的怪物暴率.");
 			//player.message("@uptime: Shows how long MapleAini has been online.");
 			player.message("@mob: 查看当前地图的怪物ID和HP.");
 			break;
@@ -360,11 +361,11 @@ public class Commands {
 			int minutes = (int) ((milliseconds / (1000*60)) % 60);
 			int hours   = (int) ((milliseconds / (1000*60*60)) % 24);
 			int days	= (int) ((milliseconds / (1000*60*60*24)));
- 			player.yellowMessage("MapleAini has been online for " + days + " days " + hours + " hours " + minutes + " minutes and " + seconds + " seconds.");
+ 			player.yellowMessage("MapleAini 运行了 " + days + " 天 " + hours + " 小时 " + minutes + " 分 " + seconds + " 秒.");
 			break;
 		case "gacha":
 			if (player.gmLevel() == 0) { // Sigh, need it for now...
-				player.yellowMessage("Player Command " + heading + sub[0] + " does not exist, see @help for a list of commands.");
+				player.yellowMessage("玩家命令 " + heading + sub[0] + " 未找到，请输入 @help 确认一遍.");
 				return false;
 			}
 			Gachapon gacha = null;
@@ -394,21 +395,21 @@ public class Commands {
 			output += "\r\nPlease keep in mind that there are items that are in all gachapons and are not listed here.";
 			c.announce(MaplePacketCreator.getNPCTalk(9010000, (byte) 0, output, "00 00", (byte) 0));
 			break;
-		case "whatdropsfrom":
+		case "diaoluo":
 			if (sub.length < 2) {
-				player.dropMessage(5, "Please do @whatdropsfrom <monster name>");
+				player.dropMessage(5, "请输入 @diaoluo <怪物名称>");
 				break;
 			}
 			String monsterName = joinStringFrom(sub, 1);
 			output = "";
-			int limit = 3;
+			int limit = 9999;
 			Iterator<Pair<Integer, String>> listIterator = MapleMonsterInformationProvider.getMobsIDsFromName(monsterName).iterator();
 			for (int i = 0; i < limit; i++) {
 				if(listIterator.hasNext()) {
 					Pair<Integer, String> data = listIterator.next();
 					int mobId = data.getLeft();
 					String mobName = data.getRight();
-					output += mobName + " drops the following items:\r\n\r\n";
+					output += mobName + " 会掉落以下物品:\r\n\r\n";
 					for (MonsterDropEntry drop : MapleMonsterInformationProvider.getInstance().retrieveDrop(mobId)){
 						try {
 							String name = MapleItemInformationProvider.getInstance().getName(drop.itemId);
@@ -426,9 +427,9 @@ public class Commands {
 			}
 			c.announce(MaplePacketCreator.getNPCTalk(9010000, (byte) 0, output, "00 00", (byte) 0));
 			break;
-		case "whodrops":
+		case "daoju":
 			if (sub.length < 2) {
-				player.dropMessage(5, "Please do @whodrops <item name>");
+				player.dropMessage(5, "请输入 @daoju <道具名称>");
 				break;
 			}
 			String searchString = joinStringFrom(sub, 1);
@@ -436,9 +437,9 @@ public class Commands {
 			listIterator = MapleItemInformationProvider.getInstance().getItemDataByName(searchString).iterator();
 			if(listIterator.hasNext()) {
 				int count = 1;
-				while(listIterator.hasNext() && count <= 3) {
+				while(listIterator.hasNext() && count <= 9999) {
 					Pair<Integer, String> data = listIterator.next();
-					output += "#b" + data.getRight() + "#k is dropped by:\r\n";
+					output += "#b" + data.getRight() + "#k 出自于:\r\n";
 					try {
 						PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM drop_data WHERE itemid = ? LIMIT 50");
 						ps.setInt(1, data.getLeft());
@@ -452,7 +453,7 @@ public class Commands {
 						rs.close();
 						ps.close();
 					} catch (Exception e) {
-						player.dropMessage("There was a problem retreiving the required data. Please try again.");
+						player.dropMessage("检索出现错误，请再试一次.");
 						e.printStackTrace();
 						return true;
 					}
@@ -460,7 +461,7 @@ public class Commands {
 					count++;
 				}
 			} else {
-				player.dropMessage(5, "The item you searched for doesn't exist.");
+				player.dropMessage(5, "此物品无效.");
 				break;
 			}
 			c.announce(MaplePacketCreator.getNPCTalk(9010000, (byte) 0, output, "00 00", (byte) 0));
@@ -493,10 +494,10 @@ public class Commands {
 			break;
 		case "online":
 			for (Channel ch : Server.getInstance().getChannelsFromWorld(player.getWorld())) {
-				player.yellowMessage("Players in Channel " + ch.getId() + ":");
+				player.yellowMessage("你在 " + ch.getId() + " 线:");
 				for (MapleCharacter chr : ch.getPlayerStorage().getAllCharacters()) {
 					if (!chr.isGM()) {
-						player.message(" >> " + MapleCharacter.makeMapleReadable(chr.getName()) + " is at " + chr.getMap().getMapName() + ".");
+						player.message(" >> " + MapleCharacter.makeMapleReadable(chr.getName()) + " 在 " + chr.getMap().getMapName() + ".");
 					}
 				}
 			}
@@ -622,12 +623,12 @@ public class Commands {
 						bar += i < percent ? "|" : ".";
 					}
 					bar += "]";
-					player.yellowMessage(monster.getName() + " 剩余 " + percent + "% HP ，数值" + monster.getHp() +"");
+					player.yellowMessage(monster.getName() + " 剩余 " + percent + "% HP ，数值" + monster.getHp() +",代码:" + monster.getId());
 					player.yellowMessage("HP: " + bar);
 				}
 			} 
 			break;
-		case "ranks":
+		case "paihang":
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 			try {

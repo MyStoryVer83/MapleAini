@@ -270,7 +270,7 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
                     if (player.getLevel() > 9) {
                         player.getClient().getChannelServer().broadcastPacket(MaplePacketCreator.serverNotice(2, medal + player.getName() + " : " + slea.readMapleAsciiString()));
                     } else {
-                        player.dropMessage(1, "You may not use this until you're level 10.");
+                        player.dropMessage(1, "你的等级必须达到 10.");
                     }
                     break;
                 case 2: // Super megaphone
@@ -312,7 +312,7 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
                         new MapleTVEffect(player, victim, messages, tvType);
                         remove(c, itemId);
                     } else {
-                        player.dropMessage(1, "MapleTV is already in use.");
+                        player.dropMessage(1, "MapleTV 已经正在使用.");
                         return;
                     }
                     break;
@@ -326,7 +326,7 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
                         {
                             return;
                         } else if (ii.isDropRestricted(item.getItemId())) { //Lol?
-                            player.dropMessage(1, "You cannot trade this item.");
+                            player.dropMessage(1, "无法交易.");
                             c.announce(MaplePacketCreator.enableActions());
                             return;
                         }
@@ -409,16 +409,16 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
                                 player.changeMap(target, target.findClosestSpawnpoint(victim.getPosition()));
                                 success = true;
                             } else {
-                                player.dropMessage(1, "You cannot teleport between continents with this teleport rock.");
+                                player.dropMessage(1, "无法夸大陆传送.");
                             }
                         } else {
                             player.dropMessage(1, error1);
                         }
                     } else {
-                        player.dropMessage(1, "You cannot teleport to this map.");
+                        player.dropMessage(1, "无法到达.");
                     }
                 } else {
-                    player.dropMessage(1, "Player could not be found in this channel.");
+                    player.dropMessage(1, "找不到角色.");
                 }
                 if (!success) {
                     MapleInventoryManipulator.addById(c, itemId, (short) 1);

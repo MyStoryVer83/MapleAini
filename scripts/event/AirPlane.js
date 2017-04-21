@@ -1,9 +1,9 @@
 importPackage(Packages.tools);
 
 //Time Setting is in millisecond
-var closeTime = 24 * 1000; //The time to close the gate
-var beginTime = 30 * 1000; //The time to begin the ride
-var rideTime = 6 * 1000; //The time that require move to destination
+var closeTime = 300 * 1000; //The time to close the gate
+var beginTime = 360 * 1000; //The time to begin the ride
+var rideTime = 600 * 1000; //The time that require move to destination
 var KC_bfd;
 var Plane_to_CBD;
 var CBD_docked;
