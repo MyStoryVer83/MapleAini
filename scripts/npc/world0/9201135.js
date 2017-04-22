@@ -23,7 +23,7 @@ var toMap = new Array(550000000, 551000000, 540000000,540000000);
 var inMap = new Array(540000000, 540000000, 551000000, 550000000);
 var cost = new Array(10000, 50000, 50000, 10000);
 var location;
-var text = "Where would you like to travel?\n\n";
+var text = "你想去哪?\n\n";
 var status = 0;
 
 function start() {
@@ -34,9 +34,9 @@ function start() {
 				break;
 			}
 		}
-		text +="\t\r\n#b#L0##m" + toMap[location] + "# (" + cost[location] + "mesos)#l#k";
+		text +="\t\r\n#b#L0##m" + toMap[location] + "# (" + cost[location] + "金币)#l#k";
 	} else {
-    	text += "\t\r\n#b#L0##m" + toMap[0] + "# (" + cost[0] + "mesos)#l\n\t\r\n#L1##m" + toMap[1] + "# (" + cost[1] + "mesos)#l#k";
+    	text += "\t\r\n#b#L0##m" + toMap[0] + "# (" + cost[0] + "金币)#l\n\t\r\n#L1##m" + toMap[1] + "# (" + cost[1] + "金币)#l#k";
 	}
     cm.sendSimple(text);
 }
@@ -46,7 +46,7 @@ function action(mode, type, selection) {
         cm.dispose();
         return;
     } else if (mode == 0) {
-    	cm.sendNext("You know where to come if you need a ride!");
+    	cm.sendNext("想来就来!");
         cm.dispose();
         return;
     } else {
@@ -60,10 +60,10 @@ function action(mode, type, selection) {
             cm.dipose();
             return;
         }
-        cm.sendYesNo("Would you like to travel to #b#m"+toMap[location]+"##k? To head over to #b#m"+toMap[location]+"##k, it'll cost you cost you #b" + cost[location] + "#k. Would you like to go right now?");
+        cm.sendYesNo("你想去 #b#m"+toMap[location]+"##k? 去 #b#m"+toMap[location]+"##k, 要车费 #b" + cost[location] + "#k. 你确定要去吗?");
     } else if (status == 2) {
         if (cm.getMeso() < cost[location]) {
-            cm.sendNext("You do not seem to have enough mesos.");
+            cm.sendNext("穷B.");
         } else {
             cm.warp(toMap[location]);
             cm.gainMeso(-cost[location]);

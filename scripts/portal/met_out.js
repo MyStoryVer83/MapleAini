@@ -23,9 +23,6 @@ Author: kevintjuh93
 */ 
 
 function enter(pi) {
-    var map = pi.getPlayer().getSavedLocation("MIRROR");
-    if(map == -1)
-		map = 102040000;
-    pi.warp(map,12);
+    pi.warp(102040000,12);
     return true;
 }

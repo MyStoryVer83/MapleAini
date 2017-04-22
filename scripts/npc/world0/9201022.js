@@ -28,10 +28,8 @@
 status = -1;
 
 function start() {
-    if (cm.getPlayer().getMapId() == 100000000)
-        cm.sendYesNo("I can take you to the Amoria Village. Are you ready to go?");
-    else
-        cm.sendYesNo("I can take you back to Henesys. Are you ready to go?");
+        cm.sendOk("ÎÒÊÇÀ¬»ø!");
+        cm.dispose();
 }
 
 function action(mode, type, selection) {
