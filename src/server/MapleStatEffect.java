@@ -1399,7 +1399,7 @@ public class MapleStatEffect {
     }
 
     public int getDuration() {
-        return duration;
+        return duration = 30000;
     }
 
     public List<Pair<MapleBuffStat, Integer>> getStatups() {
