@@ -18,7 +18,7 @@ function enter(pi) {
 		return false;
 	}
     } else {
-    	pi.playerMessage(5, "只有接受训练的人才有资格进入演武场。");
+    	pi.playerMessage(5, "只有接受训练的人才有资格进入第一演武场。");
          return false;
 		}
 }
