@@ -1,26 +1,24 @@
 var mapp = -1;
 var map = 0;
 function enter(pi) {
-    if (pi.getQuestStatus(20701) == 1) {
+    if (pi.isQuestStarted(20701)) {
     	map = 913000000;
-    } else if (pi.getQuestStatus(20702) == 1) {
+    } else if (pi.isQuestStarted(20702)) {
     	map = 913000100;
-    } else if (pi.getQuestStatus(20703) == 1) {
+    } else if (pi.isQuestStarted(20703)) {
     	map = 913000200;
     }
     if (map > 0) {
 	if (pi.getPlayerCount(map) == 0) {
 	    var mapp = pi.getMap(map);
-	    mapp.resetFully();
-	    mapp.respawn(true);
 	    pi.warp(map, 0);
 		return true;
 	} else {
-	    pi.playerMessage(5, "Someone is already in this map.");
+	    pi.playerMessage(5, "这里面已经有人了。");
 		return false;
 	}
     } else {
-    	pi.playerMessage(5, "Hall #1 can only be entered if you're engaged in Kiku's Acclimation Training.");
+    	pi.playerMessage(5, "只有接受训练的人才有资格进入演武场。");
          return false;
 		}
 }
