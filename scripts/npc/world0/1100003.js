@@ -10,7 +10,7 @@
 **/
 
 var menu = new Array("Victoria Island");
-var method;
+var duration = 60;
 
 function start() {
 	status = -1;
@@ -40,12 +40,18 @@ function action(mode, type, selection) {
 		} else if(status == 1) {
 			 if(cm.getMeso() < 1000) {
 				cm.sendNext("Hmm... Are you sure you have #b1000#k Mesos? Check your Inventory and make sure you have enough. You must pay the fee or I can't let you get on...");
-				cm.dispose();
 			} else {
-				cm.gainMeso(-1000);
-				cm.warp(200090031);
-				cm.dispose();
+            for (var i = 0; i < 5; i++) {
+                if (cm.getPlayerCount(200090031 + i +1) == 0) {
+                    cm.gainMeso(-1000);
+                    cm.getPlayer().setTravelTime(duration);
+                    cm.warp(200090031 + i + 1);
+					cm.setClock(cm.getClient(), duration);
+                    cm.dispose();
+                    return;
+                    }
+                  } cm.sendNext("Seems all ships are taken, try again in a bit.");	
 				}
-			}
+			} cm.dispose();
 	}
 }
