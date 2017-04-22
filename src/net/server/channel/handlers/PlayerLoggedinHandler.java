@@ -226,8 +226,9 @@ public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {
         
         if(newcomer) {
             for(MaplePet pet : player.getPets()) {
-                if(pet != null)
-                    player.startFullnessSchedule(PetDataFactory.getHunger(pet.getItemId()), pet, player.getPetIndex(pet));
+                if(pet != null) {
+                    player.startFullnessSchedule(PetDataFactory.getHunger(pet.getItemId()), pet, player.getPetIndex(pet) ,player);
+                }
             }
         }
         

@@ -4689,11 +4689,12 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         return coolDowns.containsKey(Integer.valueOf(skillId));
     }
 
-    public void startFullnessSchedule(final int decrease, final MaplePet pet, int petSlot) {
+    public void startFullnessSchedule(final int decrease, final MaplePet pet, int petSlot, final MapleCharacter player) {
         ScheduledFuture<?> schedule;
         schedule = TimerManager.getInstance().register(new Runnable() {
             @Override
             public void run() {
+                if (player.isLoggedin()) {   
                 int newFullness = pet.getFullness() - decrease;
                 if (newFullness <= 5) {
                     pet.setFullness(15);
@@ -4706,11 +4707,13 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                     if (petz != null) {
                         forceUpdateItem(petz);
                     }
+                  }
+                } else {
+                    cancelFullnessSchedule(getPetIndex(pet));
                 }
             }
         }, 180000, 18000);
         fullnessSchedule[petSlot] = schedule;
-
     }
 
     public void startMapEffect(String msg, int itemId) {

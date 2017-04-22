@@ -501,19 +501,19 @@ public class MapleInventoryManipulator {
             } else {
                 c.getPlayer().getMap().spawnItemDrop(c.getPlayer(), c.getPlayer(), target, dropPos, true, true);
             }
-        } else {
+        } else {   
             c.getPlayer().getInventory(type).removeSlot(src);
             c.announce(MaplePacketCreator.modifyInventory(true, Collections.singletonList(new ModifyInventory(3, source))));
             if (src < 0) {
                 c.getPlayer().equipChanged();
             }
-            if (c.getPlayer().getMap().getEverlast()) {
-                if (ii.isDropRestricted(itemId) || ii.isCash(itemId)) {
+            if (c.getPlayer().getMap().getEverlast()) {     
+                if (ii.isDropRestricted(itemId) || ii.isCash(itemId)) { 
                     c.getPlayer().getMap().disappearingItemDrop(c.getPlayer(), c.getPlayer(), source, dropPos);
-                } else {
+                } else { 
                     c.getPlayer().getMap().spawnItemDrop(c.getPlayer(), c.getPlayer(), source, dropPos, true, false);
                 }
-            } else if (ii.isDropRestricted(itemId) || ii.isCash(itemId)) {
+            } else if (ii.isDropRestricted(itemId) || ii.isCash(itemId)) { 
                 c.getPlayer().getMap().disappearingItemDrop(c.getPlayer(), c.getPlayer(), source, dropPos);           
             } else {
                 c.getPlayer().getMap().spawnItemDrop(c.getPlayer(), c.getPlayer(), source, dropPos, true, true);
