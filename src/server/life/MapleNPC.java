@@ -28,6 +28,7 @@ import tools.MaplePacketCreator;
 
 public class MapleNPC extends AbstractLoadedMapleLife {
     private MapleNPCStats stats;
+    private boolean custom = false;
 
     public MapleNPC(int id, MapleNPCStats stats) {
         super(id);
@@ -64,5 +65,13 @@ public class MapleNPC extends AbstractLoadedMapleLife {
 
     public String getName() {
         return stats.getName();
+    }
+
+    public boolean isCustom() {
+		return custom;
+    }
+
+    public void setCustom(boolean custom) {
+		this.custom = custom;
     }
 }

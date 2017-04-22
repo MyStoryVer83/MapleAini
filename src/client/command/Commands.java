@@ -1391,19 +1391,98 @@ public class Commands {
 			MapleCharacter victim = c.getChannelServer().getPlayerStorage().getCharacterByName(sub[1]);
 			player.message(victim.getName() + "'s account name is " + victim.getClient().getAccountName() + ".");
 			break;
+                case "pnpc":
+			int npcId = Integer.parseInt(sub[1]);
+            MapleNPC npc = MapleLifeFactory.getNPC(npcId);
+            int xpos = player.getPosition().x;
+            int ypos = player.getPosition().y;
+            int fh = player.getMap().getFootholds().findBelow(player.getPosition()).getId();
+            if (npc != null && !npc.getName().equals("MISSINGNO")) {
+                npc.setPosition(player.getPosition());
+                npc.setCy(ypos);
+                npc.setRx0(xpos + 50);
+                npc.setRx1(xpos - 50);
+                npc.setFh(fh);
+                npc.setCustom(true);
+                try {
+                    Connection con = DatabaseConnection.getConnection();
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO spawns ( idd, f, fh, cy, rx0, rx1, type, x, y, mid ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
+                    ps.setInt(1, npcId);
+                    ps.setInt(2, 0);
+                    ps.setInt(3, fh);
+                    ps.setInt(4, ypos);
+                    ps.setInt(4, ypos);
+                    ps.setInt(5, xpos + 50);
+                    ps.setInt(6, xpos - 50);
+                    ps.setString(7, "n");
+                    ps.setInt(8, xpos);
+                    ps.setInt(9, ypos);
+                    ps.setInt(10, player.getMapId());
+                    ps.executeUpdate();
+                } catch (SQLException e) {
+                    player.dropMessage("无法存入数据库，请重试！！");
+                }
+                player.getMap().addMapObject(npc);
+                player.getMap().broadcastMessage(MaplePacketCreator.spawnNPC(npc));
+            } else {
+                player.dropMessage("你应该输入一个正确的 Npc-Id");
+            }
+			break;
+                case "pmob":
+            int npcId1 = Integer.parseInt(sub[1]);
+            int mobTime = Integer.parseInt(sub[2]);
+            if (sub[2] == null) {
+                mobTime = 0;
+            }
+            int xpos1 = player.getPosition().x;
+            int ypos1 = player.getPosition().y;
+            int fh1 = player.getMap().getFootholds().findBelow(player.getPosition()).getId();
+
+            MapleMonster mob = MapleLifeFactory.getMonster(npcId1);
+            if (mob != null && !mob.getName().equals("MISSINGNO")) {
+                mob.setPosition(player.getPosition());
+                mob.setCy(ypos1);
+                mob.setRx0(xpos1 + 50);
+                mob.setRx1(xpos1 - 50);
+                mob.setFh(fh1);
+                try {
+                    Connection con = DatabaseConnection.getConnection();
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO spawns ( idd, f, fh, cy, rx0, rx1, type, x, y, mid, mobtime ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
+                    ps.setInt(1, npcId1);
+                    ps.setInt(2, 0);
+                    ps.setInt(3, fh1);
+                    ps.setInt(4, ypos1);
+                    ps.setInt(5, xpos1 + 50);
+                    ps.setInt(6, xpos1 - 50);
+                    ps.setString(7, "m");
+                    ps.setInt(8, xpos1);
+                    ps.setInt(9, ypos1);
+                    ps.setInt(10, player.getMapId());
+                    ps.setInt(11, mobTime);
+                    ps.executeUpdate();
+                } catch (SQLException e) {
+                    player.dropMessage("Failed to save MOB to the database");
+                }
+                            final Point position = mob.getPosition();
+                            final boolean mobile = mob.isMobile();
+                            player.getMap().addMonsterSpawn(mob, mobTime, fh1);
+            } else {
+                player.dropMessage("You have entered an invalid Npc-Id");
+            }
+			break;
 		case "npc":
 			if (sub.length < 1) {
 				break;
 			}
-			MapleNPC npc = MapleLifeFactory.getNPC(Integer.parseInt(sub[1]));
-			if (npc != null) {
-				npc.setPosition(player.getPosition());
-				npc.setCy(player.getPosition().y);
-				npc.setRx0(player.getPosition().x + 50);
-				npc.setRx1(player.getPosition().x - 50);
-				npc.setFh(player.getMap().getFootholds().findBelow(c.getPlayer().getPosition()).getId());
-				player.getMap().addMapObject(npc);
-				player.getMap().broadcastMessage(MaplePacketCreator.spawnNPC(npc));
+			MapleNPC npc1 = MapleLifeFactory.getNPC(Integer.parseInt(sub[1]));
+			if (npc1 != null) {
+				npc1.setPosition(player.getPosition());
+				npc1.setCy(player.getPosition().y);
+				npc1.setRx0(player.getPosition().x + 50);
+				npc1.setRx1(player.getPosition().x - 50);
+				npc1.setFh(player.getMap().getFootholds().findBelow(c.getPlayer().getPosition()).getId());
+				player.getMap().addMapObject(npc1);
+				player.getMap().broadcastMessage(MaplePacketCreator.spawnNPC(npc1));
 			}
 			break;
 		case "job": { //Honestly, we should merge this with @job and job yourself if array is 1 long only. I'll do it but gotta run at this point lel
