@@ -23,8 +23,10 @@ package server.maps;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -138,6 +140,40 @@ public class MapleMapFactory {
                         map.addMapleArea(new Rectangle(x1, y1, (x2 - x1), (y2 - y1)));
                     }
                 }
+                try
+                {
+                    Connection con = DatabaseConnection.getConnection();
+                    PreparedStatement ps = con.prepareStatement("SELECT * FROM spawns WHERE mid = ?");
+                    ps.setInt(1, omapid);
+                    ResultSet rs = ps.executeQuery();
+
+
+                    while (rs.next()) {
+                    int id = rs.getInt("idd");
+                    int f = rs.getInt("f");
+                    boolean hide = false;
+                    String type = rs.getString("type");
+                    int fh = rs.getInt("fh");
+                    int cy = rs.getInt("cy");
+                    int rx0 = rs.getInt("rx0");
+                    int rx1 = rs.getInt("rx1");
+                    int x = rs.getInt("x");
+                    int y = rs.getInt("y");
+                    int mobTime = rs.getInt("mobtime");
+                    AbstractLoadedMapleLife myLife = giveLife(id, f, hide, fh, cy, rx0, rx1, x, y, type);
+                    if(type.equals("n"))
+                    {
+                            map.addMapObject(myLife);
+                            }
+                    else if (type.equals("m"))
+                    {
+                            MapleMonster monster = (MapleMonster) myLife;
+                            map.addMonsterSpawn(monster, mobTime, -1);
+                            }
+                    }
+                } catch(SQLException e) {
+                     System.out.println(e);
+                     }
                 MapleData mcData = mapData.getChildByPath("monsterCarnival");
                 if (mcData != null) {
                     MCWZData mcpqInfo = new MCWZData(mcData);
@@ -388,6 +424,40 @@ public class MapleMapFactory {
                 map.addMapleArea(new Rectangle(x1, y1, (x2 - x1), (y2 - y1)));
             }
         }
+        try
+                {
+                    Connection con = DatabaseConnection.getConnection();
+                    PreparedStatement ps = con.prepareStatement("SELECT * FROM spawns WHERE mid = ?");
+                    ps.setInt(1, omapid);
+                    ResultSet rs = ps.executeQuery();
+
+
+                    while (rs.next()) {
+                    int id = rs.getInt("idd");
+                    int f = rs.getInt("f");
+                    boolean hide = false;
+                    String type = rs.getString("type");
+                    int fh = rs.getInt("fh");
+                    int cy = rs.getInt("cy");
+                    int rx0 = rs.getInt("rx0");
+                    int rx1 = rs.getInt("rx1");
+                    int x = rs.getInt("x");
+                    int y = rs.getInt("y");
+                    int mobTime = rs.getInt("mobtime");
+                    AbstractLoadedMapleLife myLife = giveLife(id, f, hide, fh, cy, rx0, rx1, x, y, type);
+                    if(type.equals("n"))
+                    {
+                            map.addMapObject(myLife);
+                            }
+                    else if (type.equals("m"))
+                    {
+                            MapleMonster monster = (MapleMonster) myLife;
+                            map.addMonsterSpawn(monster, mobTime, -1);
+                            }
+                    }
+                } catch(SQLException e) {
+                     System.out.println(e);
+                     }
         MapleData mcData = mapData.getChildByPath("monsterCarnival");
         if (mcData != null) {
             MCWZData mcpqInfo = new MCWZData(mcData);
@@ -466,5 +536,17 @@ public class MapleMapFactory {
         }
         map.setBackgroundTypes(backTypes);
         return map;
+    }
+    
+    private AbstractLoadedMapleLife giveLife(int id, int f, boolean hide, int fh, int cy, int rx0, int rx1, int x, int y, String type) {
+        AbstractLoadedMapleLife myLife = MapleLifeFactory.getLife(id, type);
+        myLife.setCy(cy);
+        myLife.setF(f);
+        myLife.setFh(fh);
+        myLife.setRx0(rx0);
+        myLife.setRx1(rx1);
+        myLife.setPosition(new Point(x, y));
+        myLife.setHide(hide);
+        return myLife;
     }
 }
