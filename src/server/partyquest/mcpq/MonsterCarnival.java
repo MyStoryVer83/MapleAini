@@ -137,12 +137,11 @@ public class MonsterCarnival {
      */
     public String getNPCAvailableFields() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Welcome to the #bCarnival PQ#k! Rooms 1-4 can hold 2-4 people, and rooms 5-6 can hold 3-6.\r\n#b");
+        sb.append("请参加怪物嘉年华!\r\n#b");
         for (int i = 1; i <= NUM_FIELDS; i++) {
             MCField field = this.fields.get(i);
-            sb.append(field.getStatus());
+            sb.append(field.getStatus(i));
         }
-
         return sb.toString();
     }
 
@@ -189,7 +188,7 @@ public class MonsterCarnival {
                 return false;
         }
     }
-
+       
     public static final boolean isValidField(int field) {
         return field >= 1 && field <= 6;
     }

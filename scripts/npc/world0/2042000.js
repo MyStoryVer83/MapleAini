@@ -51,7 +51,7 @@ function action(mode, type, selection) {
         if (code == MonsterCarnival.STATUS_FIELD_FULL) {
             cm.sendOk("这个房间已经满了。")
         } else if (code == MonsterCarnival.STATUS_PARTY_SIZE) {
-            cm.sendOk("你的队伍不适合进行对抗。");
+            cm.sendOk("你组队的人数不符合要求。");
         } else if (code == MonsterCarnival.STATUS_PARTY_LEVEL) {
             cm.sendOk("请确认你的组队组员等级是否符合要求。");
         } else if (code == MonsterCarnival.STATUS_PARTY_MISSING) {

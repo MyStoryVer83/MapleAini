@@ -193,7 +193,7 @@ public class MCField {
      * Gets a string representing the status of this room for the Spiegelmann NPC.
      *   [MENTION=850422]return[/MENTION] String representing the room's status.
      */
-    public String getStatus() {
+    public String getStatus(int number) {
         if (isFull()) {
             return "";
         }
@@ -202,13 +202,20 @@ public class MCField {
         }
         String waitingParty = "";
         if (this.red != null) {
-            String fmt = " <Party Size: %d, Average Level: %d>";
+            String fmt = " (" + this.red.getLeaderName() + "/%d名/平均等级 %d)";
             waitingParty = String.format(fmt, this.red.getSize(), this.red.getAverageLevel());
+        } else {
+            String fmt = " (%d~%d名)";
+        if (number >= 1 && number <= 4) {
+            waitingParty = String.format(fmt, 2, 4);
+        } else if (number >= 5 && number <= 6) {
+            waitingParty = String.format(fmt, 3, 6); 
         }
-        String fmt = "#L%d#Carnival Field %d%s#l\r\n";
+    }
+           String fmt = "#L%d#嘉年华战斗地图%d%s#l\r\n";
         return String.format(fmt, this.arena, this.arena, waitingParty);
     }
-
+     
     /**
      * Attempts to register a party in this field. If success, then all players in the party
      * will be warped to the waiting lobby. All players in the party will also have relevant
@@ -275,13 +282,13 @@ public class MCField {
      *   [MENTION=850422]return[/MENTION] Formatted list of requests for NPC.
      */
     public String getNPCRequestString() {
-        StringBuilder sb = new StringBuilder("Here is the list of pending requests:\r\n\r\n#b");
+        StringBuilder sb = new StringBuilder("申请进行怪物嘉年华的队伍:\r\n\r\n#b");
         for (MCParty pty : requests) {
             if (!pty.exists()) {
                 continue;
             }
             sb.append("#L").append(requests.indexOf(pty)).append("#");
-            String fmt = "<Party Size: %d, Average Level: %d>";
+            String fmt = "(" + pty.getLeaderName() + "%d名/平均等级 %d)";
             fmt = String.format(fmt, pty.getSize(), pty.getAverageLevel());
             sb.append(fmt);
             sb.append("#l\r\n");

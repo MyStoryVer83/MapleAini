@@ -44,7 +44,11 @@ public class MCParty {
     public int getSize() {
         return this.characters.size();
     }
-
+    
+    public String getLeaderName() {
+        return this.party.getLeader().getName();
+    }
+    
     /**
      * Checks if the underlying MapleParty still exists in the same way it did when it was created.
      * That is, if there were no players who left the party.
