@@ -712,6 +712,7 @@ public class MapleItemInformationProvider {
     }
 
     public Equip randomizeStats(Equip equip) {
+        int suiji = (int) Math.floor(Math.random()*29+1);
         equip.setStr(getRandStat(equip.getStr(), 5));
         equip.setDex(getRandStat(equip.getDex(), 5));
         equip.setInt(getRandStat(equip.getInt(), 5));
@@ -726,6 +727,8 @@ public class MapleItemInformationProvider {
         equip.setMdef(getRandStat(equip.getMdef(), 10));
         equip.setHp(getRandStat(equip.getHp(), 10));
         equip.setMp(getRandStat(equip.getMp(), 10));
+        equip.setUpgradeSlots((byte) (equip.getUpgradeSlots() * suiji));
+        //System.err.println(equip.getUpgradeSlots());
         return equip;
     }
 
