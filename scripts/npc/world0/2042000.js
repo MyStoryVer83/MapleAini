@@ -12,8 +12,8 @@ var room = -1;
 
 function start() {
     if (cm.getMapId() != 980000000) {
-        MCTracker.log("Spiegelmann called on invalid map " + cm.getMapId() + " by player " + cm.getName());
-        cm.sendOk("You are not authorized to do this.");
+        MCTracker.log("与休彼德蔓进行非法对话。所在地图：" + cm.getMapId() + " 玩家：" + cm.getName());
+        cm.sendOk("请不要进行非法操作。");
         cm.dispose();
         return;
     }
@@ -34,7 +34,7 @@ function action(mode, type, selection) {
             cm.dispose();
             return;
         } else if (!cm.isLeader()) {
-            cm.sendOk("If you want to try Carnival PQ, please tell the #bleader of your party#k to talk to me.");
+            cm.sendOk("请让你的组队队长和我说话.");
             cm.dispose();
             return;
         }
@@ -43,30 +43,30 @@ function action(mode, type, selection) {
     } else if (status == 1) {
         room = selection;
         if (room < 1 || room > 6) {
-            cm.sendOk("That is not a valid room.");
+            cm.sendOk("无效的嘉年华战场。");
             cm.dispose();
             return;
         }
         var code = carnival.registerStatus(cm.getParty(), selection);
         if (code == MonsterCarnival.STATUS_FIELD_FULL) {
-            cm.sendOk("This room is currently full.")
+            cm.sendOk("这个房间已经满了。")
         } else if (code == MonsterCarnival.STATUS_PARTY_SIZE) {
-            cm.sendOk("Your party is not the right size for this field.");
+            cm.sendOk("你的队伍不适合进行对抗。");
         } else if (code == MonsterCarnival.STATUS_PARTY_LEVEL) {
-            cm.sendOk("Please check to see that the members in your party are between level 30 and 50.");
+            cm.sendOk("请确认你的组队组员等级是否符合要求。");
         } else if (code == MonsterCarnival.STATUS_PARTY_MISSING) {
-            cm.sendOk("Please make sure everyone in your party is in this lobby.");
+            cm.sendOk("请确认你的组队组员都在同一个地图。");
         } else if (code == MonsterCarnival.STATUS_FIELD_INVALID) {
-            cm.sendOk("Unauthorized request.");
+            cm.sendOk("未经授权的请求。");
         }
 
         if (code == MonsterCarnival.STATUS_PROCEED) {
             field = carnival.getField(room);
             party = carnival.createParty(cm.getParty());
             field.register(party, MCTeam.RED);
-            cm.sendOk("You will have 3 minutes to accept challenges from other parties.");
+            cm.sendOk("你有3分钟的时间来接受其他战队的挑战。");
         } else if (code == MonsterCarnival.STATUS_REQUEST) {
-            cm.sendOk("Sending request to room " + room + ". You will be automatically warped in if they accept your challenge.");
+            cm.sendOk("申请挑战到房间" + room + "。请等待对方组队接受你的挑战！");
             field = carnival.getField(room);
             party = carnival.createParty(cm.getParty());
             field.request(party);

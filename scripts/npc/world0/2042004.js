@@ -11,8 +11,8 @@ var room = -1;
 
 function start() {
     if (!MonsterCarnival.isLobbyMap(cm.getMapId())) {
-        MCTracker.log("Assistant called on invalid map " + cm.getMapId() + " by player " + cm.getName());
-        cm.sendOk("You are not authorized to do this.");
+        MCTracker.log("与助理 蓝进行非法对话。所在地图：" + cm.getMapId() + " 玩家：" + cm.getName());
+        cm.sendOk("请不要进行非法操作。");
         cm.dispose();
         return;
     }
@@ -33,13 +33,13 @@ function action(mode, type, selection) {
             cm.dispose();
             return;
         }
-        options = ["#L1#Leave the room #r#e(WARNING: Abusing this will block you from future Carnival PQs)#b#n.#l",
-                   "#L2#Close NPC#l"];
+        options = ["#L1#离开这个房间 #r#e（警告：如果滥用的话将禁止您进行怪物嘉年华）#b#n.#l",
+                   "#L2#没什么事，我要进行嘉年华对战。#l"];
         if (cm.isLeader()) {
-            options.unshift("#L0#View pending challenges#l");
+            options.unshift("#L0#查看待处理的挑战#l");
         }
 
-        text = "Welcome to Carnival PQ. I am #bAssistant Blue#k. What can I do for you?#b\r\n";
+        text = "欢迎来到怪物嘉年华。我是#r助理 蓝#k. 我能为你做点什么？#b\r\n";
         for (var i = 0; i < options.length; i++) {
             text += options[i];
             text += "\r\n";
@@ -49,12 +49,12 @@ function action(mode, type, selection) {
         field = cm.getChar().getMCPQField();
         if (selection == 0) {
             if (!cm.isLeader()) {
-                cm.sendOk("You are not authorized to do this.");
+                cm.sendOk("请让你的组队队长和我说话.");
                 cm.dispose();
                 return;
             }
             if (!field.hasPendingRequests()) {
-                cm.sendOk("There are no pending requests at this time.");
+                cm.sendOk("目前没有待处理的请求。");
                 cm.dispose();
                 return;
             }
@@ -72,9 +72,9 @@ function action(mode, type, selection) {
     } else if (status == 2) {
         var code = field.acceptRequest(selection);
         if (code == 1) {
-            cm.sendOk("The challenge was accepted.");
+            cm.sendOk("接受挑战。");
         } else {
-            cm.sendOk("An unknown error occurred.");
+            cm.sendOk("出现未知错误。");
         }
         cm.dispose();
     }

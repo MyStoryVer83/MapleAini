@@ -1,6 +1,6 @@
 /*
 * @Portal - move_RieRit
-* @description - Portal while on ship from Rien to Lith Harbor.
+* @description - 里恩至明珠港
 */
 
 function enter(pi) {

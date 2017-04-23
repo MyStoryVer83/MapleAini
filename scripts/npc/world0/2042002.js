@@ -60,7 +60,7 @@ var pirate = [[1482005, 7], [1482006, 10], [1482007, 20], [1492005, 7],
 var necklace = [[1122007, 50], [2041211, 40]];
 
 // Long Text Descriptions
-var infoText = "You wish to know about the Monster Carnival? Very well. The Monster Carnival is a place of trilling battles and exciting competiton against people just as strong and motivated as yourself. You must summon monsters and defeat the monsters summoned by the opposing party. That's the essence of the Monster Carnival. Once you enter the Carnival Field, the task is to earn CP by hunter monsters from the opposing party and use those CP's to distract the opposing party from hunting monsters. There are three ways to distract the other party; Summon a Monster, Skill or Protector. Please remember this though, it's never a good idea to save up CP just for the sake of it. The CP's you've used will also help determine the winner and the loser of the carnival.";
+var infoText = "你想知道怪物嘉年华吗？很好。怪物嘉年华是带领自己的队伍与其他队伍进行对抗并战胜其他队伍获得胜利。你必须召唤怪物，打败对方召唤的怪物。这是怪物嘉年华的精髓。进入嘉年华战场后，目标是从对方的召唤的怪物中获取CP，并使用这些CP来阻止对方猎杀怪物。有三种方式可以阻止对方; 召唤怪物，技能或召唤物。请记住，尽管如此，保留CP也不是一个好办法。合理的使用CP将有助于你成为嘉年华的获胜者。";
 var no = "你没有足够的冒险岛纪念币来进行兑换。";
 
 function getGrade(cp) {
@@ -193,7 +193,7 @@ function doWinnerMap(mode, type, selection) {
 
 function doTown(mode, type, selection) {
     if (mode == -1) {
-        cm.sendOk("Be sure to vote for the server every 24 hours!");
+        cm.sendOk("每隔24小时可以进行投票！");
         cm.dispose();
     } else {
         if (mode == 1) status++;
@@ -251,7 +251,7 @@ function doTown(mode, type, selection) {
                         storeInfo = [];
                 }
                 if (storeInfo.length == 0) {
-                    cm.sendOk("That store doesn't exist.");
+                    cm.sendOk("你的这个选项不存在。");
                     cm.dispose();
                     return;
                 }
@@ -263,7 +263,7 @@ function doTown(mode, type, selection) {
                 }
                 cm.sendSimple(storeText);
             } else {
-                MCTracker.log("[MCPQ_Info] CONTEXT_TOWN: Invalid status 2");
+                MCTracker.log("[嘉年华信息] CONTEXT_TOWN: 无效的选项 2");
             }
         } else if (status == 3) {
             if (store) {
@@ -271,24 +271,24 @@ function doTown(mode, type, selection) {
                 purchaseCost = storeInfo[selection][1];
 
                 if (cm.haveItem(coinId, purchaseCost)) {
-                    cm.sendYesNo("Are you sure you want to purchase #i" + purchaseId + "#? You will have #r#e" + (cm.itemQuantity(coinId) - purchaseCost) + " " + coinIcon + "##k#n remaining.");
+                    cm.sendYesNo("你确定要兑换#i" + purchaseId + "#吗? 兑换后还剩下#r#e" + (cm.itemQuantity(coinId) - purchaseCost) + "个纪念币 兑换需要" + coinIcon + "##k#n个纪念币.");
                 } else {
                     cm.sendOk("你没有足够的冒险岛纪念币");
                     cm.dispose();
                 }
             } else {
-                MCTracker.log("[MCPQ_Info] CONTEXT_TOWN: Invalid status 3");
+                MCTracker.log("[嘉年华信息] CONTEXT_TOWN: 无效的选项 3");
             }
         } else if (status == 4) {
             if (store) {
                 if (cm.haveItem(coinId, purchaseCost)) {
                     cm.gainItem(coinId, -purchaseCost);
                     cm.gainItem(purchaseId);
-                    cm.sendOk("Congratulations! Enjoy your new item.");
+                    cm.sendOk("恭喜您兑换成功！");
                     cm.dispose();
                 }
             } else {
-                MCTracker.log("[MCPQ_Info] CONTEXT_TOWN: Invalid status 4");
+                MCTracker.log("[嘉年华信息] CONTEXT_TOWN: 无效的选项 4");
             }
         }
     }
