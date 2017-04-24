@@ -713,20 +713,20 @@ public class MapleItemInformationProvider {
 
     public Equip randomizeStats(Equip equip) {
         int suiji = (int) Math.floor(Math.random()*29+1);
-        equip.setStr(getRandStat(equip.getStr(), 5));
-        equip.setDex(getRandStat(equip.getDex(), 5));
-        equip.setInt(getRandStat(equip.getInt(), 5));
-        equip.setLuk(getRandStat(equip.getLuk(), 5));
-        equip.setMatk(getRandStat(equip.getMatk(), 5));
-        equip.setWatk(getRandStat(equip.getWatk(), 5));
-        equip.setAcc(getRandStat(equip.getAcc(), 5));
-        equip.setAvoid(getRandStat(equip.getAvoid(), 5));
-        equip.setJump(getRandStat(equip.getJump(), 5));
-        equip.setSpeed(getRandStat(equip.getSpeed(), 5));
-        equip.setWdef(getRandStat(equip.getWdef(), 10));
-        equip.setMdef(getRandStat(equip.getMdef(), 10));
-        equip.setHp(getRandStat(equip.getHp(), 10));
-        equip.setMp(getRandStat(equip.getMp(), 10));
+        equip.setStr(getRandStat(equip.getStr(), suiji));
+        equip.setDex(getRandStat(equip.getDex(), suiji));
+        equip.setInt(getRandStat(equip.getInt(), suiji));
+        equip.setLuk(getRandStat(equip.getLuk(), suiji));
+        equip.setMatk(getRandStat(equip.getMatk(), suiji));
+        equip.setWatk(getRandStat(equip.getWatk(), suiji));
+        equip.setAcc(getRandStat(equip.getAcc(), suiji));
+        equip.setAvoid(getRandStat(equip.getAvoid(), suiji));
+        equip.setJump(getRandStat(equip.getJump(), suiji));
+        equip.setSpeed(getRandStat(equip.getSpeed(), suiji));
+        equip.setWdef(getRandStat(equip.getWdef(), suiji));
+        equip.setMdef(getRandStat(equip.getMdef(), suiji));
+        equip.setHp(getRandStat(equip.getHp(), suiji));
+        equip.setMp(getRandStat(equip.getMp(), suiji));
         equip.setUpgradeSlots((byte) (equip.getUpgradeSlots() * suiji));
         //System.err.println(equip.getUpgradeSlots());
         return equip;
