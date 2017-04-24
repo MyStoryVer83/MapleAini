@@ -25,7 +25,9 @@ function action(mode) {
                     cm.dispose();
                     return;
                 }
-            } cm.sendNext("Seems all ships are taken, try again in a bit.");
+        } 
+			cm.sendNext("Seems all ships are taken, try again in a bit.");
+			cm.dispose();
         }
-    } cm.dispose();
+    }
 }
