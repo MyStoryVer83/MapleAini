@@ -56,8 +56,10 @@ function action(mode, type, selection) {
 				}  else {	
 				    map = map + 2
 				}
-                  } cm.sendNext("Seems all ships are taken, try again in a bit.");	
+            } 
+				  cm.sendNext("Seems all ships are taken, try again in a bit.");
+                  cm.dispose();				  
 				}
-			} cm.dispose();
+			} 
 	  }
 }
