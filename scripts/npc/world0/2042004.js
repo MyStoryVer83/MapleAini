@@ -23,10 +23,14 @@ function action(mode, type, selection) {
     if (mode == -1) {
         cm.dispose();
         return;
+    } else if(mode == 0 && status == 0) {
+		cm.dispose();
+		return;
+	} else if (mode == 1){
+		status++;
+	} else {
+		status--;
     }
-    if (mode == 1) status++;
-    else status--;
-
     if (status == 0) {
         if (cm.getParty() == null) {
             cm.warp(MonsterCarnival.MAP_LOBBY);

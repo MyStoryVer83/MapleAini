@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2017-04-23 17:35:51
+Date: 2017-04-24 17:47:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -723,15 +723,15 @@ CREATE TABLE `guilds` (
 `logo`  int(10) UNSIGNED NULL DEFAULT NULL ,
 `logoColor`  smallint(5) UNSIGNED NOT NULL DEFAULT 0 ,
 `name`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`rank1title`  varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Master' ,
-`rank2title`  varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Jr. Master' ,
-`rank3title`  varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Member' ,
-`rank4title`  varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Member' ,
-`rank5title`  varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Member' ,
+`rank1title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Master' ,
+`rank2title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Jr. Master' ,
+`rank3title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Member' ,
+`rank4title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Member' ,
+`rank5title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Member' ,
 `capacity`  int(10) UNSIGNED NOT NULL DEFAULT 10 ,
 `logoBG`  int(10) UNSIGNED NULL DEFAULT NULL ,
 `logoBGColor`  smallint(5) UNSIGNED NOT NULL DEFAULT 0 ,
-`notice`  varchar(101) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+`notice`  varchar(101) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 `signature`  int(11) NOT NULL DEFAULT 0 ,
 `allianceId`  int(11) UNSIGNED NOT NULL DEFAULT 0 ,
 PRIMARY KEY (`guildid`)
@@ -1179,7 +1179,8 @@ DROP TABLE IF EXISTS `monsterbook`;
 CREATE TABLE `monsterbook` (
 `charid`  int(11) UNSIGNED NOT NULL ,
 `cardid`  int(11) NOT NULL ,
-`level`  int(1) NULL DEFAULT 1 
+`level`  int(1) NULL DEFAULT 1 ,
+PRIMARY KEY (`charid`)
 )
 ENGINE=MyISAM
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
@@ -1190,7 +1191,6 @@ DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
 -- Records of monsterbook
 -- ----------------------------
 BEGIN;
-INSERT INTO `monsterbook` VALUES ('30000', '2380011', '1');
 COMMIT;
 
 -- ----------------------------
@@ -1302,9 +1302,9 @@ COMMIT;
 DROP TABLE IF EXISTS `notes`;
 CREATE TABLE `notes` (
 `id`  int(11) NOT NULL AUTO_INCREMENT ,
-`to`  varchar(13) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '' ,
-`from`  varchar(13) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '' ,
-`message`  text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
+`to`  varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' ,
+`from`  varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' ,
+`message`  text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 `timestamp`  bigint(20) UNSIGNED NOT NULL ,
 `fame`  int(11) NOT NULL DEFAULT 0 ,
 `deleted`  int(2) NOT NULL DEFAULT 0 ,
@@ -1771,7 +1771,7 @@ CREATE TABLE `skillmacros` (
 `skill1`  int(11) NOT NULL DEFAULT 0 ,
 `skill2`  int(11) NOT NULL DEFAULT 0 ,
 `skill3`  int(11) NOT NULL DEFAULT 0 ,
-`name`  varchar(13) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+`name`  varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 `shout`  tinyint(1) NOT NULL DEFAULT 0 ,
 PRIMARY KEY (`id`)
 )
