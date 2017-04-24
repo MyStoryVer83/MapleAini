@@ -10,7 +10,8 @@
 **/
 
 var menu = new Array("Ereve");
-var method;
+var duration = 60;
+var map = 200090030;
 
 function start() {
 	status = -1;
@@ -42,10 +43,22 @@ function action(mode, type, selection) {
 				cm.sendNext("Hmm... Are you sure you have #b1000#k Mesos? Check your Inventory and make sure you have enough. You must pay the fee or I can't let you get on...");
 				cm.dispose();
 			} else {
-				cm.gainMeso(-1000);
-				cm.warp(200090030);
-				cm.dispose();
+            for (var i = 0; i < 10; i++) {
+     			if (cm.getPlayerCount(map) == 0) {
+                    cm.gainMeso(-1000);
+                    cm.getPlayer().setTravelTime(duration);
+                    cm.warp(map);
+					cm.setClock(cm.getClient(), duration);
+                    cm.dispose();
+                    return;
+                    }
+				if (i = 5) {
+					map = 200090040
+				}  else {	
+				    map = map + 2
 				}
-			}
-		}
+                  } cm.sendNext("Seems all ships are taken, try again in a bit.");	
+				}
+			} cm.dispose();
+	  }
 }

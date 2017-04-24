@@ -1306,17 +1306,6 @@ public class MapleMap {
                     }
                 }
             }, 5 * 60 * 1000);
-        } else if (mapid == 200090030) { // To Ereve (SkyFerry)
-            chr.getClient().announce(MaplePacketCreator.getClock(60));
-            TimerManager.getInstance().schedule(new Runnable() {
-
-                @Override
-                public void run() {
-                    if (chr.getMapId() == 200090030) {
-                        chr.changeMap(130000210);
-                    }
-                }
-            }, 60 * 1000);
         } else if (mapid == 200090021) { // To Orbis (SkyFerry)
             chr.getClient().announce(MaplePacketCreator.getClock(60));
             TimerManager.getInstance().schedule(new Runnable() {
