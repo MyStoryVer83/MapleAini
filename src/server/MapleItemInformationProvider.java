@@ -728,8 +728,8 @@ public class MapleItemInformationProvider {
         equip.setHp(getRandStat(equip.getHp(), suiji));
         equip.setMp(getRandStat(equip.getMp(), suiji));
         int slots = equip.getUpgradeSlots() * suiji;
-        if(slots > 127 ){
-            slots = 127;
+        if(slots > 126 ){
+            slots = 126;
         }
         equip.setUpgradeSlots((byte) (slots));
         return equip;
