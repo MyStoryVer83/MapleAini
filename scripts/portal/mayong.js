@@ -1,5 +1,5 @@
 function enter(pi) {
-    if(pi.isQuestStarted(1451) || pi.isQuestStarted(1453) || pi.isQuestStarted(1455) || pi.isQuestStarted(1457) || pi.isQuestStarted(1459)){
+    if(pi.isQuestStarted(6904) || pi.isQuestStarted(6914) || pi.isQuestStarted(6924) || pi.isQuestStarted(6934) || pi.isQuestStarted(6944)){
         pi.resetMap(924000200);
         pi.warp(924000200, 2);
     } else {
