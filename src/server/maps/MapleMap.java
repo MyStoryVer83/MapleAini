@@ -437,6 +437,9 @@ public class MapleMap {
                 }
             }
         }
+            int shu = Randomizer.nextInt(10) + 1;
+            if(shu >= 8)
+            chr.getCashShop().gainCash(1, (int) (mob.getStats().getLevel()*0.2));
     }
 
     private void spawnDrop(final Item idrop, final Point dropPos, final MapleMonster mob, final MapleCharacter chr, final byte droptype, final short questid) {
