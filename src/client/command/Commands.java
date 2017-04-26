@@ -332,7 +332,7 @@ public class Commands {
 			//player.message("@time: Displays the current server time.");
 			player.message("@rates: 查看倍率");
                         player.message("@paihang: 查看排行榜");
-			player.message("@points: 显示未使用的投票次数,如果有次数可以进行投票.");
+			player.message("@toupiao: 显示未使用的投票次数,如果有次数可以进行投票.");
 			//player.message("@gm <message>: Sends a message to all online GMs in the case of an emergency.");
 			//player.message("@bug <bug>: Sends a bug report to all developers.");
 			//player.message("@joinevent: If an event is in progress, use this to warp to the event map.");
@@ -475,21 +475,21 @@ public class Commands {
 		case "rates":
 			c.resetVoteTime(); 
 			player.setRates();
-			player.yellowMessage("DROP RATE");
-			player.message(">>Total DROP Rate: " + player.getDropRate() + "x");
+			player.yellowMessage("掉落倍率");
+			player.message(">>目前你的掉落倍率为: " + player.getDropRate() + "x");
 
-			player.yellowMessage("MESO RATE");
-			player.message(">>Base MESO Rate: " + c.getWorldServer().getMesoRate() + "x");
-			player.message(">>Guild MESO Rate bonus: " + (player.getGuild() != null ? "1" : "0") + "x");
-			player.message(">>Total MESO Rate: " + player.getMesoRate() + "x");
+			player.yellowMessage("金币倍率");
+			player.message(">>基础金币倍率: " + c.getWorldServer().getMesoRate() + "x");
+			player.message(">>公会倍率加成: " + (player.getGuild() != null ? "1" : "0") + "x");
+			player.message(">>总倍率: " + player.getMesoRate() + "x");
 
-			player.yellowMessage("EXP RATE");
-			player.message(">>Base Server EXP Rate: " + c.getWorldServer().getExpRate() + "x");
-			player.message(">>Voted EXP bonus: " + (c.hasVotedAlready() ? "1x" : "0x (If you vote now, you will earn an additional 1x EXP!)"));
-			player.message(">>Total EXP Rate: " + player.getExpRate() + "x");
+			player.yellowMessage("经验倍率");
+			player.message(">>基础经验倍率: " + c.getWorldServer().getExpRate() + "x");
+			player.message(">>投票经验倍率: " + (c.hasVotedAlready() ? "1x" : "0x (如果你投票，你将获得1倍的加成。)"));
+			player.message(">>总倍率: " + player.getExpRate() + "x");
 			
 			if (player.getLevel() < 10) { 
-				player.message("Players under level 10 always have 1x exp.");
+				player.message("10级以下一律1倍.");
 			}
 			break;
 		case "online":
@@ -525,17 +525,17 @@ public class Commands {
 			FilePrinter.printError("bug.txt", MapleCharacter.makeMapleReadable(player.getName()) + ": " + message + "\r\n");
 			player.dropMessage(5, "Your bug '" + message + "' was submitted successfully to our developers. Thank you!");
 			break;
-		case "points":
-			player.dropMessage(5, "You have " + c.getVotePoints() + " vote point(s).");
+		case "toupiao":
+			player.dropMessage(5, "你拥有 " + c.getVotePoints() + " 投票点数.");
 			if (c.hasVotedAlready()) {
 				Date currentDate = new Date();
 				int time = (int) ((int) 86400 - ((currentDate.getTime() / 1000) - c.getVoteTime())); //ugly as fuck
 				hours = time / 3600;
 				minutes = time % 3600 / 60;
 				seconds = time % 3600 % 60;
-				player.yellowMessage("You have already voted. You can vote again in " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds.");
+				player.yellowMessage("你已经投票了. 下次投票时间间隔 " + hours + " 小时, " + minutes + " 分钟, " + seconds + " 秒.");
 			} else {
-				player.yellowMessage("You are free to vote! Make sure to vote to gain a vote point!");
+				player.yellowMessage("你可以投票了!");
 			}
 			break;
 		case "joinevent":

@@ -55,6 +55,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 import net.server.Server;
 import net.server.channel.Channel;
 import scripting.map.MapScriptManager;
+import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.MaplePortal;
 import server.MapleStatEffect;
@@ -406,6 +407,9 @@ public class MapleMap {
                     } else {
                         idrop = new Item(de.itemId, (short) 0, (short) (de.Maximum != 1 ? Randomizer.nextInt(de.Maximum - de.Minimum) + de.Minimum : 1));
                     }
+                    if(de.itemId == 4001126)
+                        chr.gainItem(4001126, 1);
+                        else
                     spawnDrop(idrop, calcDropPos(pos, mob.getPosition()), mob, chr, droptype, de.questid);
                 }
                 d++;

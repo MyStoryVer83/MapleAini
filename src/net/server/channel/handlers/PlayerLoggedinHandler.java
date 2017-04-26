@@ -247,7 +247,7 @@ public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {
             	player.announce(MaplePacketCreator.earnTitleMessage("你已经可以开始投票了!"));
             }
             if (player.isGM()){
-            	Server.getInstance().broadcastGMMessage(MaplePacketCreator.earnTitleMessage("GM " + player.getName() + " has logged in"));
+            	Server.getInstance().broadcastGMMessage(MaplePacketCreator.earnTitleMessage("GM " + player.getName() + " 登陆了"));
             }
         }
     }

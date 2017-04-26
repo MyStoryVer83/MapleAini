@@ -712,7 +712,7 @@ public class MapleItemInformationProvider {
     }
 
     public Equip randomizeStats(Equip equip) {
-        int suiji = (int) Math.floor(Math.random()*29+1);
+        int suiji = (int) Math.floor(Math.random()*17+1);
         equip.setStr(getRandStat(equip.getStr(), suiji));
         equip.setDex(getRandStat(equip.getDex(), suiji));
         equip.setInt(getRandStat(equip.getInt(), suiji));

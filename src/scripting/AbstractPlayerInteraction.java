@@ -235,7 +235,7 @@ public class AbstractPlayerInteraction {
 				item.setExpiration(System.currentTimeMillis() + expires);
 
 			if (!MapleInventoryManipulator.checkSpace(c, id, quantity, "")) {
-				c.getPlayer().dropMessage(1, "Your inventory is full. Please remove an item from your " + ii.getInventoryType(id).name() + " inventory.");
+				c.getPlayer().dropMessage(1, "您的背包已满，请检查 " + ii.getInventoryType(id).name() + " 栏.");
 				return null;
 			}
 			if (ii.getInventoryType(id).equals(MapleInventoryType.EQUIP) && !ItemConstants.isRechargable(item.getItemId())) {

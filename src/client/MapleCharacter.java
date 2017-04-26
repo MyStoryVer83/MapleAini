@@ -5317,4 +5317,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         }
         return inMap;
     }
+    
+    public void gainItem(int code, int amount) {
+        MapleInventoryManipulator.addById(client, code, (short) amount);
+    }
 }
