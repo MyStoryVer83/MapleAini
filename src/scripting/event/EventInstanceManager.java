@@ -43,6 +43,7 @@ import server.maps.MapleMap;
 import server.maps.MapleMapFactory;
 import tools.DatabaseConnection;
 import client.MapleCharacter;
+import client.MapleClient;
 
 /**
  *
@@ -55,6 +56,7 @@ public class EventInstanceManager {
 	private EventManager em;
 	private MapleMapFactory mapFactory;
 	private String name;
+        private MapleClient c;
 	private Properties props = new Properties();
 	private long timeStarted = 0;
 	private long eventTime = 0;
@@ -322,4 +324,9 @@ public class EventInstanceManager {
 	public boolean isLeader(MapleCharacter chr) {
 		return (chr.getParty().getLeader().getId() == chr.getId());
 	}
+        
+        public void autoExp() {//外部腳本控制傳入參數
+                int exp = c.getPlayer().getLevel() * 30;
+                c.getPlayer().gainExp(exp, true, true);
+        }
 }
