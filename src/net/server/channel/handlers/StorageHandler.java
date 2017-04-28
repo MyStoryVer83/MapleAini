@@ -80,7 +80,8 @@ public final class StorageHandler extends AbstractMaplePacketHandler {
 					item = storage.takeOut(slot);//actually the same but idc
 					String itemName = MapleItemInformationProvider.getInstance().getName(item.getItemId());
 					FilePrinter.printError(FilePrinter.STORAGE + c.getAccountName() + ".txt", c.getPlayer().getName() + " took out " + item.getQuantity() + " " + itemName + " (" + item.getItemId() + ")\r\n");			
-					if ((item.getFlag() & ItemConstants.KARMA) == ItemConstants.KARMA) {
+                                        chr.saveToDB(); 
+                                        if ((item.getFlag() & ItemConstants.KARMA) == ItemConstants.KARMA) {
 						item.setFlag((byte) (item.getFlag() ^ ItemConstants.KARMA)); //items with scissors of karma used on them are reset once traded
 					} else if (item.getType() == 2 && (item.getFlag() & ItemConstants.SPIKES) == ItemConstants.SPIKES){
 						item.setFlag((byte) (item.getFlag() ^ ItemConstants.SPIKES));
@@ -127,7 +128,8 @@ public final class StorageHandler extends AbstractMaplePacketHandler {
 					storage.sendStored(c, ii.getInventoryType(itemId));
 					String itemName = MapleItemInformationProvider.getInstance().getName(item.getItemId());
 					FilePrinter.printError(FilePrinter.STORAGE + c.getAccountName() + ".txt", c.getPlayer().getName() + " stored " + item.getQuantity() + " " + itemName + " (" + item.getItemId() + ")\r\n");	
-				}
+                                        chr.saveToDB(); 
+                                }
 			}
 		} else if (mode == 7) { // meso
 			int meso = slea.readInt();
@@ -147,6 +149,7 @@ public final class StorageHandler extends AbstractMaplePacketHandler {
 				}
 				storage.setMeso(storageMesos - meso);
 				chr.gainMeso(meso, false, true, false);
+                                chr.saveToDB();                                 
 				FilePrinter.printError(FilePrinter.STORAGE + c.getPlayer().getName() + ".txt", c.getPlayer().getName() + (meso > 0 ? " took out " : " stored ") + Math.abs(meso) + " mesos\r\n");					
 			} else {
 				return;

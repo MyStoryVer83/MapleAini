@@ -118,10 +118,10 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
                         player.addStat(4, -1);
                         break;
                     case 2048: // HP
-                    	if (APTo != 8192) {
-                    		c.announce(MaplePacketCreator.enableActions());
-                    		return;
-                    	}
+//                    	if (APTo != 8192) {
+//                    		c.announce(MaplePacketCreator.enableActions());
+//                    		return;
+//                    	}
                         int hplose = 0;
                         final int jobid = player.getJob().getId();
                         if (jobid == 0 || jobid == 1000 || jobid == 2000 || jobid >= 1200 && jobid <= 1211) { // Beginner
@@ -162,22 +162,22 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
                         statupdate.add(new Pair<>(MapleStat.MAXHP, player.getMaxHp()));
                         break;
                     case 8192: // MP
-                    	if (APTo != 2048) {
-                    		c.announce(MaplePacketCreator.enableActions());
-                    		return;
-                    	}
+//                    	if (APTo != 2048) {
+//                    		c.announce(MaplePacketCreator.enableActions());
+//                    		return;
+//                    	}
                         int mp = player.getMp();
                         int level = player.getLevel();
                         MapleJob job = player.getJob();
-                        boolean canWash = true;
-                        if (job.isA(MapleJob.SPEARMAN) && mp < 4 * level + 156) {
-                            canWash = false;
-                        } else if (job.isA(MapleJob.FIGHTER) && mp < 4 * level + 56) {
-                            canWash = false;
-                        } else if (job.isA(MapleJob.THIEF) && job.getId() % 100 > 0 && mp < level * 14 - 4) {
-                            canWash = false;
-                        } else if (mp < level * 14 + 148) {
-                            canWash = false;
+                        boolean canWash;
+                        if (job.isA(MapleJob.SPEARMAN)) {
+                            canWash = mp > 4 * level + 156;
+                        } else if (job.isA(MapleJob.FIGHTER)) {
+                            canWash = mp > 4 * level + 56;
+                        } else if (job.isA(MapleJob.THIEF) && job.getId() % 100 > 0) {
+                            canWash = mp > level * 14 - 4;
+                        } else {
+                            canWash = mp > level * 14 + 148;
                         }
                         if (canWash) {
                             int minmp = 0;
