@@ -95,7 +95,7 @@ public final class CloseRangeDamageHandler extends AbstractDealDamageHandler {
                         }
                     }
                     int duration = combo.getEffect(player.getSkillLevel(oid)).getDuration();
-                    List<Pair<MapleBuffStat, Integer>> stat = Collections.singletonList(new Pair<>(MapleBuffStat.COMBO, neworbcount));
+                    List<Pair<MapleBuffStat, Integer>> stat = Collections.singletonList(new Pair<MapleBuffStat, Integer>(MapleBuffStat.COMBO, neworbcount));
                     player.setBuffedValue(MapleBuffStat.COMBO, neworbcount);                 
                     duration -= (int) (System.currentTimeMillis() - player.getBuffedStarttime(MapleBuffStat.COMBO));
                     c.announce(MaplePacketCreator.giveBuff(oid, duration, stat));

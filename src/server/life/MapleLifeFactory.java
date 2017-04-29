@@ -86,7 +86,7 @@ public class MapleLifeFactory {
             if (special != null) {
                 int coolDmg = MapleDataTool.getIntConvert("coolDamage", monsterInfoData);
                 int coolProb = MapleDataTool.getIntConvert("coolDamageProb", monsterInfoData, 0);
-                stats.setCool(new Pair<>(coolDmg, coolProb));
+                stats.setCool(new Pair<Integer, Integer>(coolDmg, coolProb));
             }
             special = monsterInfoData.getChildByPath("loseItem");
             if (special != null) {
@@ -136,7 +136,7 @@ public class MapleLifeFactory {
                 int i = 0;
                 List<Pair<Integer, Integer>> skills = new ArrayList<>();
                 while (monsterSkillData.getChildByPath(Integer.toString(i)) != null) {
-                    skills.add(new Pair<>(Integer.valueOf(MapleDataTool.getInt(i + "/skill", monsterSkillData, 0)), Integer.valueOf(MapleDataTool.getInt(i + "/level", monsterSkillData, 0))));
+                    skills.add(new Pair<Integer, Integer>(Integer.valueOf(MapleDataTool.getInt(i + "/skill", monsterSkillData, 0)), Integer.valueOf(MapleDataTool.getInt(i + "/level", monsterSkillData, 0))));
                     i++;
                 }
                 stats.setSkills(skills);

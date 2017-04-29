@@ -115,7 +115,7 @@ public enum ItemFactory {
                     item.setExpiration(rs.getLong("expiration"));
                     item.setGiftFrom(rs.getString("giftFrom"));
                     item.setFlag((byte) rs.getInt("flag"));
-                    items.add(new Pair<>(item, mit));
+                    items.add(new Pair<Item, MapleInventoryType>(item, mit));
                 }
             }
 

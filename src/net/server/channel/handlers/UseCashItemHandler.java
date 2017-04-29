@@ -158,8 +158,8 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
                         }
                         player.setHp(player.getHp() + hplose);
                         player.setMaxHp(player.getMaxHp() + hplose);
-                        statupdate.add(new Pair<>(MapleStat.HP, player.getHp()));
-                        statupdate.add(new Pair<>(MapleStat.MAXHP, player.getMaxHp()));
+                        statupdate.add(new Pair<MapleStat, Integer>(MapleStat.HP, player.getHp()));
+                        statupdate.add(new Pair<MapleStat, Integer>(MapleStat.MAXHP, player.getMaxHp()));
                         break;
                     case 8192: // MP
 //                    	if (APTo != 2048) {
@@ -194,8 +194,8 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
                             }                       
                             player.setMp(player.getMp() - minmp);
                             player.setMaxMp(player.getMaxMp() - minmp);
-                            statupdate.add(new Pair<>(MapleStat.MP, player.getMp()));
-                            statupdate.add(new Pair<>(MapleStat.MAXMP, player.getMaxMp()));
+                            statupdate.add(new Pair<MapleStat, Integer>(MapleStat.MP, player.getMp()));
+                            statupdate.add(new Pair<MapleStat, Integer>(MapleStat.MAXMP, player.getMaxMp()));
                             break;
                         }
                     default:

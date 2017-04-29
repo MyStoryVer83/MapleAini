@@ -398,7 +398,7 @@ public class CashShop {
                     equip.setRingId(rs.getInt("ringid"));
                     gifts.add(new Pair<Item, String>(equip, rs.getString("message")));
                 } else
-                    gifts.add(new Pair<>(item, rs.getString("message")));
+                    gifts.add(new Pair<Item, String>(item, rs.getString("message")));
 
                 if (CashItemFactory.isPackage(cItem.getItemId())) { //Packages never contains a ring
                     for (Item packageItem : CashItemFactory.getPackage(cItem.getItemId())) {
