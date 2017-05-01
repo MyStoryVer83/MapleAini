@@ -3504,7 +3504,7 @@ public class MaplePacketCreator {
         mplew.write(0);
         return mplew.getPacket();
     }
-
+            
     public static byte[] damageMonster(int oid, int damage) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(SendOpcode.DAMAGE_MONSTER.getValue());

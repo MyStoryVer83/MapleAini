@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2017-04-23 17:33:43
+Date: 2017-05-01 17:21:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `drop_data` (
   `chance` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `mobid` (`dropperid`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=12804 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12805 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of drop_data
@@ -12594,3 +12594,4 @@ INSERT INTO `drop_data` VALUES ('12800', '9500137', '4031171', '1', '1', '7101',
 INSERT INTO `drop_data` VALUES ('12801', '1210101', '4001343', '1', '1', '28170', '800000');
 INSERT INTO `drop_data` VALUES ('12802', '1110101', '4001344', '1', '1', '28170', '600000');
 INSERT INTO `drop_data` VALUES ('12803', '1210102', '4001345', '1', '1', '28170', '400000');
+INSERT INTO `drop_data` VALUES ('12804', '8160000', '4031172', '1', '1', '7103', '600000');

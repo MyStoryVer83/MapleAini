@@ -21,13 +21,16 @@
  */
 function enter(pi) {
     var papuMap = pi.getClient().getChannelServer().getMapFactory().getMap(220080001);
+    if (!pi.haveItem(4031172)) {
+	    pi.getPlayer().dropMessage("必须先取得玩具城奖牌才能进入动力室。");	
+	return false;
+    }
     if (papuMap.getCharacters().size() == 0) {
-        pi.getPlayer().dropMessage("The room is empty. A perfect opportunity to challenge the boss.");
         papuMap.resetReactors();
-    } else { // someone is inside
+    } else {
         for (var i = 0; i < 3; i++) {
             if (papuMap.getMonsterById(8500000 + i) != null) {
-                pi.getPlayer().dropMessage("Someone is fighting Papulatus.");
+                pi.getPlayer().dropMessage("里面已经开始了帕普拉图斯对抗的战斗。");
                 return false;
             }
         }
