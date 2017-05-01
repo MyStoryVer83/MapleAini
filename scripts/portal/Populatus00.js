@@ -22,7 +22,7 @@
 function enter(pi) {
     var papuMap = pi.getClient().getChannelServer().getMapFactory().getMap(220080001);
     if (!pi.haveItem(4031172)) {
-	    pi.getPlayer().dropMessage("必须先取得玩具城奖牌才能进入动力室。");	
+	    pi.getPlayer().dropMessage(6,"你必须拥有玩具城奖牌才能进入动力室。");	
 	return false;
     }
     if (papuMap.getCharacters().size() == 0) {
