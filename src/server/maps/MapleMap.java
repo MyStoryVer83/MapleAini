@@ -229,7 +229,14 @@ public class MapleMap {
             for (MapleMapObject o : mapobjects.values()) {
                 if (o.getType() == MapleMapObjectType.REACTOR) {
                     if (((MapleReactor) o).getState() < 1) {
-                        ((MapleReactor) o).setState((byte) 1);
+                        MapleReactor mr = (MapleReactor) o;
+                        mr.lockReactor();
+                        try {
+                            mr.setState((byte) 1);
+                            mr.setShouldCollect(true);
+                        } finally {
+                            mr.unlockReactor();
+                        }
                         broadcastMessage(MaplePacketCreator.triggerReactor((MapleReactor) o, 1));
                     }
                 }
@@ -747,7 +754,6 @@ public class MapleMap {
         broadcastMessage(MaplePacketCreator.destroyReactor(reactor));
         reactor.setAlive(false);
         removeMapObject(reactor);
-        reactor.setTimerActive(false);
         if (reactor.getDelay() > 0) {
             tMan.schedule(new Runnable() {
                 @Override
@@ -764,8 +770,13 @@ public class MapleMap {
             for (MapleMapObject o : mapobjects.values()) {
                 if (o.getType() == MapleMapObjectType.REACTOR) {
                     final MapleReactor r = ((MapleReactor) o);
-                    r.setState((byte) 0);
-                    r.setTimerActive(false);
+                    r.lockReactor();
+                    try {
+                        r.setState((byte) 0);
+                        r.setShouldCollect(true);
+                    } finally {
+                        r.unlockReactor();
+                    }
                     broadcastMessage(MaplePacketCreator.triggerReactor(r, 0));
                 }
             }
@@ -1125,8 +1136,14 @@ public class MapleMap {
     }
 
     private void respawnReactor(final MapleReactor reactor) {
-        reactor.setState((byte) 0);
-        reactor.setAlive(true);
+        reactor.lockReactor();
+        try {
+            reactor.setShouldCollect(true);
+            reactor.setState((byte) 0);
+            reactor.setAlive(true);
+        } finally {
+            reactor.unlockReactor();
+        }
         spawnReactor(reactor);
     }
 
@@ -1257,11 +1274,8 @@ public class MapleMap {
                 if (react.getReactItem((byte) 0).getLeft() == item.getItemId() && react.getReactItem((byte) 0).getRight() == item.getQuantity()) {
 
                     if (react.getArea().contains(drop.getPosition())) {
-                        if (!react.isTimerActive()) {
-                            TimerManager.getInstance().schedule(new ActivateItemReactor(drop, react, c), 5000);
-                            react.setTimerActive(true);
-                            break;
-                        }
+                        TimerManager.getInstance().schedule(new ActivateItemReactor(drop, react, c), 5000);
+                        break;
                     }
                 }
             }
@@ -1963,22 +1977,30 @@ public class MapleMap {
 
         @Override
         public void run() {
-            if (mapitem != null && mapitem == getMapObject(mapitem.getObjectId())) {
+            reactor.lockReactor();
+            try {
+                if (mapitem != null && mapitem == getMapObject(mapitem.getObjectId())) {
                 mapitem.itemLock.lock();
                 try {
                     TimerManager tMan = TimerManager.getInstance();
                     if (mapitem.isPickedUp()) {
                         return;
                     }
+                    reactor.setShouldCollect(false);
                     MapleMap.this.broadcastMessage(MaplePacketCreator.removeItemFromMap(mapitem.getObjectId(), 0, 0), mapitem.getPosition());
                     MapleMap.this.removeMapObject(mapitem);
                     reactor.hitReactor(c);
-                    reactor.setTimerActive(false);
                     if (reactor.getDelay() > 0) {
                         tMan.schedule(new Runnable() {
                             @Override
                             public void run() {
-                                reactor.setState((byte) 0);
+                                reactor.lockReactor();
+                                try {
+                                    reactor.setState((byte) 0);
+                                    reactor.setShouldCollect(true);
+                                } finally {
+                                    reactor.unlockReactor();
+                                }
                                 broadcastMessage(MaplePacketCreator.triggerReactor(reactor, 0));
                             }
                         }, reactor.getDelay());
@@ -1986,6 +2008,9 @@ public class MapleMap {
                 } finally {
                     mapitem.itemLock.unlock();
                 }
+              }                
+            } finally {
+                reactor.unlockReactor();
             }
         }
     }

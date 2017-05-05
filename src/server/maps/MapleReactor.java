@@ -25,6 +25,8 @@ import client.MapleClient;
 
 import java.awt.Rectangle;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import scripting.reactor.ReactorScriptManager;
 import server.TimerManager;
@@ -42,9 +44,10 @@ public class MapleReactor extends AbstractMapleMapObject {
     private byte state;
     private int delay;
     private MapleMap map;
-    private String name;
-    private boolean timerActive;
+    private String name;  
     private boolean alive;
+    private boolean shouldCollect;
+    private Lock reactorLock = new ReentrantLock(true);
 
     public MapleReactor(MapleReactorStats stats, int rid) {
         this.stats = stats;
@@ -52,22 +55,34 @@ public class MapleReactor extends AbstractMapleMapObject {
         alive = true;
     }
 
-    public void setTimerActive(boolean active) {
-        this.timerActive = active;
+    public void setShouldCollect(boolean collect) {
+        this.shouldCollect = collect;
     }
 
-    public boolean isTimerActive() {
-        return timerActive;
+    public boolean getShouldCollect() {
+        return shouldCollect;
     }
-
+    
+    public void lockReactor() {
+       reactorLock.lock();
+    }
+    
+    public void unlockReactor() {
+       reactorLock.unlock();
+    }   
+    
     public void setState(byte state) {
         this.state = state;
     }
-
+      
     public byte getState() {
         return state;
     }
-
+    
+    public MapleReactorStats getStats() {
+        return stats;
+    }
+    
     public int getId() {
         return rid;
     }
@@ -128,8 +143,13 @@ public class MapleReactor extends AbstractMapleMapObject {
     }
 
     public void forceHitReactor(final byte newState) {
-        setState((byte) newState);
-        setTimerActive(false);
+        this.lockReactor();
+        try {
+            setState((byte) newState);
+            this.setShouldCollect(true);
+        } finally {
+            this.unlockReactor();
+        }
         map.broadcastMessage(MaplePacketCreator.triggerReactor(this, (short) 0));
     }
 
@@ -155,8 +175,9 @@ public class MapleReactor extends AbstractMapleMapObject {
                 c.getPlayer().getMCPQField().onGuardianHit(c.getPlayer(), this);
                 return;
             }
-            if (stats.getType(state) < 999 && stats.getType(state) != -1) {//type 2 = only hit from right (kerning swamp plants), 00 is air left 02 is ground left
-                if (!(stats.getType(state) == 2 && (charPos == 0 || charPos == 2))) { //get next state
+            int reactorType = stats.getType(state);
+            if (reactorType < 999 && reactorType != -1) {//type 2 = only hit from right (kerning swamp plants), 00 is air left 02 is ground left
+                if (!(reactorType == 2 && (stance == 0 || stance == 2))) { //get next state
                     for (byte b = 0; b < stats.getStateSize(state); b++) {//YAY?
                         List<Integer> activeSkills = stats.getActiveSkills(state, b);
                         if (activeSkills != null) {
@@ -181,6 +202,7 @@ public class MapleReactor extends AbstractMapleMapObject {
                             if (state == stats.getNextState(state, b)) {//current state = next state, looping reactor
                                 ReactorScriptManager.getInstance().act(c, this);
                             }
+                            setShouldCollect(true);
                         }
                         break;
                     }
@@ -189,6 +211,7 @@ public class MapleReactor extends AbstractMapleMapObject {
                 state++;
                 map.broadcastMessage(MaplePacketCreator.triggerReactor(this, stance));
                 ReactorScriptManager.getInstance().act(c, this);
+                setShouldCollect(true);
             }
         } catch (Exception e) {
             e.printStackTrace();

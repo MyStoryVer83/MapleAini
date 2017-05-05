@@ -48,6 +48,8 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.Lock;
 import java.util.regex.Pattern;
 
 import net.server.PlayerBuffValueHolder;
@@ -273,6 +275,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     private int availableCP = 0;
     private int totalCP = 0;
     private long travelTime = 0; 
+    private Lock sLock = new ReentrantLock(true);
 
     private MapleCharacter() {
         setStance(0);
@@ -493,7 +496,12 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     }
 
     public void addSummon(int id, MapleSummon summon) {
-        summons.put(id, summon);
+        sLock.lock();
+        try {
+            summons.put(id, summon);
+        } finally {
+            sLock.unlock();
+        }
     }
 
     public void addVisibleMapObject(MapleMapObject mo) {
@@ -1261,6 +1269,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                         }
                     } else if (stat == MapleBuffStat.SUMMON || stat == MapleBuffStat.PUPPET) {
                         int summonId = mbsvh.effect.getSourceId();
+                        sLock.lock();
+                    try {
                         MapleSummon summon = summons.get(summonId);
                         if (summon != null) {
                             getMap().broadcastMessage(MaplePacketCreator.removeSummon(summon, true), summon.getPosition());
@@ -1277,6 +1287,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                                 beholderBuffSchedule.cancel(false);
                                 beholderBuffSchedule = null;
                             }
+                        }                        
+                    } finally {
+                            sLock.unlock();
                         }
                     } else if (stat == MapleBuffStat.DRAGONBLOOD) {
                         dragonBloodSchedule.cancel(false);
@@ -1727,6 +1740,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     private List<MapleBuffStat> getBuffStats(MapleStatEffect effect, long startTime) {
         List<MapleBuffStat> stats = new ArrayList<>();
         for (Entry<MapleBuffStat, MapleBuffStatValueHolder> stateffect : effects.entrySet()) {
+            if(stateffect.getValue() == null) {
+                continue;
+            }
             if (stateffect.getValue().effect.sameSource(effect) && (startTime == -1 || startTime == stateffect.getValue().startTime)) {
                 stats.add(stateffect.getKey());
             }
