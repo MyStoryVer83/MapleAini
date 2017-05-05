@@ -177,15 +177,18 @@ public class ItemAction extends MapleQuestAction {
 	private boolean canGetItem(ItemData item, MapleCharacter chr) {
 		if (item.getGender() != 2 && item.getGender() != chr.getGender()) {
 			return false;
-		}
-		
-		if(item.getJob() != -1) {
-			if (item.getJob() != chr.getJob().getId()) {
-					return false;
-			} else if (MapleJob.getBy5ByteEncoding(item.getJob()).getId() / 100 != chr.getJob().getId() / 100) {
-				return false;
-			}
-		}
+		}		
+                if (item.job > 0) {
+                    final List<Integer> code = getJobBy5ByteEncoding(item.getJob());
+                    boolean jobFound = false;
+                    for (int codec : code) {
+                        if (codec / 100 == chr.getJob().getId() / 100) {
+                            jobFound = true;
+                            break;
+                        }
+                    }
+                    return jobFound;
+                }
         return true;
     }
 	

@@ -605,8 +605,9 @@ public class MapleMap {
         if (chr == null) {
             spawnedMonstersOnMap.decrementAndGet();
             monster.setHp(0);
-            broadcastMessage(MaplePacketCreator.killMonster(monster.getObjectId(), animation), monster.getPosition());
             removeMapObject(monster);
+            monster.dispatchMonsterKilled();
+            broadcastMessage(MaplePacketCreator.killMonster(monster.getObjectId(), animation), monster.getPosition());
             return;
         }
         if (monster.getStats().getLevel() >= chr.getLevel() + 30 && !chr.isGM()) {
@@ -676,6 +677,8 @@ public class MapleMap {
             }
             dropFromMonster(dropOwner, monster);
         }
+            monster.dispatchMonsterKilled();
+            broadcastMessage(MaplePacketCreator.killMonster(monster.getObjectId(), animation), monster.getPosition());
     }
 
     public void killFriendlies(MapleMonster mob) {
@@ -854,7 +857,12 @@ public class MapleMap {
     }
 
     public Collection<MapleMapObject> getMapObjects() {
-        return Collections.unmodifiableCollection(mapobjects.values());
+        objectRLock.lock();
+        try {
+            return Collections.unmodifiableCollection(mapobjects.values());
+        } finally {
+            objectRLock.unlock();
+        }
     }
 
     public boolean containsNPC(int npcid) {
@@ -877,7 +885,12 @@ public class MapleMap {
     }
 
     public MapleMapObject getMapObject(int oid) {
-        return mapobjects.get(oid);
+        objectRLock.lock();
+        try {
+            return mapobjects.get(oid);
+        } finally {
+            objectRLock.unlock();
+        }
     }
 
     /**
@@ -1026,6 +1039,8 @@ public class MapleMap {
                 monsterItemDrop(monster, new Item(4031507, (short) 0, (short) 1), monster.getDropPeriodTime());
             } else if (monster.getId() == 9300061) {
                 monsterItemDrop(monster, new Item(4001101, (short) 0, (short) 1), monster.getDropPeriodTime() / 3);
+            } else if (monster.getId() == 9300093) {
+               monsterItemDrop(monster, new Item(4031495, (short) 0, (short) 1), monster.getDropPeriodTime());
             } else {
                 FilePrinter.printError(FilePrinter.UNHANDLED_EVENT, "UNCODED TIMED MOB DETECTED: " + monster.getId());
             }
@@ -1723,7 +1738,12 @@ public class MapleMap {
     }
 
     public Collection<MapleCharacter> getCharacters() {
-        return Collections.unmodifiableCollection(this.characters);
+        chrRLock.lock();
+         try {
+            return Collections.unmodifiableCollection(this.characters);
+         } finally {
+            chrRLock.unlock();
+         }
     }
 
     public MapleCharacter getCharacterById(int id) {
@@ -1768,6 +1788,7 @@ public class MapleMap {
         player.setPosition(newPosition);
         Collection<MapleMapObject> visibleObjects = player.getVisibleMapObjects();
         MapleMapObject[] visibleObjectsNow = visibleObjects.toArray(new MapleMapObject[visibleObjects.size()]);
+        objectRLock.lock();
         try {
             for (MapleMapObject mo : visibleObjectsNow) {
                 if (mo != null) {
@@ -1780,6 +1801,8 @@ public class MapleMap {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            objectRLock.unlock();
         }
         for (MapleMapObject mo : getMapObjectsInRange(player.getPosition(), 722500, rangedMapobjectTypes)) {
             if (!player.isMapObjectVisible(mo)) {
@@ -1984,8 +2007,13 @@ public class MapleMap {
     }
 
     public void respawn() {
+        chrRLock.lock();
+        try {
         if (characters.isEmpty()) {
             return;
+        }            
+        } finally {
+            chrRLock.unlock();
         }
         short numShouldSpawn = (short) ((monsterSpawn.size() - spawnedMonstersOnMap.get()));//Fking lol'd
         if (numShouldSpawn > 0) {
@@ -2178,8 +2206,7 @@ public class MapleMap {
     }
    
       public void warpEveryone(int to) {
-        List<MapleCharacter> players;
-        players = new ArrayList<>(getCharacters());
+        List<MapleCharacter> players = new ArrayList<>(getCharacters());
         for (MapleCharacter chr : players) {
             chr.changeMap(to);
         }
@@ -2305,6 +2332,8 @@ public class MapleMap {
     }
 
     public void toggleHiddenNPC(int id) {
+        objectRLock.lock();
+        try {
         for (MapleMapObject obj : mapobjects.values()) {
             if (obj.getType() == MapleMapObjectType.NPC) {
                 MapleNPC npc = (MapleNPC) obj;
@@ -2316,6 +2345,9 @@ public class MapleMap {
                     }
                 }
             }
+        }            
+        } finally {
+            objectRLock.unlock();
         }
     }
 

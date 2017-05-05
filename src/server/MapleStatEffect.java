@@ -1135,7 +1135,8 @@ public class MapleStatEffect {
          AutobanFactory.MPCON.addPoint(applyfrom.getAutobanManager(), "mpCon hack for skill:" + sourceid + "; Player MP: " + applyto.getMp() + " MP Needed: " + getMpCon());
          } */
         if (hpchange != 0) {
-            if (hpchange < 0 && (-hpchange) > applyto.getHp()) {
+            if (hpchange < 0 && (-hpchange) > applyto.getHp() && !applyto.hasDisease(MapleDisease.ZOMBIFY)) {
+                applyto.getClient().announce(MaplePacketCreator.enableActions());
                 return false;
             }
             int newHp = applyto.getHp() + hpchange;
@@ -1148,6 +1149,7 @@ public class MapleStatEffect {
         int newMp = applyto.getMp() + mpchange;
         if (mpchange != 0) {
             if (mpchange < 0 && -mpchange > applyto.getMp()) {
+                applyto.getClient().announce(MaplePacketCreator.enableActions());
                 return false;
             }
 
@@ -1468,12 +1470,18 @@ public class MapleStatEffect {
                 } else {
                     hpchange += hp;
                 }
+                if (applyfrom.hasDisease(MapleDisease.ZOMBIFY)) {
+                    hpchange /= 2;
+                }
             } else {
                 hpchange += makeHealHP(hp / 100.0, applyfrom.getTotalMagic(), 3, 5);
+                if (applyfrom.hasDisease(MapleDisease.ZOMBIFY)) {
+                    hpchange = -hpchange;
+                }
             }
         }
         if (hpR != 0) {
-            hpchange += (int) (applyfrom.getCurrentMaxHp() * hpR);
+            hpchange += (int) (applyfrom.getCurrentMaxHp() * hpR) / (applyfrom.hasDisease(MapleDisease.ZOMBIFY) ? 2 : 1);
             applyfrom.checkBerserk();
         }
         if (primary) {

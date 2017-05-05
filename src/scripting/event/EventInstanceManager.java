@@ -30,6 +30,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
 import javax.script.ScriptException;
 
@@ -52,6 +55,9 @@ public class EventInstanceManager {
 	private List<MapleCharacter> chars = new ArrayList<>();
 	private List<MapleMonster> mobs = new LinkedList<>();
 	private Map<MapleCharacter, Integer> killCount = new HashMap<>();
+        private final ReentrantReadWriteLock mutex = new ReentrantReadWriteLock();
+        private final ReadLock rL = mutex.readLock();
+        private final WriteLock wL = mutex.writeLock();
 	private EventManager em;
 	private MapleMapFactory mapFactory;
 	private String name;
@@ -76,6 +82,12 @@ public class EventInstanceManager {
 			return;
 		}
 		try {
+                        wL.lock();
+                        try {
+                            chars.add(chr);
+                        } finally {
+                            wL.unlock();
+                        }
 			chars.add(chr);
 			chr.setEventInstance(this);
 			em.getIv().invokeFunction("playerEntry", this, chr);
@@ -110,16 +122,31 @@ public class EventInstanceManager {
 	}
 
 	public void unregisterPlayer(MapleCharacter chr) {
-		chars.remove(chr);
+	    wL.lock();
+                try {
+                    chars.remove(chr);
+                } finally {
+                    wL.unlock();
+                }
 		chr.setEventInstance(null);
 	}
 	
 	public int getPlayerCount() {
-		return chars.size();
+            rL.lock();
+                try {
+                    return chars.size();
+                } finally {
+                    rL.unlock();
+                }
 	}
 
 	public List<MapleCharacter> getPlayers() {
-		return new ArrayList<>(chars);
+	    rL.lock();
+                try {
+                    return new ArrayList<>(chars);
+                } finally {
+                    rL.unlock();
+                }
 	}
 
 	public void registerMonster(MapleMonster mob) {
@@ -215,6 +242,12 @@ public class EventInstanceManager {
             ex.printStackTrace();
         }
         chars.clear();
+        wL.lock();
+        try {
+            chars.clear();
+        } finally {
+            wL.unlock();
+        }
         mobs.clear();
         killCount.clear();
         mapFactory = null;

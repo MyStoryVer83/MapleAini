@@ -28,24 +28,41 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 import client.MapleCharacter;
 import client.MapleClient;
+import client.inventory.Item;
 import client.inventory.MapleInventory;
 import client.inventory.MapleInventoryType;
+import server.MapleItemInformationProvider;
 
 public final class ItemSortHandler extends AbstractMaplePacketHandler {
 
     @Override
     public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-    	MapleCharacter chr = c.getPlayer();
+    	        MapleCharacter chr = c.getPlayer();
 		chr.getAutobanManager().setTimestamp(2, slea.readInt(), 3);
 		MapleInventoryType inventoryType = MapleInventoryType.getByType(slea.readByte());
-		if (inventoryType.equals(MapleInventoryType.UNDEFINED) || c.getPlayer().getInventory(inventoryType).isFull()) {
-		    c.getSession().write(MaplePacketCreator.enableActions());
+                if(!ServerConstants.USE_ITEM_SORT) {
+		    c.announce(MaplePacketCreator.enableActions());
 		    return;
-		}
-		
-		MapleInventory inventory = c.getPlayer().getInventory(inventoryType);
-		boolean sorted = false;
-		
+	        }
+                MapleInventory inventory = c.getPlayer().getInventory(inventoryType);
+                MapleItemInformationProvider ii = MapleItemInformationProvider.getInstance();
+                Item srcItem, dstItem;
+                for(short dst = 0; dst <= inventory.getSlotLimit(); dst++) {
+                    dstItem = inventory.getItem(dst);
+                    if(dstItem == null) continue;
+                    
+                    for(short src = (short)(dst + 1); src <= inventory.getSlotLimit(); src++) {
+                        srcItem = inventory.getItem(src);
+                        if(srcItem == null) continue;
+                        
+                        if(dstItem.getItemId() != srcItem.getItemId()) continue;
+                        if(dstItem.getQuantity() == ii.getSlotMax(c, inventory.getItem(dst).getItemId())) break;
+                        
+                        MapleInventoryManipulator.move(c, inventoryType, src, dst);
+                    }
+                }   
+		inventory = c.getPlayer().getInventory(inventoryType);
+		boolean sorted = false;		
 		while (!sorted) {
 			short freeSlot = inventory.getNextFreeSlot();
 		    if (freeSlot != -1) {
@@ -65,7 +82,7 @@ public final class ItemSortHandler extends AbstractMaplePacketHandler {
 		        sorted = true;
 		    }
 		}
-		c.getSession().write(MaplePacketCreator.finishedSort(inventoryType.getType()));
-		c.getSession().write(MaplePacketCreator.enableActions());
+		c.announce(MaplePacketCreator.finishedSort(inventoryType.getType()));
+		c.announce(MaplePacketCreator.enableActions());
     }
 }

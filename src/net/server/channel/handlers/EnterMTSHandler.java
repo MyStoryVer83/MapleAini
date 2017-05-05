@@ -64,6 +64,7 @@ public final class EnterMTSHandler extends AbstractMaplePacketHandler {
         try {
             c.announce(MaplePacketCreator.openCashShop(c, true));
         } catch (Exception ex) {
+            ex.printStackTrace();
         }
         chr.getCashShop().open(true);// xD
         c.announce(MaplePacketCreator.enableCSUse());

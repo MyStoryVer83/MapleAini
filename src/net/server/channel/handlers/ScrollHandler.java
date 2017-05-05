@@ -130,6 +130,12 @@ public final class ScrollHandler extends AbstractMaplePacketHandler {
     }
     
     public boolean canScroll(int scrollid, int itemid) {
-        return (scrollid / 100) % 100 == (itemid / 10000) % 100;
+        int sid = scrollid / 100;
+        switch(sid) {
+            case 20492: 
+                return canScroll(2041100, itemid) || canScroll(2041200, itemid) || canScroll(2041300, itemid);
+            default:
+                return (scrollid / 100) % 100 == (itemid / 10000) % 100;
+        }
     }
 }

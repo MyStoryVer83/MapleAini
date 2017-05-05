@@ -216,7 +216,7 @@ public class AbstractPlayerInteraction {
 	public Item gainItem(int id, short quantity, boolean randomStats, boolean showMessage) {
 		return gainItem(id, quantity, randomStats, showMessage, -1);
 	}
-
+               
 	public Item gainItem(int id, short quantity, boolean randomStats, boolean showMessage, long expires) {
 		Item item = null;
 		if (id >= 5000000 && id <= 5000100) {
@@ -227,6 +227,12 @@ public class AbstractPlayerInteraction {
 
 			if (ii.getInventoryType(id).equals(MapleInventoryType.EQUIP)) {
 				item = ii.getEquipById(id);
+                        if(item != null) {
+                                Equip it = (Equip)item;
+                                if(isAccessory(item.getItemId()) && it.getUpgradeSlots() <= 0) {
+                                    it.setUpgradeSlots(3);
+                                }
+                        }        
 			} else {
 				item = new Item(id, (short) 0, quantity);
 			}
@@ -258,6 +264,11 @@ public class AbstractPlayerInteraction {
 		return item;
 	}
 
+        private boolean isAccessory(int id) {
+               int val = id / 10000;
+               return(val >= 111 && val <= 113);
+        }
+         
 	public void changeMusic(String songName) {
 		getPlayer().getMap().broadcastMessage(MaplePacketCreator.musicChange(songName));
 	}

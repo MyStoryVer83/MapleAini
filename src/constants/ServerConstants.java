@@ -29,7 +29,9 @@ public class ServerConstants {
     public static final boolean USE_MTS = true;  //拍卖行
     public static final boolean USE_FAMILY_SYSTEM = true;  //学院系统
     public static final boolean USE_PARTY_SEARCH = true; //组队搜索
-    public static final boolean USE_DUEY = true;  
+    public static final boolean USE_DUEY = true;
+    public static final boolean USE_ITEM_SORT = true; //道具排序
+    public static final boolean USE_ITEM_SORT_BY_NAME = true;  //以道具名称进行排序
     //Rates
     public static final int PARTY_EXPERIENCE_MOD = 1; // change for event stuff
     public static final double PQ_BONUS_EXP_MOD = 0.5;

@@ -771,13 +771,14 @@ public class MapleClient {
             final MapleGuildCharacter chrg = player.getMGC();
             final MapleGuild guild = player.getGuild();
 
-            removePlayer();
-            player.saveCooldowns();
-            player.saveToDB();
             if (channel == -1 || shutdown) {
+                removePlayer();
+                player.saveCooldowns();
+                player.saveToDB();
                 player = null;
                 return;
             }
+            removePlayer();            
             final World worlda = getWorldServer();
             try {
                 if (!cashshop) {
@@ -847,10 +848,15 @@ public class MapleClient {
                 getChannelServer().removePlayer(player);
                 if (!this.serverTransition) {
                     worlda.removePlayer(player);
+                    player.saveCooldowns();
+                    player.saveToDB();                    
                     if (player != null) {//no idea, occur :(
                         player.empty(false);
                     }
                     player.logOff();
+                } else {
+                    player.saveCooldowns();
+                    player.saveToDB();
                 }
                 player = null;
             }

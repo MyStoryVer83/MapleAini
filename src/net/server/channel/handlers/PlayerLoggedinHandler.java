@@ -50,6 +50,8 @@ import client.inventory.MapleInventoryType;
 import client.inventory.MaplePet;
 import client.inventory.PetDataFactory;
 import constants.GameConstants;
+import java.util.concurrent.ScheduledFuture;
+import server.TimerManager;
 
 public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {
 
@@ -247,7 +249,7 @@ public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {
             	player.announce(MaplePacketCreator.earnTitleMessage("你已经可以开始投票了!"));
             }
             if (player.isGM()){
-            	Server.getInstance().broadcastGMMessage(MaplePacketCreator.earnTitleMessage("GM " + player.getName() + " 登陆了"));
+            	Server.getInstance().broadcastGMMessage(MaplePacketCreator.earnTitleMessage("游戏管理员 " + player.getName() + " 登陆了"));
             }
         }
     }

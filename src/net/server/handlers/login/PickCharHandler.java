@@ -50,12 +50,14 @@ public final class PickCharHandler extends AbstractMaplePacketHandler {
         }
         if (c.getIdleTask() != null) {
             c.getIdleTask().cancel(true);
+        } else {
+            return; 
         }
         c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION);
         String[] socket = Server.getInstance().getIP(c.getWorld(), c.getChannel()).split(":");
         try {
             c.announce(MaplePacketCreator.getServerIP(InetAddress.getByName(socket[0]), Integer.parseInt(socket[1]), charId));
-        } catch (UnknownHostException e) {
+        } catch (UnknownHostException e) {          
         }
     }
 }

@@ -3706,6 +3706,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                     ps.executeBatch();
                 }
             } catch (SQLException se) {
+                se.printStackTrace();
             }
         }
     }
@@ -3720,6 +3721,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                 ps.execute();
             }
         } catch (SQLException se) {
+            se.printStackTrace();
         }
     }
 
