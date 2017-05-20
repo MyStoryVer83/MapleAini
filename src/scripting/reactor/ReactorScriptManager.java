@@ -50,15 +50,16 @@ public class ReactorScriptManager extends AbstractScriptManager {
 
     public void act(MapleClient c, MapleReactor reactor) {
         try {
-            c.getPlayer().dropMessage("正在与" + reactor.getId() + "进行接触。");
             ReactorActionManager rm = new ReactorActionManager(c, reactor);
             Invocable iv = getInvocable("reactor/" + reactor.getId() + ".js", c);
             if (iv == null) {
             	return;
             }
+            c.getPlayer().dropMessage("正在与" + reactor.getId() + "进行接触。");
             engine.put("rm", rm);
             iv.invokeFunction("act");
         } catch (final ScriptException | NoSuchMethodException | NullPointerException e) {
+            System.err.println("缺少脚本" + reactor.getId() + " 反应堆名称：" + reactor.getName());
             FilePrinter.printError(FilePrinter.REACTOR + reactor.getId() + ".txt", e);
         }
     }
@@ -103,6 +104,7 @@ public class ReactorScriptManager extends AbstractScriptManager {
             if (iv == null) {
                 return;
             }
+            c.getPlayer().dropMessage("正在与" + reactor.getId() + "进行接触。");
             engine.put("rm", rm);
             if (touching) {
                 iv.invokeFunction("touch");
@@ -110,6 +112,7 @@ public class ReactorScriptManager extends AbstractScriptManager {
                 iv.invokeFunction("untouch");
             }
         } catch (final ScriptException | NoSuchMethodException | NullPointerException ute) {
+            System.err.println("缺少脚本" + reactor.getId() + " 反应堆名称：" + reactor.getName());
             FilePrinter.printError(FilePrinter.REACTOR + reactor.getId() + ".txt", ute);
         }
     }

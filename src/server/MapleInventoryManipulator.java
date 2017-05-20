@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import tools.FilePrinter;
 
 import tools.MaplePacketCreator;
 
@@ -208,6 +209,9 @@ public class MapleInventoryManipulator {
             }
             c.announce(MaplePacketCreator.modifyInventory(true, Collections.singletonList(new ModifyInventory(0, item))));
         } else {
+            FilePrinter.print(FilePrinter.ITEM, "Tried to pickup Equip id " + item.getItemId() + " containing more than 1 quantity --> " + quantity);
+            c.announce(MaplePacketCreator.getInventoryFull());
+            c.announce(MaplePacketCreator.showItemUnavailable());
             return false;
         }
         if (show) {

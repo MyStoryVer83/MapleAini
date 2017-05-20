@@ -958,6 +958,9 @@ public class MapleMap {
     public void spawnMonsterOnGroundBelow(MapleMonster mob, Point pos) {
         Point spos = new Point(pos.x, pos.y - 1);
         spos = calcPointBelow(spos);
+        if(spos == null) {
+            return;
+        }
         spos.y--;
         mob.setPosition(spos);
         spawnMonster(mob);

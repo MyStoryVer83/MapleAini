@@ -85,8 +85,8 @@ public class PortalScriptManager {
     public boolean executePortalScript(MaplePortal portal, MapleClient c) {
         PortalScript script = getPortalScript(portal.getScriptName());
         if (script != null) {
-            System.err.println("正在使用" + portal.getScriptName() + "进行传送。");
             try {
+                System.err.println("正在使用" + portal.getScriptName() + "进行传送。");
                 return script.enter(new PortalPlayerInteraction(c, portal));
             } catch (Exception e) {
                 System.err.println("脚本出错" + portal.getScriptName() + ":" + e);

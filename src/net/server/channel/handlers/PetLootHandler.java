@@ -45,6 +45,7 @@ public final class PetLootHandler extends AbstractMaplePacketHandler {
         MapleCharacter chr = c.getPlayer();
         MaplePet pet = chr.getPet(chr.getPetIndex(slea.readInt()));//why would it be an int...?
         if (pet == null || !pet.isSummoned()) {
+            c.announce(MaplePacketCreator.enableActions());
             return;
         }
 
@@ -53,6 +54,7 @@ public final class PetLootHandler extends AbstractMaplePacketHandler {
         MapleMapObject ob = chr.getMap().getMapObject(oid);
         if (ob == null) {
             c.announce(MaplePacketCreator.getInventoryFull());
+            c.announce(MaplePacketCreator.enableActions());
             return;
         }
         if (ob instanceof MapleMapItem) {
@@ -68,16 +70,19 @@ public final class PetLootHandler extends AbstractMaplePacketHandler {
                     return;
                 }
                 if (mapitem.isPickedUp()) {
-                    c.announce(MaplePacketCreator.getInventoryFull());
+                    c.announce(MaplePacketCreator.showItemUnavailable());
+                    c.announce(MaplePacketCreator.enableActions());
                     return;
                 }
                 if (mapitem.getDropper() == c.getPlayer()) {
+                    c.announce(MaplePacketCreator.enableActions());
                     return;
                 }
                 if (mapitem.getMeso() > 0) {
                     if (chr.getParty() != null) {
                         int mesosamm = mapitem.getMeso();
                         if (mesosamm > 50000 * chr.getMesoRate()) {
+                            c.announce(MaplePacketCreator.enableActions());
                             return;
                         }
                         int partynum = 0;
@@ -130,6 +135,7 @@ public final class PetLootHandler extends AbstractMaplePacketHandler {
                     if (chr.getInventory(MapleInventoryType.EQUIPPED).findById(1812007) != null) {
                         for (int i : chr.getExcluded()) {
                             if (mapitem.getItem().getItemId() == i) {
+                                c.announce(MaplePacketCreator.enableActions());
                                 return;
                             }
                         }
@@ -137,6 +143,7 @@ public final class PetLootHandler extends AbstractMaplePacketHandler {
                         chr.getMap().broadcastMessage(MaplePacketCreator.removeItemFromMap(mapitem.getObjectId(), 5, chr.getId(), true, chr.getPetIndex(pet)), mapitem.getPosition());
                         chr.getMap().removeMapObject(ob);
                     } else {
+                        c.announce(MaplePacketCreator.enableActions());
                         return;
                     }
                 } else if (mapitem.getItem().getItemId() / 10000 == 243) {
@@ -163,6 +170,7 @@ public final class PetLootHandler extends AbstractMaplePacketHandler {
                     chr.getMap().broadcastMessage(MaplePacketCreator.removeItemFromMap(mapitem.getObjectId(), 5, chr.getId(), true, chr.getPetIndex(pet)), mapitem.getPosition());
                     chr.getMap().removeMapObject(ob);
                 } else {
+                    c.announce(MaplePacketCreator.enableActions());
                     return;
                 }
                 mapitem.setPickedUp(true);
