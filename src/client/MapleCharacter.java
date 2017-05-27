@@ -57,6 +57,7 @@ import net.server.PlayerCoolDownValueHolder;
 import net.server.PlayerDiseaseValueHolder;
 import net.server.Server;
 import net.server.channel.Channel;
+import net.server.guild.MapleAlliance;
 import net.server.guild.MapleGuild;
 import net.server.guild.MapleGuildCharacter;
 import net.server.world.MapleMessenger;
@@ -1794,7 +1795,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     }
 
     public int getAllianceRank() {
-        return this.allianceRank;
+        return allianceRank;
     }
 
     public int getAllowWarpToId() {
@@ -2034,10 +2035,22 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 
     public MapleGuild getGuild() {
         try {
-            return Server.getInstance().getGuild(getGuildId(), getWorld(), null);
+            return Server.getInstance().getGuild(getGuildId(), getWorld(), this);
         } catch (Exception ex) {
+            ex.printStackTrace();
             return null;
         }
+    }
+    
+    public MapleAlliance getAlliance() {
+        if(mgc != null) {
+            try {
+                return Server.getInstance().getAlliance(getGuild().getAllianceId());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public int getGuildId() {
@@ -2243,6 +2256,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     public MapleGuildCharacter getMGC() {
         return mgc;
     }
+    
+    public void setMGC(MapleGuildCharacter mgc) {
+        this.mgc = mgc;
+    }
 
     public MaplePartyCharacter getMPC() {
         if (mpc == null) {
@@ -2335,11 +2352,30 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     public int getPartyId() {
         return (party != null ? party.getId() : -1);
     }
+    
+    public List<MapleCharacter> getPartyMembers() {
+        List<MapleCharacter> list = new LinkedList<>();
+        if(party != null) {
+            for(MaplePartyCharacter partyMembers: party.getMembers()) {
+                list.add(partyMembers.getPlayer());
+            }
+        }
+        return list;
+    }
+    
+    public boolean isPartyMember(MapleCharacter chr) {
+        for(MapleCharacter mpc: getPartyMembers()) {
+            if(mpc.getId() == chr.getId()) {
+                return true;    
+            }
+        }
+        return false;
+    }    
 
     public MaplePlayerShop getPlayerShop() {
         return playerShop;
     }
-
+    
     public MaplePet[] getPets() {
         return pets;
     }
@@ -3840,10 +3876,6 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         }
     }
 
-    public void resetMGC() {
-        this.mgc = null;
-    }
-
     public synchronized void saveCooldowns() {
         if (getAllCooldowns().size() > 0) {
             try {
@@ -3872,7 +3904,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                 ps.setInt(2, guildrank);
                 ps.setInt(3, allianceRank);
                 ps.setInt(4, id);
-                ps.execute();
+                ps.executeUpdate();
             }
         } catch (SQLException se) {
             se.printStackTrace();
@@ -4293,9 +4325,6 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 
     public void setAllianceRank(int rank) {
         allianceRank = rank;
-        if (mgc != null) {
-            mgc.setAllianceRank(rank);
-        }
     }
 
     public void setAllowWarpToId(int id) {

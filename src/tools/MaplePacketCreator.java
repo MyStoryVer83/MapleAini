@@ -5895,7 +5895,7 @@ public class MaplePacketCreator {
             mplew.writeMapleAsciiString(alliance.getRankTitle(i));
         }
         mplew.write(alliance.getGuilds().size());
-        mplew.writeInt(2); // probably capacity
+        mplew.writeInt(alliance.getCapacity());
         for (Integer guild : alliance.getGuilds()) {
             mplew.writeInt(guild);
         }
@@ -5903,7 +5903,7 @@ public class MaplePacketCreator {
         return mplew.getPacket();
     }
 
-    public static byte[] makeNewAlliance(MapleAlliance alliance, MapleClient c) {
+    public static byte[] updateAllianceInfo(MapleAlliance alliance, MapleClient c) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(SendOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(0x0F);
@@ -5916,10 +5916,10 @@ public class MaplePacketCreator {
         for (Integer guild : alliance.getGuilds()) {
             mplew.writeInt(guild);
         }
-        mplew.writeInt(2); // probably capacity
+        mplew.writeInt(alliance.getCapacity()); // probably capacity
         mplew.writeShort(0);
         for (Integer guildd : alliance.getGuilds()) {
-            getGuildInfo(mplew, Server.getInstance().getGuild(guildd, c.getWorld(), c.getPlayer().getMGC()));
+            getGuildInfo(mplew, Server.getInstance().getGuild(guildd, c.getWorld(), c.getPlayer()));
         }
         return mplew.getPacket();
     }
@@ -5948,7 +5948,7 @@ public class MaplePacketCreator {
         for (Integer guild : alliance.getGuilds()) {
             mplew.writeInt(guild);
         }
-        mplew.writeInt(2);
+        mplew.writeInt(alliance.getCapacity());
         mplew.writeMapleAsciiString(alliance.getNotice());
         mplew.writeInt(newGuild);
         getGuildInfo(mplew, Server.getInstance().getGuild(newGuild, c.getWorld(), null));
@@ -6011,7 +6011,7 @@ public class MaplePacketCreator {
         for (Integer guild : alliance.getGuilds()) {
             mplew.writeInt(guild);
         }
-        mplew.writeInt(2);
+       mplew.writeInt(alliance.getCapacity());
         mplew.writeMapleAsciiString(alliance.getNotice());
         mplew.writeInt(expelledGuild);
         getGuildInfo(mplew, Server.getInstance().getGuild(expelledGuild, c.getWorld(), null));

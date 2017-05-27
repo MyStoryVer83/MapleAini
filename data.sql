@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2017-04-24 17:47:37
+Date: 2017-05-26 20:45:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -72,19 +72,14 @@ COMMIT;
 DROP TABLE IF EXISTS `alliance`;
 CREATE TABLE `alliance` (
 `id`  int(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
-`name`  varchar(13) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`notice`  varchar(128) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '' ,
+`name`  varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 `capacity`  int(10) UNSIGNED NOT NULL DEFAULT 2 ,
-`rank_title1`  varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Master' ,
-`rank_title2`  varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Jr.Master' ,
-`rank_title3`  varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Member' ,
-`rank_title4`  varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Member' ,
-`rank_title5`  varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Member' ,
-`guild1`  int(10) NOT NULL DEFAULT '-1' ,
-`guild2`  int(10) NOT NULL DEFAULT '-1' ,
-`guild3`  int(10) NOT NULL DEFAULT '-1' ,
-`guild4`  int(10) NOT NULL DEFAULT '-1' ,
-`guild5`  int(10) NOT NULL DEFAULT '-1' ,
+`notice`  varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' ,
+`rank1`  varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' ,
+`rank2`  varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' ,
+`rank3`  varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' ,
+`rank4`  varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' ,
+`rank5`  varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
@@ -95,6 +90,27 @@ AUTO_INCREMENT=1
 
 -- ----------------------------
 -- Records of alliance
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for `allianceguilds`
+-- ----------------------------
+DROP TABLE IF EXISTS `allianceguilds`;
+CREATE TABLE `allianceguilds` (
+`id`  int(10) NOT NULL ,
+`allianceid`  int(10) NOT NULL DEFAULT '-1' ,
+`guildid`  int(10) NULL DEFAULT '-1' ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+
+;
+
+-- ----------------------------
+-- Records of allianceguilds
 -- ----------------------------
 BEGIN;
 COMMIT;
@@ -723,11 +739,11 @@ CREATE TABLE `guilds` (
 `logo`  int(10) UNSIGNED NULL DEFAULT NULL ,
 `logoColor`  smallint(5) UNSIGNED NOT NULL DEFAULT 0 ,
 `name`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`rank1title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Master' ,
-`rank2title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Jr. Master' ,
-`rank3title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Member' ,
-`rank4title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Member' ,
-`rank5title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Member' ,
+`rank1title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '族长' ,
+`rank2title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '副族长' ,
+`rank3title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '成员' ,
+`rank4title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '成员' ,
+`rank5title`  varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '成员' ,
 `capacity`  int(10) UNSIGNED NOT NULL DEFAULT 10 ,
 `logoBG`  int(10) UNSIGNED NULL DEFAULT NULL ,
 `logoBGColor`  smallint(5) UNSIGNED NOT NULL DEFAULT 0 ,

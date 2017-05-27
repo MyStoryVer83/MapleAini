@@ -37,7 +37,6 @@ import java.util.Set;
 
 import net.server.Server;
 import net.server.channel.Channel;
-import tools.LogHelper;
 import tools.DatabaseConnection;
 import tools.MaplePacketCreator;
 
@@ -97,7 +96,7 @@ public class MapleGuild {
                 return;
             }
             do {
-                members.add(new MapleGuildCharacter(rs.getInt("id"), rs.getInt("level"), rs.getString("name"), (byte) -1, world, rs.getInt("job"), rs.getInt("guildrank"), guildid, false, rs.getInt("allianceRank")));
+                members.add(new MapleGuildCharacter(null, rs.getInt("id"), rs.getInt("level"), rs.getString("name"), (byte) -1, world, rs.getInt("job"), rs.getInt("guildrank"), guildid, false, rs.getInt("allianceRank")));
             } while (rs.next());
             
             ps.close();
@@ -180,6 +179,10 @@ public class MapleGuild {
 
     public int getLeaderId() {
         return leader;
+    }
+    
+    public int setLeaderId(int charId) {
+        return leader = charId;
     }
 
     public int getGP() {
@@ -282,6 +285,21 @@ public class MapleGuild {
             }
         }
     }
+    
+    public void dropMessage(String message) {
+        dropMessage(5, message);
+    }
+    
+    public void dropMessage(int type, String message) {
+        for (MapleGuildCharacter mgc : members) {
+            if(mgc.getCharacter() != null)
+                mgc.getCharacter().dropMessage(type, message);
+        }
+    }
+    
+    public void broadcastMessage(byte[] packet) {
+        Server.getInstance().guildMessage(id, packet);
+    }
 
     public final void setOnline(int cid, boolean online, int channel) {
         boolean bBroadcast = true;
@@ -332,11 +350,18 @@ public class MapleGuild {
             ps.setInt(1, leaderId);
             rs = ps.executeQuery();
             rs.first();
-            int guildid = rs.getInt("guildid");
+            int guildId = rs.getInt("guildid");
             rs.close();
             ps.close();
-            return guildid;
+            ps = con.prepareStatement("UPDATE characters SET guildid = ? WHERE id = ?");
+            ps.setInt(1, guildId);
+            ps.setInt(2, leaderId);
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+            return guildId;
         } catch (Exception e) {
+            e.printStackTrace();
             return 0;
         }
     }
@@ -485,6 +510,19 @@ public class MapleGuild {
             }
         }
         return null;
+    }
+    
+    public void resetAllianceGuildPlayersRank() {
+        try {
+            for(MapleGuildCharacter mgc: members) mgc.setAllianceRank(5);
+            try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE characters SET allianceRank = ? WHERE guildid = ?")) {
+                ps.setInt(1, 5);
+                ps.setInt(2, id);
+                ps.executeUpdate();
+            } 
+            } catch (SQLException e) {
+                e.printStackTrace();
+        }
     }
 
     public boolean increaseCapacity() {
