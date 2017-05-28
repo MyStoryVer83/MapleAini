@@ -101,8 +101,9 @@ public class MapleMount {
 			this.tiredness++;
 			owner.getMap().broadcastMessage(MaplePacketCreator.updateMount(owner.getId(), this, false));
 			if (tiredness > 99) {
-				this.tiredness = 95;
+				this.tiredness = 99;
 				owner.dispelSkill(owner.getJobType() * 10000000 + 1004);
+                                owner.dropMessage("Your mount grew tired! Treat it some revitalizer before riding it again!");
 			}
 		} else {
 			if(this.tirednessSchedule != null) {
