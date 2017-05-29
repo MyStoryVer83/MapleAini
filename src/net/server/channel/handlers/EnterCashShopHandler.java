@@ -25,6 +25,7 @@ import client.MapleCharacter;
 import client.MapleClient;
 import net.AbstractMaplePacketHandler;
 import net.server.Server;
+import server.MapleTrade;
 import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
@@ -41,7 +42,7 @@ public class EnterCashShopHandler extends AbstractMaplePacketHandler {
         	if (mc.getCashShop().isOpened()) {
                     return;
                 }
-        	
+        	        mc.closePlayerInteractions();
 			Server.getInstance().getPlayerBuffStorage().addBuffsToStorage(mc.getId(), mc.getAllBuffs());
 	                mc.cancelBuffEffects();
 	                mc.cancelExpirationTask();
