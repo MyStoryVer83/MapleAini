@@ -378,11 +378,8 @@ public class Server implements Runnable {
                 return null;
             }
             if (mc != null) {
-                MapleGuildCharacter mgc = mc.getMGC();
-                if (mgc != null) {
-                    g.setOnline(mgc.getId(), true, mgc.getChannel());
-                    mc.setMGC(g.getMGC(mc.getId()));
-                }       
+                g.addGuildMember(mc.getMGC());
+                g.setOnline(mc.getId(), true, mc.getClient().getChannel());
             }
             guilds.put(id, g);
             return g;

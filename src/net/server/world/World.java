@@ -241,7 +241,11 @@ public class World {
         } else {
             bDifferentGuild = guildid != mc.getGuildId();
             mc.setGuildId(guildid);
-            mc.setGuildRank(rank);
+            MapleGuildCharacter mgc = mc.getMGC();
+            if(mgc != null) {
+                mgc.setGuildRank(rank);
+                if(bDifferentGuild) mgc.setAllianceRank(5);
+            }
             mc.saveGuildStatus();
         }
         if (bDifferentGuild) {
