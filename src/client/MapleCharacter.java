@@ -3185,7 +3185,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
             ret.dojoPoints = rs.getInt("dojoPoints");
             ret.dojoStage = rs.getInt("lastDojoStage");
             ret.dataString = rs.getString("dataString");
-            if (ret.guildid > 0) ret.mgc = new MapleGuildCharacter(ret);
+            ret.mgc = new MapleGuildCharacter(ret);
             int buddyCapacity = rs.getInt("buddyCapacity");
             ret.buddylist = new BuddyList(buddyCapacity);
             ret.getInventory(MapleInventoryType.EQUIP).setSlotLimit(rs.getByte("equipslots"));
@@ -4549,17 +4549,6 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 
     public void setGuildId(int _id) {
         guildid = _id;
-        if (guildid > 0) {
-            if (mgc == null) {
-                mgc = new MapleGuildCharacter(this);
-            } else {
-                mgc.setGuildId(guildid);
-            }
-        } else {
-            mgc = null;
-            guildRank = 5;
-            allianceRank = 5;
-        }
     }
 
     public void setGuildRank(int _rank) {

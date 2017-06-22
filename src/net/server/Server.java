@@ -367,6 +367,10 @@ public class Server implements Runnable {
             return null;
         }
     }
+    
+    public MapleGuild getGuild(int id, int world) {
+            return getGuild(id, world, null);
+    }    
 
     public MapleGuild getGuild(int id, int world, MapleCharacter mc) {
         synchronized (guilds) {
@@ -378,7 +382,9 @@ public class Server implements Runnable {
                 return null;
             }
             if (mc != null) {
-                g.addGuildMember(mc.getMGC());
+                mc.setMGC(g.getMGC(mc.getId()));
+                if(g.getMGC(mc.getId()) == null) System.out.println("null for " + mc.getName() + " when loading " + id);
+                g.getMGC(mc.getId()).setCharacter(mc);
                 g.setOnline(mc.getId(), true, mc.getClient().getChannel());
             }
             guilds.put(id, g);
@@ -399,10 +405,10 @@ public class Server implements Runnable {
         g.setOnline(mc.getId(), bOnline, channel);
     }
 
-    public int addGuildMember(MapleGuildCharacter mgc) {
+    public int addGuildMember(MapleGuildCharacter mgc, MapleCharacter chr) {
         MapleGuild g = guilds.get(mgc.getGuildId());
         if (g != null) {
-            return g.addGuildMember(mgc);
+            return g.addGuildMember(mgc, chr);
         }
         return 0;
     }

@@ -5917,18 +5917,18 @@ public class MaplePacketCreator {
         mplew.writeInt(alliance.getCapacity()); // probably capacity
         mplew.writeShort(0);
         for (Integer guildd : alliance.getGuilds()) {
-            getGuildInfo(mplew, Server.getInstance().getGuild(guildd, c.getWorld(), c.getPlayer()));
+            getGuildInfo(mplew, Server.getInstance().getGuild(guildd, c.getWorld()));
         }
         return mplew.getPacket();
     }
 
-    public static byte[] getGuildAlliances(MapleAlliance alliance, MapleClient c) {
+    public static byte[] getGuildAlliances(MapleAlliance alliance, int worldId) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(SendOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(0x0D);
         mplew.writeInt(alliance.getGuilds().size());
         for (Integer guild : alliance.getGuilds()) {
-            getGuildInfo(mplew, Server.getInstance().getGuild(guild, c.getWorld(), null));
+            getGuildInfo(mplew, Server.getInstance().getGuild(guild, worldId));
         }
         return mplew.getPacket();
     }
@@ -5996,7 +5996,7 @@ public class MaplePacketCreator {
         return mplew.getPacket();
     }
 
-    public static byte[] removeGuildFromAlliance(MapleAlliance alliance, int expelledGuild, MapleClient c) {
+    public static byte[] removeGuildFromAlliance(MapleAlliance alliance, int expelledGuild, int worldId) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(SendOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(0x10);
@@ -6012,7 +6012,7 @@ public class MaplePacketCreator {
        mplew.writeInt(alliance.getCapacity());
         mplew.writeMapleAsciiString(alliance.getNotice());
         mplew.writeInt(expelledGuild);
-        getGuildInfo(mplew, Server.getInstance().getGuild(expelledGuild, c.getWorld(), null));
+        getGuildInfo(mplew, Server.getInstance().getGuild(expelledGuild, worldId, null));
         mplew.write(0x01);
         return mplew.getPacket();
     }

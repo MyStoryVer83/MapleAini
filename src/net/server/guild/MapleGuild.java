@@ -366,13 +366,14 @@ public class MapleGuild {
         }
     }
 
-    public int addGuildMember(MapleGuildCharacter mgc) {
+    public int addGuildMember(MapleGuildCharacter mgc, MapleCharacter chr) {
         synchronized (members) {
             if (members.size() >= capacity) {
                 return 0;
             }
             for (int i = members.size() - 1; i >= 0; i--) {
                 if (members.get(i).getGuildRank() < 5 || members.get(i).getName().compareTo(mgc.getName()) < 0) {
+                    mgc.setCharacter(chr);
                     members.add(i + 1, mgc);
                     bDirty = true;
                     break;
@@ -432,21 +433,27 @@ public class MapleGuild {
     public void changeRank(int cid, int newRank) {
         for (MapleGuildCharacter mgc : members) {
             if (cid == mgc.getId()) {
-                try {
-                    if (mgc.isOnline()) {
-                        Server.getInstance().getWorld(mgc.getWorld()).setGuildAndRank(cid, this.id, newRank);
-                    } else {
-                        Server.getInstance().getWorld(mgc.getWorld()).setOfflineGuildStatus((short) this.id, (byte) newRank, cid);
-                    }
-                } catch (Exception re) {
-                    re.printStackTrace();
-                    return;
-                }
-                mgc.setGuildRank(newRank);
-                this.broadcast(MaplePacketCreator.changeRank(mgc));
+                changeRank(mgc, newRank);
                 return;
             }
         }
+    }
+    
+    public void changeRank(MapleGuildCharacter mgc, int newRank) {
+        try {
+            if (mgc.isOnline()) {
+                Server.getInstance().getWorld(mgc.getWorld()).setGuildAndRank(mgc.getId(), this.id, newRank);
+                mgc.setGuildRank(newRank);
+            } else {
+                Server.getInstance().getWorld(mgc.getWorld()).setOfflineGuildStatus((short) this.id, (byte) newRank, mgc.getId());
+                mgc.setOfflineGuildRank(newRank);
+            }
+        } catch (Exception re) {
+            re.printStackTrace();
+            return;
+        }
+        this.broadcast(MaplePacketCreator.changeRank(mgc));
+        return;
     }
 
     public void setGuildNotice(String notice) {
@@ -510,19 +517,6 @@ public class MapleGuild {
             }
         }
         return null;
-    }
-    
-    public void resetAllianceGuildPlayersRank() {
-        try {
-            for(MapleGuildCharacter mgc: members) mgc.setAllianceRank(5);
-            try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE characters SET allianceRank = ? WHERE guildid = ?")) {
-                ps.setInt(1, 5);
-                ps.setInt(2, id);
-                ps.executeUpdate();
-            } 
-            } catch (SQLException e) {
-                e.printStackTrace();
-        }
     }
 
     public boolean increaseCapacity() {
@@ -588,6 +582,24 @@ public class MapleGuild {
         } catch (SQLException e) {
         }
     }
+    
+    public void resetAllianceGuildPlayersRank() {
+        try {
+            for(MapleGuildCharacter mgc: members) {
+                if(mgc.isOnline()) {
+                    mgc.setAllianceRank(5);
+                }
+            }
+            
+            try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE characters SET allianceRank = ? WHERE guildid = ?")) {
+                ps.setInt(1, 5);
+                ps.setInt(2, id);
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }    
 
     public int getIncreaseGuildCost(int size) {
         return 500000 * (size - 6) / 6;
