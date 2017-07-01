@@ -273,6 +273,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     private PartyQuest partyQuest = null;
     private boolean loggedIn = false;
     private MapleDragon dragon = null;
+    private long lastHpDec = 0;
     private MCField.MCTeam MCPQTeam;
     private MCParty MCPQParty;
     private MCField MCPQField;
@@ -1097,13 +1098,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                 updatePartyMemberHP();
             }
             if (getMap().getHPDec() > 0) {
-                hpDecreaseTask = TimerManager.getInstance().schedule(new Runnable() {
-                    @Override
-                    public void run() {
-                        doHurtHp();
-                    }
-                }, 10000);
-            }
+                resetHpDecreaseTask();
+            } else {
+            FilePrinter.printError(FilePrinter.MAPLE_MAP, "Character " + this.getName() + " got stuck when moving to map " + map.getId() + ".");
+        }
         }
     }
 
@@ -1570,6 +1568,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
             return;
         }
         addHP(-getMap().getHPDec());
+        lastHpDec = System.currentTimeMillis();
         hpDecreaseTask = TimerManager.getInstance().schedule(new Runnable() {
             @Override
             public void run() {
@@ -1578,6 +1577,24 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         }, 10000);
     }
 
+    public void resetHpDecreaseTask() {
+        if (hpDecreaseTask != null) {
+            hpDecreaseTask.cancel(false);
+        }
+        
+        long lastHpTask = System.currentTimeMillis() - lastHpDec;
+        if(lastHpTask >= 10000) {
+            doHurtHp();
+        } else {
+            hpDecreaseTask = TimerManager.getInstance().schedule(new Runnable() {
+                @Override
+                public void run() {
+                    doHurtHp();
+                }
+            }, 10000 - lastHpTask);
+        }
+    }
+    
     public void dropMessage(String message) {
         dropMessage(0, message);
     }
@@ -2503,6 +2520,17 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         }
     }
 
+    public final MapleQuestStatus getMapleQuestStatus(final int quest) {
+        synchronized (quests) {
+            for (final MapleQuestStatus q : quests.values()) {
+                if (q.getQuest().getId() == quest) {
+                    return q;
+                }
+            }
+            return null;
+        }
+    }
+    
     public MapleQuestStatus getQuest(MapleQuest quest) {
         synchronized (quests) {
             if (!quests.containsKey(quest.getId())) {
@@ -3329,6 +3357,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                         if (cTime > -1) {
                             status.setCompletionTime(cTime * 1000);
                         }
+                        long eTime = rs.getLong("expires");
+                        if (eTime > 0) {
+                            status.setExpirationTime(eTime);
+                        }
                         status.setForfeited(rs.getInt("forfeited"));
                         ret.quests.put(q.getId(), status);
                         pse.setInt(1, rs.getInt("queststatusid"));
@@ -3434,6 +3466,14 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public void reloadQuestExpirations() {
+        for(MapleQuestStatus mqs: quests.values()) {
+            if(mqs.getExpirationTime() > 0) {
+                questTimeLimit2(mqs.getQuest(), mqs.getExpirationTime());
+            }
+        }
     }
 
     public static String makeMapleReadable(String in) {
@@ -4301,7 +4341,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
             ps.executeBatch();
             deleteWhereCharacterId(con, "DELETE FROM eventstats WHERE characterid = ?");
             deleteWhereCharacterId(con, "DELETE FROM queststatus WHERE characterid = ?");
-            ps = con.prepareStatement("INSERT INTO queststatus (`queststatusid`, `characterid`, `quest`, `status`, `time`, `forfeited`) VALUES (DEFAULT, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            ps = con.prepareStatement("INSERT INTO queststatus (`queststatusid`, `characterid`, `quest`, `status`, `time`, `expires`, `forfeited`) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             PreparedStatement psf;
             try (PreparedStatement pse = con.prepareStatement("INSERT INTO questprogress VALUES (DEFAULT, ?, ?, ?)")) {
                 psf = con.prepareStatement("INSERT INTO medalmaps VALUES (DEFAULT, ?, ?)");
@@ -4311,7 +4351,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                         ps.setInt(2, q.getQuest().getId());
                         ps.setInt(3, q.getStatus().getId());
                         ps.setInt(4, (int) (q.getCompletionTime() / 1000));
-                        ps.setInt(5, q.getForfeited());
+                        ps.setLong(5, q.getExpirationTime());
+                        ps.setInt(6, q.getForfeited());
                         ps.executeUpdate();
                         try (ResultSet rs = ps.getGeneratedKeys()) {
                             rs.next();
@@ -5080,23 +5121,40 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
             }
         }
     }
+    
+    private void expireQuest(MapleQuest quest) {
+        if(getQuestStatus(quest.getId()) == MapleQuestStatus.Status.COMPLETED.getId()) return;
+        if(System.currentTimeMillis() < getMapleQuestStatus(quest.getId()).getExpirationTime()) return;
+        announce(MaplePacketCreator.questExpire(quest.getId()));
+        MapleQuestStatus newStatus = new MapleQuestStatus(quest, MapleQuestStatus.Status.NOT_STARTED);
+        newStatus.setForfeited(getQuest(quest).getForfeited() + 1);
+        updateQuest(newStatus);
+    }
 
     public void questTimeLimit(final MapleQuest quest, int seconds) {
-        final MapleCharacter chr = this;
         ScheduledFuture<?> sf = TimerManager.getInstance().schedule(new Runnable() {
             @Override
             public void run() {
-                if(chr.getQuestStatus(quest.getId()) == MapleQuestStatus.Status.COMPLETED.getId()) {
-                    return;
-                }
-                announce(MaplePacketCreator.questExpire(quest.getId()));
-                MapleQuestStatus newStatus = new MapleQuestStatus(quest, MapleQuestStatus.Status.NOT_STARTED);
-                newStatus.setForfeited(getQuest(quest).getForfeited() + 1);
-                updateQuest(newStatus);
+                expireQuest(quest);
             }
         }, seconds * 1000);
         announce(MaplePacketCreator.addQuestTimeLimit(quest.getId(), seconds * 1000));
         timers.add(sf);
+    }
+    
+    public void questTimeLimit2(final MapleQuest quest, long expires) {
+        long timeLeft = expires - System.currentTimeMillis();
+        if(timeLeft <= 0) {
+            expireQuest(quest);
+        } else {
+            ScheduledFuture<?> sf = TimerManager.getInstance().schedule(new Runnable() {
+                @Override
+                public void run() {
+                    expireQuest(quest);
+                }
+            }, timeLeft);
+            timers.add(sf);
+        }
     }
 
     public void updateSingleStat(MapleStat stat, int newval) {

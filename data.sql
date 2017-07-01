@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2017-05-26 20:45:04
+Date: 2017-07-01 10:52:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1522,6 +1522,7 @@ CREATE TABLE `queststatus` (
 `quest`  int(11) NOT NULL DEFAULT 0 ,
 `status`  int(11) NOT NULL DEFAULT 0 ,
 `time`  int(11) NOT NULL DEFAULT 0 ,
+`expires`  bigint(20) NOT NULL DEFAULT 0 ,
 `forfeited`  int(11) NOT NULL DEFAULT 0 ,
 `info`  tinyint(3) NOT NULL DEFAULT 0 ,
 PRIMARY KEY (`queststatusid`)

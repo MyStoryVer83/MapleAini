@@ -63,13 +63,14 @@ public class MapleQuestStatus {
     private Map<Integer, String> progress = new LinkedHashMap<Integer, String>();
     private List<Integer> medalProgress = new LinkedList<Integer>();
     private int npc;
-    private long completionTime;
+    private long completionTime, expirationTime;
     private int forfeited = 0;
 
     public MapleQuestStatus(MapleQuest quest, Status status) {
         this.questID = quest.getId();
         this.setStatus(status);
         this.completionTime = System.currentTimeMillis();
+        this.expirationTime = 0;
         if (status == Status.STARTED) 
             registerMobs();      
     }
@@ -79,6 +80,7 @@ public class MapleQuestStatus {
         this.setStatus(status);
         this.setNpc(npc);
         this.completionTime = System.currentTimeMillis();
+        this.expirationTime = 0;
         if (status == Status.STARTED) {
             registerMobs();
         }
@@ -161,6 +163,14 @@ public class MapleQuestStatus {
 
     public void setCompletionTime(long completionTime) {
         this.completionTime = completionTime;
+    }
+    
+    public long getExpirationTime() {
+        return expirationTime;
+    }
+    
+    public void setExpirationTime(long expirationTime) {
+        this.expirationTime = expirationTime;
     }
 
     public int getForfeited() {
