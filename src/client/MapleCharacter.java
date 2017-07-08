@@ -788,6 +788,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                 List<MapleBuffStat> dsstat = Collections.singletonList(MapleBuffStat.DARKSIGHT);
                 getMap().broadcastGMMessage(this, MaplePacketCreator.cancelForeignBuff(id, dsstat), false);
                 getMap().broadcastMessage(this, MaplePacketCreator.spawnPlayerMapobject(this), false);
+                for(MapleSummon ms: this.getSummons().values()) {
+                    getMap().broadcastNONGMMessage(this, MaplePacketCreator.spawnSummon(ms, false), false);
+                }
                 updatePartyMemberHP();
             } else {
                 this.hidden = true;
@@ -1139,7 +1142,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         this.currentType = type;
     }
 
-    public void checkBerserk() {
+    public void checkBerserk(final boolean isHidden) {
         if (BerserkSchedule != null) {
             BerserkSchedule.cancel(false);
         }
@@ -1153,7 +1156,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                     @Override
                     public void run() {
                         client.announce(MaplePacketCreator.showOwnBerserk(skilllevel, Berserk));
-                        getMap().broadcastMessage(MapleCharacter.this, MaplePacketCreator.showBerserk(getId(), skilllevel, Berserk), false);
+                        if(!isHidden) getMap().broadcastMessage(MapleCharacter.this, MaplePacketCreator.showBerserk(getId(), skilllevel, Berserk), false);
+                        else getMap().broadcastGMMessage(MapleCharacter.this, MaplePacketCreator.showBerserk(getId(), skilllevel, Berserk), false);
                     }
                 }, 5000, 3000);
             }
@@ -3688,7 +3692,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                 addHP(-bloodEffect.getX());
                 client.announce(MaplePacketCreator.showOwnBuffEffect(bloodEffect.getSourceId(), 5));
                 getMap().broadcastMessage(MapleCharacter.this, MaplePacketCreator.showBuffeffect(getId(), bloodEffect.getSourceId(), 5), false);
-                checkBerserk();
+                checkBerserk(isHidden());
             }
         }, 4000, 4000);
     }
@@ -3835,7 +3839,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         if (effect.isDragonBlood()) {
             prepareDragonBlood(effect);
         } else if (effect.isBerserk()) {
-            checkBerserk();
+            checkBerserk(isHidden());
         } else if (effect.isBeholder()) {
             final int beholder = DarkKnight.BEHOLDER;
             if (beholderHealingSchedule != null) {
