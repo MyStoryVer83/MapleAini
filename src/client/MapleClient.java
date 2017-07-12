@@ -1194,8 +1194,6 @@ public class MapleClient {
         }
         server.getPlayerBuffStorage().addBuffsToStorage(player.getId(), player.getAllBuffs());
         player.cancelBuffEffects();
-        player.cancelMagicDoor();
-        //Canceling mounts? Noty
         if (player.getBuffedValue(MapleBuffStat.PUPPET) != null) {
             player.cancelEffectFromBuffStat(MapleBuffStat.PUPPET);
         }

@@ -64,6 +64,7 @@ import server.life.MapleNPC;
 import server.life.MobSkill;
 import server.maps.HiredMerchant;
 import server.maps.MapleDoor;
+import server.maps.MapleDoorObject;
 import server.maps.MapleDragon;
 import server.maps.MapleMap;
 import server.maps.MapleMapItem;
@@ -1044,9 +1045,7 @@ public class MaplePacketCreator {
         mplew.writeShort(SendOpcode.SPAWN_PORTAL.getValue());
         mplew.writeInt(townId);
         mplew.writeInt(targetId);
-        if (pos != null) {
-            mplew.writePos(pos);
-        }
+        mplew.writePos(pos);
         return mplew.getPacket();
     }
 
@@ -1058,10 +1057,10 @@ public class MaplePacketCreator {
      * @param town
      * @return The remove door packet.
      */
-    public static byte[] spawnDoor(int oid, Point pos, boolean town) {
+    public static byte[] spawnDoor(int oid, Point pos, boolean launched) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter(11);
         mplew.writeShort(SendOpcode.SPAWN_DOOR.getValue());
-        mplew.writeBool(town);
+        mplew.writeBool(launched);
         mplew.writeInt(oid);
         mplew.writePos(pos);
         return mplew.getPacket();
@@ -2336,7 +2335,7 @@ public class MaplePacketCreator {
             }
         }
         mplew.writeMapleAsciiString(guildName);
-        mplew.writeMapleAsciiString(allianceName); // 好像无效
+        mplew.writeMapleAsciiString(allianceName);  // does not seems to work
         mplew.write(0);
         MaplePet[] pets = chr.getPets();
         Item inv = chr.getInventory(MapleInventoryType.EQUIPPED).getItem((short) -114);
@@ -2353,7 +2352,8 @@ public class MaplePacketCreator {
             }
         }
         mplew.write(0); //end of pets
-        if (chr.getMount() != null && chr.getInventory(MapleInventoryType.EQUIPPED).getItem((short) -18) != null) {
+        Item mount;     //mounts can potentially crash the client if the player's level is not properly checked
+        if (chr.getMount() != null && (mount = chr.getInventory(MapleInventoryType.EQUIPPED).getItem((short) -18)) != null && MapleItemInformationProvider.getInstance().getEquipStats(mount.getItemId()).get("reqLevel") <= chr.getLevel()) {
             mplew.write(chr.getMount().getId()); //mount
             mplew.writeInt(chr.getMount().getLevel()); //level
             mplew.writeInt(chr.getMount().getExp()); //exp
@@ -3196,11 +3196,22 @@ public class MaplePacketCreator {
         mplew.writeShort(0x8b);
         mplew.writeShort(1);
         if (partychar.getDoors().size() > 0) {
-            for (MapleDoor doors : partychar.getDoors()) {
-                mplew.writeInt(doors.getTown().getId());
-                mplew.writeInt(doors.getTarget().getId());
-                mplew.writeInt(doors.getPosition().x);
-                mplew.writeInt(doors.getPosition().y);
+            boolean deployedPortal = false;
+            for (MapleDoor door : partychar.getDoors()) {
+                if(door.getOwnerId() == partychar.getId()) {
+                    MapleDoorObject mdo = door.getTownDoor();
+                    mplew.writeInt(mdo.getTo().getId());
+                    mplew.writeInt(mdo.getFrom().getId());
+                    mplew.writeInt(mdo.getPosition().x);
+                    mplew.writeInt(mdo.getPosition().y);
+                    deployedPortal = true;
+                }
+            }
+            if(!deployedPortal) {
+                mplew.writeInt(999999999);
+                mplew.writeInt(999999999);
+                mplew.writeInt(0);
+                mplew.writeInt(0);
             }
         } else {
             mplew.writeInt(999999999);
@@ -3288,11 +3299,22 @@ public class MaplePacketCreator {
         for (MaplePartyCharacter partychar : partymembers) {
             if (partychar.getChannel() == forchannel && !leaving) {
                 if (partychar.getDoors().size() > 0) {
-                    for (MapleDoor doors : partychar.getDoors()) {
-                        lew.writeInt(doors.getTown().getId());
-                        lew.writeInt(doors.getTarget().getId());
-                        lew.writeInt(doors.getPosition().x);
-                        lew.writeInt(doors.getPosition().y);
+                    boolean deployedPortal = false;
+                    for (MapleDoor door : partychar.getDoors()) {
+                        if(door.getOwnerId() == partychar.getId()) {
+                            MapleDoorObject mdo = door.getTownDoor();
+                            lew.writeInt(mdo.getTown().getId());
+                            lew.writeInt(mdo.getArea().getId());
+                            lew.writeInt(mdo.getPosition().x);
+                            lew.writeInt(mdo.getPosition().y);
+                            deployedPortal = true;
+                        }
+                    }
+                    if(!deployedPortal) {
+                        lew.writeInt(999999999);
+                        lew.writeInt(999999999);
+                        lew.writeInt(0);
+                        lew.writeInt(0);
                     }
                 } else {
                     lew.writeInt(999999999);

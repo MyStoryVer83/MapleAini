@@ -236,12 +236,13 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     private Map<Integer, String> entered = new LinkedHashMap<>();
     private Set<MapleMapObject> visibleMapObjects = new LinkedHashSet<>();
     private Map<Skill, SkillEntry> skills = new LinkedHashMap<>();
+    private Map<Integer, Integer> activeCoupons = new LinkedHashMap<>();
     private EnumMap<MapleBuffStat, MapleBuffStatValueHolder> effects = new EnumMap<>(MapleBuffStat.class);
     private Map<Integer, MapleKeyBinding> keymap = new LinkedHashMap<>();
     private Map<Integer, MapleSummon> summons = new LinkedHashMap<>();
     private Map<Integer, MapleCoolDownValueHolder> coolDowns = new LinkedHashMap<>(50);
     private EnumMap<MapleDisease, DiseaseValueHolder> diseases = new EnumMap<>(MapleDisease.class);
-    private List<MapleDoor> doors = new ArrayList<>();
+    private Map<Integer, MapleDoor> doors = new LinkedHashMap<>();
     private ScheduledFuture<?> dragonBloodSchedule;
     private ScheduledFuture<?> mapTimeLimitTask = null;
     private ScheduledFuture<?>[] fullnessSchedule = new ScheduledFuture<?>[3];
@@ -380,8 +381,12 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         return pts;
     }
 
-    public void addDoor(MapleDoor door) {
-        doors.add(door);
+    public void addDoor(Integer owner, MapleDoor door) {
+        doors.put(owner, door);
+    }
+    
+    public void removeDoor(Integer owner) {
+        doors.remove(owner);
     }
 
     public void addExcluded(int x) {
@@ -596,17 +601,17 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                 secondarystat = localdex;
             }
             maxbasedamage = (int) (((weapon.getMaxDamageMultiplier() * mainstat + secondarystat) / 100.0) * watk);
-        } else if (job.isA(MapleJob.PIRATE) || job.isA(MapleJob.THUNDERBREAKER1)) {
-            double weapMulti = 3;
-            if (job.getId() % 100 != 0) {
-                weapMulti = 4.2;
-            }
-
-            int attack = (int) Math.min(Math.floor((2 * getLevel() + 31) / 3), 31);
-
-            maxbasedamage = (int) (localstr * weapMulti + localdex) * attack / 100;
         } else {
+            if (job.isA(MapleJob.PIRATE) || job.isA(MapleJob.THUNDERBREAKER1)) {
+                double weapMulti = 3;
+                if (job.getId() % 100 != 0) {
+                    weapMulti = 4.2;
+                }
+                int attack = (int) Math.min(Math.floor((2 * getLevel() + 31) / 3), 31);
+                maxbasedamage = (int) (localstr * weapMulti + localdex) * attack / 100;
+            } else {
             maxbasedamage = 1;
+            }
         }
         return maxbasedamage;
     }
@@ -729,31 +734,28 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                 buffstats.add(statup.getLeft());
             }
         }
-        deregisterBuffStats(buffstats);
         if (effect.isMagicDoor()) {
-            if (!getDoors().isEmpty()) {
-                MapleDoor door = getDoors().iterator().next();
-                for (MapleCharacter chr : door.getTarget().getCharacters()) {
-                    door.sendDestroyData(chr.client);
+            MapleDoor destroyDoor = doors.remove(this.getId());
+            if (destroyDoor != null) {
+                destroyDoor.freeAllocatedPortal();
+                destroyDoor.getTarget().removeMapObject(destroyDoor.getAreaDoor());
+                destroyDoor.getTown().removeMapObject(destroyDoor.getTownDoor());
+                for (MapleCharacter chr : destroyDoor.getTarget().getCharacters()) {
+                    destroyDoor.getAreaDoor().sendDestroyData(chr.getClient());
                 }
-                for (MapleCharacter chr : door.getTown().getCharacters()) {
-                    door.sendDestroyData(chr.client);
-                }
-                for (MapleDoor destroyDoor : getDoors()) {
-                    door.getTarget().removeMapObject(destroyDoor);
-                    door.getTown().removeMapObject(destroyDoor);
+                for (MapleCharacter chr : destroyDoor.getTown().getCharacters()) {
+                    destroyDoor.getTownDoor().sendDestroyData(chr.getClient());
                 }
                 if (party != null) {
                     for (MaplePartyCharacter partyMembers : getParty().getMembers()) {
-                        partyMembers.getPlayer().getDoors().remove(door);
-                        partyMembers.getDoors().remove(door);
+                        partyMembers.getPlayer().removeDoor(this.getId());
+                        partyMembers.removeDoor(this.getId());
                     }
                     silentPartyUpdate();
-                } else {
-                    clearDoors();
                 }
             }
         }
+        deregisterBuffStats(buffstats);
         if (effect.getSourceId() == Spearman.HYPER_BODY || effect.getSourceId() == GM.HYPER_BODY || effect.getSourceId() == SuperGM.HYPER_BODY) {
             List<Pair<MapleStat, Integer>> statup = new ArrayList<>(4);
             statup.add(new Pair<MapleStat, Integer>(MapleStat.HP, Math.min(hp, maxhp)));
@@ -1180,10 +1182,6 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                 monster.switchController(this, true);
             }
         }
-    }
-
-    public void clearDoors() {
-        doors.clear();
     }
 
     public void clearSavedLocation(SavedLocationType type) {
@@ -1986,8 +1984,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         return dojoStage;
     }
 
-    public List<MapleDoor> getDoors() {
-        return new ArrayList<>(doors);
+    public Map<Integer, MapleDoor> getDoors() {
+        return Collections.unmodifiableMap(doors);
     }
 
     public int getDropRate() {
@@ -3143,6 +3141,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         } else if (level == 200) {
             yellowMessage("Your drop rate has increased to 4x since you have reached level 200!");
         }
+    }
+    
+    public Set<Integer> getActiveCoupons() {
+        return Collections.unmodifiableSet(activeCoupons.keySet());
     }
 
     public static MapleCharacter loadCharFromDB(int charid, MapleClient client, boolean channelserver) throws SQLException {

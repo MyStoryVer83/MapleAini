@@ -68,7 +68,7 @@ public class MapleShopFactory {
 
     public MapleShop getShopForNPC(int npcId) {
         if (npcShops.containsKey(npcId)) {
-            npcShops.get(npcId);
+            return npcShops.get(npcId);
         }
         return loadShop(npcId, false);
     }
